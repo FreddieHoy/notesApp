@@ -3,7 +3,7 @@ import { Login } from "./app/Login";
 
 export const App = () => {
   return (
-    <div className="flex absolute h-full w-full justify-center align-center">
+    <div className="flex  h-screen w-screen justify-center items-center">
       <Login />
     </div>
   );
