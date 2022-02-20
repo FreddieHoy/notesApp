@@ -1,23 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
-import { Login } from "./app/Login";
-import { Link, HashRouter as Router, Routes, Route } from "react-router-dom";
+import { Login } from "./Login";
+import { Jot } from "./Jot/Home";
+import { match } from "ts-pattern";
+import { Register } from "./Register";
+
+export type LoginView = "login" | "register";
 
 export const App = () => {
+  const isAuth = false;
+  const [view, setView] = useState<LoginView>("login");
+
+  if (isAuth) return <Jot />;
+
   return (
     <div className="flex  h-screen w-screen justify-center items-center">
-      <Router>
-        <Link to="/login" />
-        <Link to="/register" />
-        <Link to="/app" />
-        <Routes>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/register">Register</Route>
-          <Route path="/app">This is the app!</Route>
-        </Routes>
-      </Router>
+      {match(view)
+        .with("login", () => <Login setView={setView} />)
+        .with("register", () => <Register setView={setView} />)
+        .exhaustive()}
     </div>
   );
 };
