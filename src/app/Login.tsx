@@ -14,26 +14,36 @@ export const Login = () => {
         <h1>Welcome to Jot!</h1>
       </div>
       <div className="flex px-6 flex-col items-center grow justify-center gap-4">
-        <div className="px-2 py-1 gap-1 flex">
-          <p>Email:</p>
-          <input
-            name="email"
-            className="border"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="px-2 py-1 gap-1 flex">
-          <p> Password:</p>
-          <input
-            name="password"
-            className="border"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+        <form action="/LOCALHOSTTODOOOOOOOOOO" method="post">
+          <div className="px-2 py-1 gap-1 flex">
+            <label htmlFor="email">Email:</label>
+            <input
+              name="email"
+              className="border"
+              type="email"
+              id="email"
+              placeholder="John@doe.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="px-2 py-1 gap-1 flex">
+            <label htmlFor="password"> Password:</label>
+            <input
+              name="password"
+              className="border"
+              type="password"
+              id="password"
+              placeholder="******"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button onClick={() => onSubmit()} type="submit">
+            Login
+          </button>
+        </form>
       </div>
-      <button onClick={() => onSubmit()}>Login</button>
     </div>
   );
 };
