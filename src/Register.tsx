@@ -1,5 +1,13 @@
 import { useState } from "react";
 import type { LoginView } from "./App";
+import {
+  CardBody,
+  CardFooter,
+  CardHeader,
+  CardWrapper,
+  Input,
+} from "./Components";
+import { Button } from "./Components/Button";
 import { useApi } from "./useApi";
 
 export const Register = ({
@@ -31,15 +39,15 @@ export const Register = ({
   };
 
   return (
-    <div className="flex flex-col absolute h-80 ... w-1/2 ...  align-center bg-grey-100 text-sky-900/100 rounded-md border ">
-      <div className="flex bg-blue-300 rounded-t-md px-6 py-2 justify-center">
+    <CardWrapper>
+      <CardHeader>
         <h1>Welcome to Jot!</h1>
-      </div>
-      <div className="flex px-6 flex-col items-center grow justify-center gap-4">
+      </CardHeader>
+      <CardBody>
         <form>
           <div className="px-2 py-1 gap-1 flex">
             <label htmlFor="email">Name:</label>
-            <input
+            <Input
               name="name"
               className="border"
               type="name"
@@ -51,7 +59,7 @@ export const Register = ({
           </div>
           <div className="px-2 py-1 gap-1 flex">
             <label htmlFor="email">Email:</label>
-            <input
+            <Input
               name="email"
               className="border"
               type="email"
@@ -63,7 +71,7 @@ export const Register = ({
           </div>
           <div className="px-2 py-1 gap-1 flex">
             <label htmlFor="password">Password:</label>
-            <input
+            <Input
               name="password"
               className="border"
               type="password"
@@ -75,7 +83,7 @@ export const Register = ({
           </div>
           <div className="px-2 py-1 gap-1 flex">
             <label htmlFor="confirmPassword">Confirm Password:</label>
-            <input
+            <Input
               name="confirmPassword"
               className="border"
               type="password"
@@ -85,20 +93,20 @@ export const Register = ({
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
-          <button onClick={() => onSubmit()} type="button">
+          <Button onClick={() => onSubmit()} type="button">
             Register
-          </button>
+          </Button>
         </form>
-      </div>
-      <div className="flex w-full px-2 py-2 border-t gap-1 items-center">
+      </CardBody>
+      <CardFooter>
         Already have an account?
-        <button
+        <Button
           onClick={() => setView("login")}
           className="border rounded px-3"
         >
           Login here
-        </button>
-      </div>
-    </div>
+        </Button>
+      </CardFooter>
+    </CardWrapper>
   );
 };

@@ -4,15 +4,23 @@ import { Login } from "./Login";
 import { Jot } from "./Jot/Home";
 import { match } from "ts-pattern";
 import { Register } from "./Register";
-import { auth } from "./Auth";
+import { AuthProvider, useAuth } from "./Auth";
 
 export type LoginView = "login" | "register";
 
+export const Providers = () => {
+  return (
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  );
+};
+
 export const App = () => {
-  const isAuth = auth.getToken();
+  const { isAuthed } = useAuth();
   const [view, setView] = useState<LoginView>("login");
 
-  if (isAuth) return <Jot />;
+  if (isAuthed) return <Jot />;
 
   return (
     <div className="flex  h-screen w-screen justify-center items-center">
