@@ -1,3 +1,8 @@
 export const Jot = () => {
-  return <div>Home! Welcome back Jotter</div>;
+  return (
+    <div>
+      <div>Home! Welcome back Jotter</div>
+      <button>logout</button>
+    </div>
+  );
 };

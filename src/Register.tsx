@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { LoginView } from "./App";
+import { useApi } from "./useApi";
 
 export const Register = ({
   setView,
@@ -11,8 +12,22 @@ export const Register = ({
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const onSubmit = () => {
-    console.log("submit");
+  const api = useApi();
+
+  const onSubmit = async () => {
+    await api
+      .post("/register", {
+        name: name,
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+      })
+      .then((res) => {
+        console.log("success", res.data);
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
   };
 
   return (
@@ -21,7 +36,7 @@ export const Register = ({
         <h1>Welcome to Jot!</h1>
       </div>
       <div className="flex px-6 flex-col items-center grow justify-center gap-4">
-        <form action="/LOCALHOSTTODOOOOOOOOOO" method="post">
+        <form>
           <div className="px-2 py-1 gap-1 flex">
             <label htmlFor="email">Name:</label>
             <input
@@ -70,12 +85,12 @@ export const Register = ({
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
-          <button onClick={() => onSubmit()} type="submit">
+          <button onClick={() => onSubmit()} type="button">
             Register
           </button>
         </form>
       </div>
-      <div className="flex w-full px-2 py-2 border-t gap-1">
+      <div className="flex w-full px-2 py-2 border-t gap-1 items-center">
         Already have an account?
         <button
           onClick={() => setView("login")}
