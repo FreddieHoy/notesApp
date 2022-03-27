@@ -14,3 +14,9 @@ Then `brew services start` something...
 
 - ahhh ok after restarting and re-install everything I realised I was using the wrong command. I was running
   `psql postgresql` but it's `psql postgres`
+
+- check what users are installed - \du (inside postgres)
+
+...
+
+Basically all the good set up notes were here - https://blog.logrocket.com/nodejs-expressjs-postgresql-crud-rest-api-example/

@@ -1,33 +1,38 @@
 import { useState } from "react";
-import type { LoginView } from "./App";
-import { useAuth } from "./Auth";
+import type { LoginView } from "../App";
 import {
-  Button,
   CardBody,
   CardFooter,
   CardHeader,
   CardWrapper,
   Input,
-} from "./Components";
-import { useApi } from "./useApi";
+} from "../Components";
+import { Button } from "../Components/Button";
+import { useApi } from "../useApi";
 
-export const Login = ({ setView }: { setView: (val: LoginView) => void }) => {
-  const { login } = useAuth();
+export const Register = ({
+  setView,
+}: {
+  setView: (val: LoginView) => void;
+}) => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const api = useApi();
 
   const onSubmit = async () => {
     await api
-      .post("/login", {
+      .post("/register", {
+        name: name,
         email: email,
         password: password,
+        confirmPassword: confirmPassword,
       })
       .then((res) => {
-        const token = res.data.token;
-        login(token);
         console.log("success", res.data);
+        setView("login");
       })
       .catch((err) => {
         console.warn(err);
@@ -40,7 +45,19 @@ export const Login = ({ setView }: { setView: (val: LoginView) => void }) => {
         <h1>Welcome to Jot!</h1>
       </CardHeader>
       <CardBody>
-        <form className="gap-3">
+        <form>
+          <div className="px-2 py-1 gap-1 flex">
+            <label htmlFor="email">Name:</label>
+            <Input
+              name="name"
+              className="border"
+              type="name"
+              id="name"
+              placeholder="John@doe.com"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
           <div className="px-2 py-1 gap-1 flex">
             <label htmlFor="email">Email:</label>
             <Input
@@ -65,14 +82,31 @@ export const Login = ({ setView }: { setView: (val: LoginView) => void }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          <div className="px-2 py-1 gap-1 flex">
+            <label htmlFor="confirmPassword">Confirm Password:</label>
+            <Input
+              name="confirmPassword"
+              className="border"
+              type="password"
+              id="confirmPassword"
+              placeholder="******"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
           <Button onClick={() => onSubmit()} type="button">
-            Login
+            Register
           </Button>
         </form>
       </CardBody>
       <CardFooter>
-        Need an account?
-        <Button onClick={() => setView("register")}>Register here</Button>
+        Already have an account?
+        <Button
+          onClick={() => setView("login")}
+          className="border rounded px-3"
+        >
+          Login here
+        </Button>
       </CardFooter>
     </CardWrapper>
   );

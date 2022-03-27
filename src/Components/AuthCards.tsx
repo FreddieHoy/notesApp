@@ -29,7 +29,7 @@ export const CardBody = (props: HTMLAttributes<HTMLDivElement>) => {
     <div
       {...props}
       className={
-        "flex px-6 flex-col grow justify-center bg-blue-100 border-y border-sky-800"
+        "flex px-6 flex-col grow justify-center bg-blue-100 border-y border-sky-800 overflow-y-scroll"
       }
     >
       {props.children}

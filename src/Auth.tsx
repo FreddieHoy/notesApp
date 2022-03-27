@@ -1,49 +1,61 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 
-const setToken = (token: string) => {
-  localStorage.setItem("token", token);
+type UserAuth = {
+  userId?: string;
+  token?: string;
 };
 
-const getToken = () => {
-  return localStorage.getItem("token");
+const setUser = (user: UserAuth) => {
+  user.token && localStorage.setItem("token", user.token);
+  user.userId && localStorage.setItem("userId", user.userId);
 };
 
-const removeToken = () => {
+const getUser = (): UserAuth => {
+  const token = localStorage.getItem("token") || undefined;
+  const userId = localStorage.getItem("userId") || undefined;
+  return { token, userId };
+};
+
+const removeUser = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("userId");
 };
 
 export const auth = {
-  setToken,
-  getToken,
-  removeToken,
+  setUser,
+  getUser,
+  removeUser,
 };
 
 type AuthContent = {
   isAuthed: boolean;
-  login: (token: string) => void;
+  userId: string | undefined;
+  login: (token: string, userId: string) => void;
   logout: () => void;
 };
 
 const Authcontext = createContext<AuthContent>({} as any);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const loggedIn = !!getToken();
-  const [isAuthed, setIsAuthed] = useState(loggedIn);
+  const userAuth = getUser();
+  const [user, setUser] = useState<UserAuth | undefined>(userAuth);
 
-  const login = (token: string) => {
-    setToken(token);
-    return setIsAuthed(true);
+  const login = (token: string, userId: string) => {
+    const newUser = { token, userId };
+    auth.setUser(newUser);
+    return setUser(newUser);
   };
 
   const logout = () => {
-    removeToken();
-    return setIsAuthed(false);
+    auth.removeUser();
+    return setUser(undefined);
   };
 
   const value: AuthContent = {
     login,
     logout,
-    isAuthed,
+    userId: user?.userId,
+    isAuthed: !!user?.token,
   };
   return <Authcontext.Provider value={value}>{children}</Authcontext.Provider>;
 };
