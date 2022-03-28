@@ -40,6 +40,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const userAuth = getUser();
   const [user, setUser] = useState<UserAuth | undefined>(userAuth);
 
+  console.log(user);
+
   const login = (token: string, userId: string) => {
     const newUser = { token, userId };
     auth.setUser(newUser);

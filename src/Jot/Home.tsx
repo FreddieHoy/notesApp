@@ -6,21 +6,35 @@ import { Body, Footer, Header } from "../Components/StandardLayout";
 import { useApi } from "../useApi";
 import { NewNote } from "./NewNote";
 
+// need to match with BE
+type Note = { id: string; heading: string; content: string };
+
 export const Jot = () => {
   const { logout } = useAuth();
   const { token } = auth.getUser();
 
   const api = useApi();
 
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState<Note[]>([]);
   const [newIsOpen, setNewIsOpen] = useState(false);
+
+  const fetchData = async () => {
+    if (token) {
+      try {
+        const res = await api.get("/notes");
+        setNotes(res.data as Note[]);
+      } catch (e) {
+        console.log("error", e);
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       if (token) {
         try {
           const res = await api.get("/notes");
-          console.log("RESULT", res);
+          setNotes(res.data as Note[]);
         } catch (e) {
           console.log("error", e);
         }
@@ -28,7 +42,7 @@ export const Jot = () => {
     };
 
     fetchData();
-  }, [api, token]);
+  }, []);
 
   return (
     <>
@@ -38,12 +52,19 @@ export const Jot = () => {
           <Button type="button" onClick={() => setNewIsOpen(true)}>
             Add +
           </Button>
-          {newIsOpen ? "true" : "false"}
         </Header>
         <Body>
-          {notes.map((note) => {
-            return <div>note</div>;
-          })}
+          <div className="flex flex-col gap-4 ">
+            {notes.map((note) => {
+              return (
+                <div key={note.id}>
+                  <h1>{"id: " + note.id}</h1>
+                  <h2>{note.heading}</h2>
+                  <p>{note.content}</p>
+                </div>
+              );
+            })}
+          </div>
         </Body>
         <Footer>
           <Button type="button" onClick={logout}>
@@ -56,7 +77,10 @@ export const Jot = () => {
         onClose={() => setNewIsOpen(false)}
         title="Create new note"
       >
-        <NewNote refetchNotes={() => {}} />
+        <NewNote
+          refetchNotes={() => fetchData()}
+          onClose={() => setNewIsOpen(false)}
+        />
       </Dialog>
     </>
   );

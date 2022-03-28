@@ -4,7 +4,9 @@ export const Header = (props: HTMLAttributes<HTMLDivElement>) => {
   return (
     <div
       {...props}
-      className={"flex  h-40 w-full border-b border-gray-800 box-border"}
+      className={
+        "flex flex-col h-40 w-full border-b border-gray-800 box-border justify-between py-6"
+      }
     >
       {props.children}
     </div>
