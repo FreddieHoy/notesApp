@@ -31,8 +31,3 @@ export const App = () => {
     </div>
   );
 };
-
-// Big issues
-
-// Auth - currently saving to LS lol
-// sharing types with the BE

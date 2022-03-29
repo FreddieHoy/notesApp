@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { auth, useAuth } from "../Auth";
 import { Button } from "../Components/Button";
-import { Dialog } from "../Components/Modal";
-import { Body, Footer, Header } from "../Components/StandardLayout";
+import { Footer } from "./Footer";
 import { useApi } from "../useApi";
-import { NewNote } from "./NewNote";
+import { Header } from "./Header";
+import { Body } from "./Body";
+import { match } from "ts-pattern";
+import { P } from "../Components/Typography";
 
-// need to match with BE
-type Note = { id: string; heading: string; content: string };
+export type Note = { id: string; heading: string; content: string };
+
+type Theme = "light" | "dark";
 
 export const Jot = () => {
   const { logout } = useAuth();
@@ -16,16 +19,17 @@ export const Jot = () => {
   const api = useApi();
 
   const [notes, setNotes] = useState<Note[]>([]);
-  const [newIsOpen, setNewIsOpen] = useState(false);
+  const [theme, setTheme] = useState("light");
+  console.log("theme", theme);
 
-  const fetchData = async () => {
-    if (token) {
-      try {
-        const res = await api.get("/notes");
-        setNotes(res.data as Note[]);
-      } catch (e) {
-        console.log("error", e);
-      }
+  const handleToggleTheme = (theme: Theme) => {
+    console.log("toggle", theme);
+    const htmlRoot = document.getElementsByTagName("html")[0];
+
+    if (theme === "dark") {
+      htmlRoot.setAttribute("class", "dark");
+    } else {
+      htmlRoot.removeAttribute("class");
     }
   };
 
@@ -46,42 +50,28 @@ export const Jot = () => {
 
   return (
     <>
-      <div className={"flex flex-col h-screen w-screen p-8 box-border gap-3"}>
-        <Header>
-          <div>Home! Welcome back Jotter</div>
-          <Button type="button" onClick={() => setNewIsOpen(true)}>
-            Add +
-          </Button>
-        </Header>
-        <Body>
-          <div className="flex flex-col gap-4 ">
-            {notes.map((note) => {
-              return (
-                <div key={note.id}>
-                  <h1>{"id: " + note.id}</h1>
-                  <h2>{note.heading}</h2>
-                  <p>{note.content}</p>
-                </div>
-              );
-            })}
-          </div>
-        </Body>
+      <div
+        className={
+          " flex flex-col h-screen w-screen p-8 box-border gap-3 dark:bg-gray-800"
+        }
+      >
+        <Header setNotes={setNotes} />
+        <Body notes={notes} />
         <Footer>
           <Button type="button" onClick={logout}>
-            Logout
+            <P>Logout</P>
+          </Button>
+          <Button
+            type="button"
+            onClick={() => {
+              setTheme(theme === "light" ? "dark" : "light");
+              handleToggleTheme(theme === "light" ? "dark" : "light");
+            }}
+          >
+            <P>{theme === "light" ? "Dark Theme" : "Light Theme"}</P>
           </Button>
         </Footer>
       </div>
-      <Dialog
-        isOpen={newIsOpen}
-        onClose={() => setNewIsOpen(false)}
-        title="Create new note"
-      >
-        <NewNote
-          refetchNotes={() => fetchData()}
-          onClose={() => setNewIsOpen(false)}
-        />
-      </Dialog>
     </>
   );
 };

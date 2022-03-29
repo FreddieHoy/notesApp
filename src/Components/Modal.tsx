@@ -16,10 +16,10 @@ export const Dialog = ({
   return (
     <div>
       {isOpen ? (
-        <div className="absolute top-0 left-0 w-screen h-screen bg-gray-600 z-10 opacity-50 flex items-center justify-center">
+        <div className="absolute top-0 left-0 w-screen h-screen bg-gray-600/50 z-10 flex items-center justify-center">
           <CardWrapper>
             <CardHeader>
-              <h1>{title}</h1>
+              <h1 className="dark:text-white">{title}</h1>
               <Button onClick={() => onClose()}>Close</Button>
             </CardHeader>
             <CardBody>{children}</CardBody>

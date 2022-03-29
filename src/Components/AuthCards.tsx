@@ -17,7 +17,9 @@ export const CardHeader = (props: HTMLAttributes<HTMLDivElement>) => {
   return (
     <div
       {...props}
-      className={"flex bg-blue-300 rounded-t-md px-6 py-2 justify-center"}
+      className={
+        "flex bg-blue-300 rounded-t-md px-6 py-2 justify-between items-center"
+      }
     >
       {props.children}
     </div>

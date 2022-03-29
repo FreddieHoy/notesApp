@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { auth } from "../Auth";
 import { Button, Checkbox, Input, Textarea } from "../Components";
+import { P } from "../Components/Typography";
 import { useApi } from "../useApi";
 
 export const NewNote = ({
@@ -38,7 +39,9 @@ export const NewNote = ({
     <div>
       <form>
         <div className="px-2 py-1 gap-1 flex">
-          <label htmlFor="content">Header:</label>
+          <label htmlFor="content">
+            <P>Header:</P>
+          </label>
           <Input
             name="heading"
             className="border"
@@ -50,7 +53,9 @@ export const NewNote = ({
           />
         </div>
         <div className="px-2 py-1 gap-1 flex">
-          <label htmlFor="note">Note:</label>
+          <label htmlFor="note">
+            <P>Note:</P>
+          </label>
           <Textarea
             name="note"
             className="border"
@@ -61,7 +66,9 @@ export const NewNote = ({
           />
         </div>
         <div className="px-2 py-1 gap-1 flex">
-          <label htmlFor="toDo">Is to do:</label>
+          <label htmlFor="toDo">
+            <P>Is to do:</P>
+          </label>
           <Checkbox
             name="toDo"
             className="border"
@@ -72,7 +79,7 @@ export const NewNote = ({
           />
         </div>
         <Button onClick={() => onSubmit()} type="button">
-          Add
+          <P>Add +</P>
         </Button>
       </form>
     </div>
