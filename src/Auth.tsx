@@ -1,4 +1,11 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { useApi } from "./useApi";
 
 type UserAuth = {
   userId?: string;
@@ -38,9 +45,21 @@ const Authcontext = createContext<AuthContent>({} as any);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const userAuth = getUser();
+  const api = useApi();
   const [user, setUser] = useState<UserAuth | undefined>(userAuth);
 
-  console.log(user);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await api
+        .get("/notes")
+        .catch((e) => {
+          console.log("error", e);
+        })
+        .then(() => {});
+    };
+
+    fetchData();
+  }, []);
 
   const login = (token: string, userId: string) => {
     const newUser = { token, userId };

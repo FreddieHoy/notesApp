@@ -25,11 +25,12 @@ export const Login = ({ setView }: { setView: (val: LoginView) => void }) => {
         password: password,
       })
       .then((res) => {
+        console.log(res);
         const token = res.data.token;
         const userId = res.data.user.id;
 
         login(token, userId);
-        console.log("success", res.data);
+        // console.log("success", res.data);
       })
       .catch((err) => {
         console.warn(err);

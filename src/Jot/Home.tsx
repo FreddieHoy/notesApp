@@ -5,7 +5,6 @@ import { Footer } from "./Footer";
 import { useApi } from "../useApi";
 import { Header } from "./Header";
 import { Body } from "./Body";
-import { match } from "ts-pattern";
 import { P } from "../Components/Typography";
 
 export type Note = { id: string; heading: string; content: string };
@@ -20,10 +19,8 @@ export const Jot = () => {
 
   const [notes, setNotes] = useState<Note[]>([]);
   const [theme, setTheme] = useState("light");
-  console.log("theme", theme);
 
   const handleToggleTheme = (theme: Theme) => {
-    console.log("toggle", theme);
     const htmlRoot = document.getElementsByTagName("html")[0];
 
     if (theme === "dark") {
