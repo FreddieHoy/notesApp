@@ -26,11 +26,7 @@ export const Login = ({ setView }: { setView: (val: LoginView) => void }) => {
       })
       .then((res) => {
         console.log(res);
-        const token = res.data.token;
-        const userId = res.data.user.id;
-
-        login(token, userId);
-        // console.log("success", res.data);
+        login(); // refetches auth now there is an http auth token
       })
       .catch((err) => {
         console.warn(err);

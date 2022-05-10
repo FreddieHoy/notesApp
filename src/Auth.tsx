@@ -12,64 +12,47 @@ type UserAuth = {
   token?: string;
 };
 
-const setUser = (user: UserAuth) => {
-  user.token && localStorage.setItem("token", user.token);
-  user.userId && localStorage.setItem("userId", user.userId);
-};
-
-const getUser = (): UserAuth => {
-  const token = localStorage.getItem("token") || undefined;
-  const userId = localStorage.getItem("userId") || undefined;
-  return { token, userId };
-};
-
-const removeUser = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("userId");
-};
-
-export const auth = {
-  setUser,
-  getUser,
-  removeUser,
-};
-
 type AuthContent = {
   isAuthed: boolean;
   userId: string | undefined;
-  login: (token: string, userId: string) => void;
+  login: () => void;
   logout: () => void;
 };
 
 const Authcontext = createContext<AuthContent>({} as any);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const userAuth = getUser();
   const api = useApi();
-  const [user, setUser] = useState<UserAuth | undefined>(userAuth);
+  const [user, setUser] = useState<UserAuth | undefined>(undefined);
+
+  const fetchData = async () => {
+    await api
+      .get("/me")
+      .then(({ data }) => {
+        console.log("me res", data);
+        if (data) {
+          setUser(data[0]);
+        }
+      })
+      .catch((e) => {
+        console.log("error", e);
+        // window.sessionStorage.removeItem("authToken");
+        setUser(undefined);
+      });
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await api
-        .get("/notes")
-        .catch((e) => {
-          console.log("error", e);
-        })
-        .then(() => {});
-    };
-
     fetchData();
   }, []);
 
-  const login = (token: string, userId: string) => {
-    const newUser = { token, userId };
-    auth.setUser(newUser);
-    return setUser(newUser);
+  const login = () => {
+    // window.sessionStorage.setItem("authToken", token);
+    fetchData();
   };
 
   const logout = () => {
-    auth.removeUser();
-    return setUser(undefined);
+    setUser(undefined);
+    // window.sessionStorage.removeItem("authToken");
   };
 
   const value: AuthContent = {

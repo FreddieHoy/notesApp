@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { auth } from "../Auth";
+import { useAuth } from "../Auth";
 import { Button, Checkbox, Input, Textarea } from "../Components";
 import { P } from "../Components/Typography";
 import { useApi } from "../useApi";
@@ -15,7 +15,7 @@ export const NewNote = ({
   const [heading, setHeading] = useState("");
   const [note, setNote] = useState("");
   const [isToDo, setIsToDo] = useState(false);
-  const { userId } = auth.getUser();
+  const { userId } = useAuth();
 
   const onSubmit = async () => {
     await api

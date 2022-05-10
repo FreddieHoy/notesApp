@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { auth } from "../Auth";
+import { useAuth } from "../Auth";
 import { Button } from "../Components";
 import { Dialog } from "../Components/Modal";
 import { P } from "../Components/Typography";
@@ -9,11 +9,11 @@ import { NewNote } from "./NewNote";
 
 export const Header = ({ setNotes }: { setNotes: (notes: Note[]) => void }) => {
   const [newIsOpen, setNewIsOpen] = useState(false);
-  const { token } = auth.getUser();
+  const { userId } = useAuth();
   const api = useApi();
 
   const fetchData = async () => {
-    if (token) {
+    if (userId) {
       try {
         const res = await api.get("/notes");
         setNotes(res.data as Note[]);

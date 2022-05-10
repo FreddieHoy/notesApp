@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { auth, useAuth } from "../Auth";
+import { useAuth } from "../Auth";
 import { Button } from "../Components/Button";
 import { Footer } from "./Footer";
 import { useApi } from "../useApi";
@@ -13,7 +13,7 @@ type Theme = "light" | "dark";
 
 export const Jot = () => {
   const { logout } = useAuth();
-  const { token } = auth.getUser();
+  const { userId } = useAuth();
 
   const api = useApi();
 
@@ -32,7 +32,7 @@ export const Jot = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (token) {
+      if (userId) {
         try {
           const res = await api.get("/notes");
           setNotes(res.data as Note[]);
