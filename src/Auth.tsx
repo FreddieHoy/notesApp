@@ -8,7 +8,7 @@ import {
 import { useApi } from "./useApi";
 
 type UserAuth = {
-  userId?: string;
+  id?: string;
   token?: string;
 };
 
@@ -29,14 +29,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     await api
       .get("/me")
       .then(({ data }) => {
-        console.log("me res", data);
         if (data) {
           setUser(data[0]);
         }
       })
       .catch((e) => {
         console.log("error", e);
-        // window.sessionStorage.removeItem("authToken");
         setUser(undefined);
       });
   };
@@ -46,19 +44,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = () => {
-    // window.sessionStorage.setItem("authToken", token);
     fetchData();
   };
 
   const logout = () => {
     setUser(undefined);
-    // window.sessionStorage.removeItem("authToken");
   };
 
   const value: AuthContent = {
     login,
     logout,
-    userId: user?.userId,
+    userId: user?.id,
     isAuthed: !!user?.token,
   };
   return <Authcontext.Provider value={value}>{children}</Authcontext.Provider>;

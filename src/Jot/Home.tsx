@@ -37,13 +37,26 @@ export const Jot = () => {
           const res = await api.get("/notes");
           setNotes(res.data as Note[]);
         } catch (e) {
-          console.log("error", e);
+          console.error("notes error", e);
         }
       }
     };
 
     fetchData();
-  }, []);
+  }, [api, userId]);
+
+  const handleLogout = async () => {
+    await api
+      .post("/logout", {
+        userId: userId,
+      })
+      .catch((e) => {
+        console.error("Failed to log out: ", e);
+      })
+      .then(() => {
+        logout();
+      });
+  };
 
   return (
     <>
@@ -55,7 +68,7 @@ export const Jot = () => {
         <Header setNotes={setNotes} />
         <Body notes={notes} />
         <Footer>
-          <Button type="button" onClick={logout}>
+          <Button type="button" onClick={() => handleLogout()}>
             <P>Logout</P>
           </Button>
           <Button
