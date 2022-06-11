@@ -18,18 +18,16 @@ export const EditNote = ({
   const [heading, setHeading] = useState(note.heading);
   const [content, setContent] = useState(note.content);
   const [isToDo, setIsToDo] = useState(note.todoitem);
-  const { me } = useAuth();
-  const userId = me?.id;
 
   const onSubmit = async () => {
     await api
-      .put("/notes", {
-        userId,
+      .put(`/notes/${note.id}`, {
+        id: note.id,
         heading,
         content,
         toDoItem: isToDo,
       })
-      .then((res) => {
+      .then(() => {
         refetchNotes();
         onClose();
       })
