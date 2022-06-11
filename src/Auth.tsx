@@ -10,11 +10,13 @@ import { useApi } from "./useApi";
 type UserAuth = {
   id?: string;
   token?: string;
+  name?: string;
+  email?: string;
 };
 
 type AuthContent = {
   isAuthed: boolean;
-  userId: string | undefined;
+  me: UserAuth | undefined;
   login: () => void;
   logout: () => void;
 };
@@ -54,7 +56,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const value: AuthContent = {
     login,
     logout,
-    userId: user?.id,
+    me: user,
     isAuthed: !!user?.token,
   };
   return <Authcontext.Provider value={value}>{children}</Authcontext.Provider>;

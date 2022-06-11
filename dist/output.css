@@ -535,6 +535,22 @@ Ensure the default browser behavior of the `hidden` attribute.
   min-width: min-content;
 }
 
+.min-w-\[500px\] {
+  min-width: 500px;
+}
+
+.min-w-\[400px\] {
+  min-width: 400px;
+}
+
+.min-w-\[200px\] {
+  min-width: 200px;
+}
+
+.min-w-\[300px\] {
+  min-width: 300px;
+}
+
 .max-w-fit {
   max-width: -webkit-fit-content;
   max-width: -moz-fit-content;
@@ -720,8 +736,40 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-bottom: 0.5rem;
 }
 
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.pb-6 {
+  padding-bottom: 1.5rem;
+}
+
+.pl-6 {
+  padding-left: 1.5rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.text-9xl {
+  font-size: 8rem;
+  line-height: 1;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
 .text-sky-900\/100 {
   color: rgb(12 74 110 / 1);
+}
+
+.hover\:cursor-pointer:hover {
+  cursor: pointer;
 }
 
 .hover\:bg-gray-200:hover {

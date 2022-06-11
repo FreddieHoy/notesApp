@@ -7,13 +7,19 @@ import { Header } from "./Header";
 import { Body } from "./Body";
 import { P } from "../Components/Typography";
 
-export type Note = { id: string; heading: string; content: string };
+export type Note = {
+  id: string;
+  heading: string;
+  content: string;
+  todoitem: boolean;
+};
 
 type Theme = "light" | "dark";
 
 export const Jot = () => {
   const { logout } = useAuth();
-  const { userId } = useAuth();
+  const { me } = useAuth();
+  const userId = me?.id;
 
   const api = useApi();
 
@@ -43,7 +49,9 @@ export const Jot = () => {
     };
 
     fetchData();
-  }, [api, userId]);
+    // api, dep is removed to prevent endless rerender
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
 
   const handleLogout = async () => {
     await api
@@ -58,6 +66,17 @@ export const Jot = () => {
       });
   };
 
+  const refetchNotes = async () => {
+    if (userId) {
+      try {
+        const res = await api.get("/notes");
+        setNotes(res.data as Note[]);
+      } catch (e) {
+        console.log("error", e);
+      }
+    }
+  };
+
   return (
     <>
       <div
@@ -65,8 +84,8 @@ export const Jot = () => {
           " flex flex-col h-screen w-screen p-8 box-border gap-3 dark:bg-gray-800"
         }
       >
-        <Header setNotes={setNotes} />
-        <Body notes={notes} />
+        <Header refetchNotes={refetchNotes} />
+        <Body notes={notes} refetchNotes={refetchNotes} />
         <Footer>
           <Button type="button" onClick={() => handleLogout()}>
             <P>Logout</P>

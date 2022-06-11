@@ -3,32 +3,34 @@ import { useAuth } from "../Auth";
 import { Button, Checkbox, Input, Textarea } from "../Components";
 import { P } from "../Components/Typography";
 import { useApi } from "../useApi";
+import { Note } from "./Home";
 
-export const NewNote = ({
+export const EditNote = ({
   refetchNotes,
   onClose,
+  note,
 }: {
   refetchNotes: () => void;
   onClose: () => void;
+  note: Note;
 }) => {
   const api = useApi();
-  const [heading, setHeading] = useState("");
-  const [note, setNote] = useState("");
-  const [isToDo, setIsToDo] = useState(false);
+  const [heading, setHeading] = useState(note.heading);
+  const [content, setContent] = useState(note.content);
+  const [isToDo, setIsToDo] = useState(note.todoitem);
   const { me } = useAuth();
   const userId = me?.id;
 
   const onSubmit = async () => {
     await api
-      .post("/notes", {
+      .put("/notes", {
         userId,
         heading,
-        content: note,
+        content,
         toDoItem: isToDo,
       })
       .then((res) => {
         refetchNotes();
-        console.log("success", res.data);
         onClose();
       })
       .catch((err) => {
@@ -62,8 +64,8 @@ export const NewNote = ({
             className="border"
             id="note"
             placeholder="I will need..."
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
           />
         </div>
         <div className="px-2 py-1 gap-1 flex">
@@ -80,7 +82,7 @@ export const NewNote = ({
           />
         </div>
         <Button onClick={() => onSubmit()} type="button">
-          <P>Add +</P>
+          <P>Save</P>
         </Button>
       </form>
     </div>
