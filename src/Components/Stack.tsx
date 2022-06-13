@@ -58,25 +58,31 @@ export const Stack = ({
   vertical,
   wrap,
 }: StackProps) => {
+  const inlineStyles: React.CSSProperties = {
+    gap,
+    maxHeight,
+    maxWidth,
+    padding,
+    justifyContent: justify,
+  };
+
   return (
     <div
       className={`
-      ${maxWidth ? `max-w-[${maxWidth}]` : ""} 
-      ${maxHeight ? `max-h-[${maxHeight}]` : ""} 
-      ${padding ? `p-[${padding}]` : ""}
-      ${gap ? `gap-${gap}` : ""}
-      items-[${align}]
-      basis-${basis}
-      border-b-${borderBottom || "0"}
+      // items-[${align}]
+      // ${inline ? "inline-" : ""}flex
+      // h-[${fixedHeight || "auto"}]
+      // basis-${basis}
+      // border-b-${borderBottom || "0"}
+
+
       border-grey
-      h-[${fixedHeight || "auto"}]
       ${convertGrow(grow)}
-      ${inline ? "inline-" : ""}flex
-      justify-${justify}
       ${getFlexDirection(!!vertical, !!reverse)}
       ${shrink ? "shrink" : ""}
       ${wrap || "no-wrap"}
     `}
+      style={inlineStyles}
     >
       {children}
     </div>
@@ -85,7 +91,7 @@ export const Stack = ({
 
 const convertGrow = (growProp: StackProps["grow"]): string => {
   if (typeof growProp === "number") {
-    return `grow-[${growProp}]`;
+    return `grow-[${growProp}]`; // This won't work
   }
 
   switch (growProp) {

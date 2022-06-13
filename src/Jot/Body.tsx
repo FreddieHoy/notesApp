@@ -17,7 +17,7 @@ export const Body = ({
   return (
     <>
       with Stack comp
-      <Stack gap={"10"}>
+      <Stack gap={10}>
         {notes.map((note) => {
           return (
             <Card key={note.id} onClick={() => setEditId(note.id)}>
@@ -28,7 +28,7 @@ export const Body = ({
         })}
       </Stack>
       without Stack comp
-      <div className="flex-col gap-4">
+      <div className="flex gap-2">
         {notes.map((note) => {
           return (
             <Card key={note.id} onClick={() => setEditId(note.id)}>
