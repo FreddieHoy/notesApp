@@ -1,5 +1,6 @@
 import { ReactNode, useState } from "react";
 import { Dialog } from "../Components/Modal";
+import { Stack } from "../Components/Stack";
 import { H1, P } from "../Components/Typography";
 import { EditNote } from "./EditNote";
 import { Note } from "./Home";
@@ -15,11 +16,19 @@ export const Body = ({
   const editNote = notes.find((note) => note.id === editId);
   return (
     <>
-      <div
-        className={
-          "flex flex-grow flex-wrap gap-4  w-full box-border overflow-hidden "
-        }
-      >
+      with Stack comp
+      <Stack gap={"10"}>
+        {notes.map((note) => {
+          return (
+            <Card key={note.id} onClick={() => setEditId(note.id)}>
+              <H1>{`${note.heading} (id:${note.id})`}</H1>
+              <P>{note.content}</P>
+            </Card>
+          );
+        })}
+      </Stack>
+      without Stack comp
+      <div className="flex-col gap-4">
         {notes.map((note) => {
           return (
             <Card key={note.id} onClick={() => setEditId(note.id)}>

@@ -466,8 +466,46 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-backdrop-sepia:  ;
 }
 
+.container {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
 .absolute {
   position: absolute;
+}
+
+.relative {
+  position: relative;
 }
 
 .top-0 {
@@ -488,6 +526,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .box-border {
   box-sizing: border-box;
+}
+
+.inline {
+  display: inline;
 }
 
 .flex {
@@ -516,6 +558,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .max-h-40 {
   max-height: 10rem;
+}
+
+.max-h-\[\$\{props\.maxHeight\}\] {
+  max-height: ${props.maxHeight};
+}
+
+.max-h-\[\$\{maxHeight\}\] {
+  max-height: ${maxHeight};
 }
 
 .w-screen {
@@ -561,6 +611,18 @@ Ensure the default browser behavior of the `hidden` attribute.
   max-width: 24rem;
 }
 
+.max-w-\[\$\{props\.maxWidth\}\] {
+  max-width: ${props.maxWidth};
+}
+
+.max-w-\[\$\{maxWidth\}\] {
+  max-width: ${maxWidth};
+}
+
+.shrink {
+  flex-shrink: 1;
+}
+
 .flex-grow {
   flex-grow: 1;
 }
@@ -569,8 +631,28 @@ Ensure the default browser behavior of the `hidden` attribute.
   flex-grow: 1;
 }
 
+.grow-\[\$\{grow\}\] {
+  flex-grow: ${grow};
+}
+
+.grow-\[\$\{growProp\}\] {
+  flex-grow: ${growProp};
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
 .flex-col {
   flex-direction: column;
+}
+
+.flex-col-reverse {
+  flex-direction: column-reverse;
 }
 
 .flex-wrap {
@@ -603,6 +685,22 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .gap-4 {
   gap: 1rem;
+}
+
+.gap-\[\$\{gap\}\] {
+  gap: ${gap};
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-10 {
+  gap: 2.5rem;
+}
+
+.gap-5 {
+  gap: 1.25rem;
 }
 
 .overflow-hidden {
@@ -709,6 +807,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .p-8 {
   padding: 2rem;
+}
+
+.p-\[\$\{\}\] {
+  padding: ${};
+}
+
+.p-\[\$\{padding\}\] {
+  padding: ${padding};
 }
 
 .px-2 {
