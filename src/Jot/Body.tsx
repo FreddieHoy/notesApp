@@ -39,6 +39,17 @@ export const Body = ({
     e.stopPropagation();
   };
 
+  const handleDeleteNote = async (noteId: string) => {
+    await api
+      .delete(`/notes/${noteId}`)
+      .then(() => {
+        refetchNotes();
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+  };
+
   return (
     <Stack vertical grow style={{ width: "100%" }}>
       <Stack gap={10} wrap="wrap">
@@ -62,6 +73,7 @@ export const Body = ({
                 <P>{note.content}</P>
               </Card>
               <Button onClick={() => setEditId(note.id)}>✏️</Button>
+              <Button onClick={() => handleDeleteNote(note.id)}>🗑</Button>
             </Stack>
           );
         })}
