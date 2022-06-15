@@ -1,4 +1,5 @@
-import { ReactNode, useState } from "react";
+import React, { ReactNode, useState } from "react";
+import { Checkbox } from "../Components";
 import { Dialog } from "../Components/Modal";
 import { Stack } from "../Components/Stack";
 import { H1, P } from "../Components/Typography";
@@ -14,30 +15,32 @@ export const Body = ({
 }) => {
   const [editId, setEditId] = useState<string>();
   const editNote = notes.find((note) => note.id === editId);
+
+  const handleCheck = (
+    e: React.MouseEvent<HTMLInputElement, MouseEvent>,
+    noteId: string
+  ) => {
+    e.stopPropagation();
+  };
+
   return (
-    <>
-      with Stack comp
-      <Stack gap={10}>
+    <Stack vertical grow style={{ width: "100%" }}>
+      <Stack gap={10} wrap="wrap">
         {notes.map((note) => {
           return (
             <Card key={note.id} onClick={() => setEditId(note.id)}>
-              <H1>{`${note.heading} (id:${note.id})`}</H1>
+              <Stack gap={6} justify="space-between" style={{ width: "100%" }}>
+                <H1>{`${note.heading} (id:${note.id})`}</H1>
+                {note.todoitem && (
+                  <Checkbox onClick={(e) => handleCheck(e, note.id)} />
+                )}
+              </Stack>
               <P>{note.content}</P>
             </Card>
           );
         })}
       </Stack>
-      without Stack comp
-      <div className="flex gap-2">
-        {notes.map((note) => {
-          return (
-            <Card key={note.id} onClick={() => setEditId(note.id)}>
-              <H1>{`${note.heading} (id:${note.id})`}</H1>
-              <P>{note.content}</P>
-            </Card>
-          );
-        })}
-      </div>
+
       {editNote && (
         <Dialog
           isOpen={!!editId}
@@ -51,7 +54,7 @@ export const Body = ({
           />
         </Dialog>
       )}
-    </>
+    </Stack>
   );
 };
 

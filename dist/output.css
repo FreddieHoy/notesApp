@@ -490,10 +490,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   box-sizing: border-box;
 }
 
-.inline {
-  display: inline;
-}
-
 .flex {
   display: flex;
 }
@@ -512,10 +508,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .h-20 {
   height: 5rem;
-}
-
-.max-h-\[\$\{maxHeight\}\] {
-  max-height: ${maxHeight};
 }
 
 .max-h-40 {
@@ -542,10 +534,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   max-width: -webkit-fit-content;
   max-width: -moz-fit-content;
   max-width: fit-content;
-}
-
-.max-w-\[\$\{maxWidth\}\] {
-  max-width: ${maxWidth};
 }
 
 .max-w-sm {
@@ -602,14 +590,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .gap-1 {
   gap: 0.25rem;
-}
-
-.gap-4 {
-  gap: 1rem;
-}
-
-.gap-2 {
-  gap: 0.5rem;
 }
 
 .overflow-y-scroll {
@@ -700,10 +680,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .bg-none {
   background-image: none;
-}
-
-.p-\[\$\{padding\}\] {
-  padding: ${padding};
 }
 
 .p-3 {

@@ -38,6 +38,7 @@ export interface StackProps {
 
   basis?: string;
   children: ReactNode;
+  style?: React.CSSProperties;
 }
 
 export const Stack = ({
@@ -51,12 +52,12 @@ export const Stack = ({
   borderBottom,
   fixedHeight,
   grow,
-  inline,
   justify,
   reverse,
   shrink,
   vertical,
   wrap,
+  style,
 }: StackProps) => {
   const inlineStyles: React.CSSProperties = {
     gap,
@@ -64,23 +65,21 @@ export const Stack = ({
     maxWidth,
     padding,
     justifyContent: justify,
+    alignItems: align,
+    height: fixedHeight,
+    flexBasis: basis,
+    borderBottom: borderBottom ? "1px solid grey" : "0",
+    flexWrap: wrap,
+    ...style,
   };
 
   return (
     <div
       className={`
-      // items-[${align}]
-      // ${inline ? "inline-" : ""}flex
-      // h-[${fixedHeight || "auto"}]
-      // basis-${basis}
-      // border-b-${borderBottom || "0"}
-
-
-      border-grey
+      flex
       ${convertGrow(grow)}
       ${getFlexDirection(!!vertical, !!reverse)}
       ${shrink ? "shrink" : ""}
-      ${wrap || "no-wrap"}
     `}
       style={inlineStyles}
     >

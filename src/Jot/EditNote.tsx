@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useAuth } from "../Auth";
 import { Button, Checkbox, Input, Textarea } from "../Components";
 import { P } from "../Components/Typography";
 import { useApi } from "../useApi";
