@@ -12,6 +12,7 @@ export type Note = {
   heading: string;
   content: string;
   todoitem: boolean;
+  checked: boolean;
 };
 
 type Theme = "light" | "dark";

@@ -24,7 +24,7 @@ export const NewNote = ({
         userId,
         heading,
         content: note,
-        toDoItem: isToDo,
+        todoitem: isToDo,
       })
       .then((res) => {
         refetchNotes();

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { match } from "ts-pattern";
-export interface StackProps {
+export type StackProps = {
   maxWidth?: number | string;
 
   maxHeight?: number | string;
@@ -39,7 +39,7 @@ export interface StackProps {
   basis?: string;
   children: ReactNode;
   style?: React.CSSProperties;
-}
+} & React.HTMLAttributes<HTMLDivElement>;
 
 export const Stack = ({
   children,

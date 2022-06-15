@@ -1,8 +1,9 @@
 import React, { ReactNode, useState } from "react";
-import { Checkbox } from "../Components";
+import { Button, Checkbox } from "../Components";
 import { Dialog } from "../Components/Modal";
 import { Stack } from "../Components/Stack";
 import { H1, P } from "../Components/Typography";
+import { useApi } from "../useApi";
 import { EditNote } from "./EditNote";
 import { Note } from "./Home";
 
@@ -13,13 +14,28 @@ export const Body = ({
   notes: Note[];
   refetchNotes: () => void;
 }) => {
+  const api = useApi();
   const [editId, setEditId] = useState<string>();
   const editNote = notes.find((note) => note.id === editId);
 
-  const handleCheck = (
-    e: React.MouseEvent<HTMLInputElement, MouseEvent>,
+  const handleCheck = async (
+    e: React.ChangeEvent<HTMLInputElement>,
     noteId: string
   ) => {
+    const editNote = notes.find((note) => noteId === note.id);
+    if (editNote) {
+      await api
+        .put(`/notes/${editNote.id}`, {
+          ...editNote,
+          checked: !editNote.checked,
+        })
+        .then(() => {
+          refetchNotes();
+        })
+        .catch((err) => {
+          console.warn(err);
+        });
+    }
     e.stopPropagation();
   };
 
@@ -28,15 +44,25 @@ export const Body = ({
       <Stack gap={10} wrap="wrap">
         {notes.map((note) => {
           return (
-            <Card key={note.id} onClick={() => setEditId(note.id)}>
-              <Stack gap={6} justify="space-between" style={{ width: "100%" }}>
-                <H1>{`${note.heading} (id:${note.id})`}</H1>
-                {note.todoitem && (
-                  <Checkbox onClick={(e) => handleCheck(e, note.id)} />
-                )}
-              </Stack>
-              <P>{note.content}</P>
-            </Card>
+            <Stack>
+              <Card key={note.id}>
+                <Stack
+                  gap={6}
+                  justify="space-between"
+                  style={{ width: "100%" }}
+                >
+                  <H1>{`${note.heading} (id:${note.id})`}</H1>
+                  {note.todoitem && (
+                    <Checkbox
+                      checked={note.checked}
+                      onChange={(e) => handleCheck(e, note.id)}
+                    />
+                  )}
+                </Stack>
+                <P>{note.content}</P>
+              </Card>
+              <Button onClick={() => setEditId(note.id)}>✏️</Button>
+            </Stack>
           );
         })}
       </Stack>
@@ -63,7 +89,7 @@ const Card = ({
   onClick,
 }: {
   children: ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
 }) => {
   return (
     <div
