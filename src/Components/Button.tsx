@@ -1,14 +1,57 @@
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, forwardRef, Ref } from "react";
 
-export const Button = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
-  return (
-    <button
-      {...props}
-      className={
-        "border border-gray-600 rounded-1 px-3 bg-gray-100 m-2 rounded-lg hover:bg-gray-200 active:bg-gray-100 h-8 flex items-center justify-items-center max-w-fit dark:bg-gray-800 dark:hover:bg-gray-600 dark:border-gray-300 dark:color-white"
-      }
-    >
-      {props.children}
-    </button>
-  );
+const classes = {
+  base: "border-0 focus:outline-none rounded text-lg",
+  size: {
+    small: "py-2 px-8 text-sm",
+    medium: "py-2 px-8 text-base",
+    large: "py-2 px-8 text-lg",
+  },
+  intent: {
+    primary: "text-white bg-indigo-500 hover:bg-indigo-600",
+    secondary: "bg-indigo-100 text-black hover:bg-indigo-200",
+  },
 };
+
+type ButtonProps = {
+  size?: "small" | "medium" | "large";
+  intent?: "primary" | "secondary";
+} & ButtonHTMLAttributes<HTMLButtonElement>;
+
+export const Button = forwardRef(
+  (
+    {
+      children,
+      type = "button",
+      className,
+      size = "large",
+      disabled = false,
+      intent = "primary",
+      ...props
+    }: ButtonProps,
+    ref: Ref<HTMLButtonElement>
+  ) => (
+    <button
+      ref={ref}
+      disabled={disabled}
+      type={type}
+      className={cls(`
+        ${classes.base}
+        ${classes.size[size]}
+        ${classes.intent[intent]}
+        ${className}
+      `)}
+      {...props}
+    >
+      {children}
+    </button>
+  )
+);
+
+export const cls = (input: string) =>
+  input
+    .replace(/\s+/gm, " ")
+    .split(" ")
+    .filter((cond) => typeof cond === "string")
+    .join(" ")
+    .trim();
