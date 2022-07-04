@@ -1,12 +1,6 @@
 import { useState } from "react";
 import type { LoginView } from "../App";
-import {
-  CardBody,
-  CardFooter,
-  CardHeader,
-  CardWrapper,
-  Input,
-} from "../Components";
+import { Input } from "../Components";
 import { Button } from "../Components/Button";
 import { useApi } from "../useApi";
 
@@ -40,74 +34,82 @@ export const Register = ({
   };
 
   return (
-    <CardWrapper>
-      <CardHeader>
-        <h1>Welcome to Jot!</h1>
-      </CardHeader>
-      <CardBody>
-        <form>
-          <div className="px-2 py-1 gap-1 flex">
-            <label htmlFor="email">Name:</label>
-            <Input
-              name="name"
-              className="border"
-              type="name"
-              id="name"
-              placeholder="John@doe.com"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <div className="px-2 py-1 gap-1 flex">
-            <label htmlFor="email">Email:</label>
-            <Input
-              name="email"
-              className="border"
-              type="email"
-              id="email"
-              placeholder="John@doe.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="px-2 py-1 gap-1 flex">
-            <label htmlFor="password">Password:</label>
-            <Input
-              name="password"
-              className="border"
-              type="password"
-              id="password"
-              placeholder="******"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="px-2 py-1 gap-1 flex">
-            <label htmlFor="confirmPassword">Confirm Password:</label>
-            <Input
-              name="confirmPassword"
-              className="border"
-              type="password"
-              id="confirmPassword"
-              placeholder="******"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </div>
-          <Button onClick={() => onSubmit()} type="button">
-            Register
-          </Button>
-        </form>
-      </CardBody>
-      <CardFooter>
-        Already have an account?
+    <section className="text-gray-600 body-font">
+      <div className="bg-gray-100 rounded-lg p-8 flex flex-col">
+        <h2 className="text-gray-900 text-lg font-medium title-font mb-5">
+          Register
+        </h2>
+        <div className="relative mb-4">
+          <label htmlFor="name" className="leading-7 text-sm text-gray-600">
+            Name
+          </label>
+          <Input
+            name="name"
+            className="border"
+            type="name"
+            id="name"
+            placeholder="John@doe.com"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className="relative mb-4">
+          <label htmlFor="email" className="leading-7 text-sm text-gray-600">
+            Email
+          </label>
+          <Input
+            name="email"
+            className="border"
+            type="email"
+            id="email"
+            placeholder="John@doe.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="relative mb-4">
+          <label htmlFor="password" className="leading-7 text-sm text-gray-600">
+            Password
+          </label>
+          <Input
+            name="password"
+            className="border"
+            type="password"
+            id="password"
+            placeholder="******"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="relative mb-4">
+          <label
+            htmlFor="confirmPassword"
+            className="leading-7 text-sm text-gray-600"
+          >
+            Confirm Password
+          </label>
+          <Input
+            name="confirmPassword"
+            className="border"
+            type="password"
+            id="confirmPassword"
+            placeholder="******"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </div>
+        <Button onClick={() => onSubmit()} type="button">
+          Register
+        </Button>
+        <p className="text-xs text-gray-500 mt-3">Already have an account?</p>
         <Button
           onClick={() => setView("login")}
-          className="border rounded px-3"
+          intent={"secondary"}
+          size="small"
         >
           Login here
         </Button>
-      </CardFooter>
-    </CardWrapper>
+      </div>
+    </section>
   );
 };
