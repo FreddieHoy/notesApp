@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Checkbox } from "../Components";
-import { Dialog } from "../Components/Modal";
+import { Overlay } from "../Components/Modal";
 import { Stack } from "../Components/Stack";
 import { H1, P } from "../Components/Typography";
 import { useApi } from "../useApi";
@@ -77,17 +77,13 @@ export const Body = ({
       </Stack>
 
       {editNote && (
-        <Dialog
-          isOpen={!!editId}
-          onClose={() => setEditId(undefined)}
-          title={`Edit note ${editNote.heading}`}
-        >
+        <Overlay isOpen={!!editId}>
           <EditNote
             note={editNote}
             refetchNotes={refetchNotes}
             onClose={() => setEditId(undefined)}
           />
-        </Dialog>
+        </Overlay>
       )}
     </Stack>
   );
