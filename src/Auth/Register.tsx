@@ -106,6 +106,7 @@ export const Register = ({
           onClick={() => setView("login")}
           intent={"secondary"}
           size="small"
+          fullWidth
         >
           Login here
         </Button>

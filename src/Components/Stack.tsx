@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { match } from "ts-pattern";
+import { cls } from "./Button";
 export type StackProps = {
   maxWidth?: number | string;
 
@@ -39,6 +40,7 @@ export type StackProps = {
   basis?: string;
   children: ReactNode;
   style?: React.CSSProperties;
+  className?: string;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 export const Stack = ({
@@ -58,6 +60,7 @@ export const Stack = ({
   vertical,
   wrap,
   style,
+  className,
 }: StackProps) => {
   const inlineStyles: React.CSSProperties = {
     gap,
@@ -75,12 +78,13 @@ export const Stack = ({
 
   return (
     <div
-      className={`
+      className={cls(`
       flex
       ${convertGrow(grow)}
       ${getFlexDirection(!!vertical, !!reverse)}
       ${shrink ? "shrink" : ""}
-    `}
+      ${className ?? ""}
+    `)}
       style={inlineStyles}
     >
       {children}

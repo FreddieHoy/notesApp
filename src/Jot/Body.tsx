@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { useState } from "react";
 import { Button, Checkbox } from "../Components";
 import { Dialog } from "../Components/Modal";
 import { Stack } from "../Components/Stack";
@@ -14,69 +14,67 @@ export const Body = ({
   notes: Note[];
   refetchNotes: () => void;
 }) => {
-  const api = useApi();
   const [editId, setEditId] = useState<string>();
   const editNote = notes.find((note) => note.id === editId);
 
-  const handleCheck = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-    noteId: string
-  ) => {
-    const editNote = notes.find((note) => noteId === note.id);
-    if (editNote) {
-      await api
-        .put(`/notes/${editNote.id}`, {
-          ...editNote,
-          checked: !editNote.checked,
-        })
-        .then(() => {
-          refetchNotes();
-        })
-        .catch((err) => {
-          console.warn(err);
-        });
-    }
-    e.stopPropagation();
-  };
-
-  const handleDeleteNote = async (noteId: string) => {
-    await api
-      .delete(`/notes/${noteId}`)
-      .then(() => {
-        refetchNotes();
-      })
-      .catch((err) => {
-        console.warn(err);
-      });
-  };
+  const readNotes = notes.filter((note) => !note.todoitem);
+  const incompleteItems = notes.filter(
+    (note) => note.todoitem && !note.checked
+  );
+  const completedItems = notes.filter((note) => note.todoitem && note.checked);
 
   return (
-    <Stack vertical grow style={{ width: "100%" }}>
-      <Stack gap={10} wrap="wrap">
-        {notes.map((note) => {
-          return (
-            <Stack>
-              <Card key={note.id}>
-                <Stack
-                  gap={6}
-                  justify="space-between"
-                  style={{ width: "100%" }}
-                >
-                  <H1>{`${note.heading} (id:${note.id})`}</H1>
-                  {note.todoitem && (
-                    <Checkbox
-                      checked={note.checked}
-                      onChange={(e) => handleCheck(e, note.id)}
-                    />
-                  )}
+    <Stack vertical grow className="w-full h-full">
+      <Stack gap={10} vertical className="w-full h-full">
+        <Stack gap={10} className="w-full h-2/3">
+          <Stack gap={10} vertical className="w-1/2">
+            <H1 underline="fail">Incomplete</H1>
+            {incompleteItems.map((note) => {
+              return (
+                <Stack gap={6} align="center">
+                  <Card
+                    key={note.id}
+                    note={note}
+                    refetchNotes={refetchNotes}
+                    setEditId={setEditId}
+                  />
                 </Stack>
-                <P>{note.content}</P>
-              </Card>
-              <Button onClick={() => setEditId(note.id)}>✏️</Button>
-              <Button onClick={() => handleDeleteNote(note.id)}>🗑</Button>
-            </Stack>
-          );
-        })}
+              );
+            })}
+          </Stack>
+          <Stack gap={10} vertical className="w-1/2">
+            <H1 underline="success">Complete</H1>
+            {completedItems.map((note) => {
+              return (
+                <Stack gap={6} align="center">
+                  <Card
+                    key={note.id}
+                    note={note}
+                    refetchNotes={refetchNotes}
+                    setEditId={setEditId}
+                  />
+                </Stack>
+              );
+            })}
+          </Stack>
+        </Stack>
+        <Stack gap={10} vertical className="h-1/3">
+          <H1 underline="primary">Notes</H1>
+          <Stack gap={10}>
+            {readNotes.map((note) => {
+              return (
+                <Stack gap={6} align="center">
+                  <Card
+                    key={note.id}
+                    note={note}
+                    refetchNotes={refetchNotes}
+                    setEditId={setEditId}
+                  />
+                </Stack>
+              );
+            })}
+          </Stack>
+        </Stack>
       </Stack>
 
       {editNote && (
@@ -97,20 +95,87 @@ export const Body = ({
 };
 
 const Card = ({
-  children,
+  note,
   onClick,
+  refetchNotes,
+  setEditId,
 }: {
-  children: ReactNode;
   onClick?: () => void;
+  note: Note;
+  refetchNotes: () => void;
+  setEditId: (val: string) => void;
 }) => {
+  const [hover, setHover] = useState(false);
+  const api = useApi();
+
+  const handleCheck = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    noteId: string
+  ) => {
+    await api
+      .put(`/notes/${note.id}`, {
+        ...note,
+        checked: !note.checked,
+      })
+      .then(() => {
+        refetchNotes();
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+    e.stopPropagation();
+  };
+
+  const handleDeleteNote = async (noteId: string) => {
+    await api
+      .delete(`/notes/${noteId}`)
+      .then(() => {
+        refetchNotes();
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+  };
   return (
     <div
       className={
-        "max-w-sm min-w-[300px] bg-cyan-100 rounded-md p-3 max-h-40 hover:cursor-pointer"
+        "max-w-sm w-[400px] bg-gray-100 dark:bg-indigo-600 rounded-md p-3 max-h-40 hover:cursor-pointer"
       }
       onClick={onClick}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
     >
-      {children}
+      <Stack gap={6} justify="space-between" className="w-full h-[40px]">
+        <H1>{`${note.heading}`}</H1>
+        <Stack gap={6}>
+          {hover && (
+            <Stack gap={6}>
+              {/* <P>{`id:${note.id}`}</P> */}
+              <Button
+                intent="secondary"
+                size="small"
+                onClick={() => setEditId(note.id)}
+              >
+                ✏️
+              </Button>
+              <Button
+                intent="secondary"
+                size="small"
+                onClick={() => handleDeleteNote(note.id)}
+              >
+                🗑
+              </Button>
+            </Stack>
+          )}
+          {note.todoitem && (
+            <Checkbox
+              checked={note.checked}
+              onChange={(e) => handleCheck(e, note.id)}
+            />
+          )}
+        </Stack>
+      </Stack>
+      <P>{note.content}</P>
     </div>
   );
 };

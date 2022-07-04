@@ -1,15 +1,16 @@
 import { ButtonHTMLAttributes, forwardRef, Ref } from "react";
 
 const classes = {
-  base: "flex border-0 focus:outline-none rounded text-lg justify-center items-center",
+  base: "flex border-0 focus:outline-none rounded text-lg justify-center items-center h-fit",
   size: {
     small: "py-2 px-4 text-sm",
-    medium: "py-2 px-8 text-base",
+    medium: "py-2 px-6 text-base",
     large: "py-2 px-8 text-lg",
   },
   intent: {
     primary: "text-white bg-indigo-500 hover:bg-indigo-600",
     secondary: "bg-indigo-100 text-black hover:bg-indigo-200",
+    minimal: "hover:text-indigo-600 px-0 py-0",
   },
   width: {
     fit: "w-fit",
@@ -19,7 +20,7 @@ const classes = {
 
 type ButtonProps = {
   size?: "small" | "medium" | "large";
-  intent?: "primary" | "secondary";
+  intent?: "primary" | "secondary" | "minimal";
   fullWidth?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -29,7 +30,7 @@ export const Button = forwardRef(
       children,
       type = "button",
       className,
-      size = "large",
+      size = "medium",
       disabled = false,
       intent = "primary",
       fullWidth = false,

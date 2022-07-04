@@ -79,6 +79,7 @@ export const Login = ({ setView }: { setView: (val: LoginView) => void }) => {
             onClick={() => setView("register")}
             intent="secondary"
             size="small"
+            fullWidth
           >
             Register here
           </Button>
