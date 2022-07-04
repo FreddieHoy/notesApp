@@ -26,8 +26,8 @@ export const EditNote = ({
         content,
         todoitem: isToDo,
       })
-      .then(() => {
-        refetchNotes();
+      .then(async () => {
+        await refetchNotes();
         onClose();
       })
       .catch((err) => {

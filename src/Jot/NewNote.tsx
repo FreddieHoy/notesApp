@@ -26,9 +26,8 @@ export const NewNote = ({
         content: note,
         todoitem: isToDo,
       })
-      .then((res) => {
-        refetchNotes();
-        console.log("success", res.data);
+      .then(async (res) => {
+        await refetchNotes();
         onClose();
       })
       .catch((err) => {

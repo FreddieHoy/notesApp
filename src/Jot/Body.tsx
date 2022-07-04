@@ -31,7 +31,7 @@ export const Body = ({
             <H1 underline="fail">Incomplete</H1>
             {incompleteItems.map((note) => {
               return (
-                <Stack gap={6} align="center">
+                <Stack gap={6} align="center" key={note.id}>
                   <Card
                     key={note.id}
                     note={note}
@@ -46,9 +46,8 @@ export const Body = ({
             <H1 underline="success">Complete</H1>
             {completedItems.map((note) => {
               return (
-                <Stack gap={6} align="center">
+                <Stack gap={6} align="center" key={note.id}>
                   <Card
-                    key={note.id}
                     note={note}
                     refetchNotes={refetchNotes}
                     setEditId={setEditId}
@@ -63,7 +62,7 @@ export const Body = ({
           <Stack gap={10}>
             {readNotes.map((note) => {
               return (
-                <Stack gap={6} align="center">
+                <Stack gap={6} align="center" key={note.id}>
                   <Card
                     key={note.id}
                     note={note}
@@ -96,11 +95,9 @@ export const Body = ({
 
 const Card = ({
   note,
-  onClick,
   refetchNotes,
   setEditId,
 }: {
-  onClick?: () => void;
   note: Note;
   refetchNotes: () => void;
   setEditId: (val: string) => void;
@@ -117,8 +114,8 @@ const Card = ({
         ...note,
         checked: !note.checked,
       })
-      .then(() => {
-        refetchNotes();
+      .then(async () => {
+        await refetchNotes();
       })
       .catch((err) => {
         console.warn(err);
@@ -129,19 +126,19 @@ const Card = ({
   const handleDeleteNote = async (noteId: string) => {
     await api
       .delete(`/notes/${noteId}`)
-      .then(() => {
-        refetchNotes();
+      .then(async () => {
+        await refetchNotes();
       })
       .catch((err) => {
         console.warn(err);
       });
   };
+
   return (
     <div
       className={
         "max-w-sm w-[400px] bg-gray-100 dark:bg-indigo-600 rounded-md p-3 max-h-40 hover:cursor-pointer"
       }
-      onClick={onClick}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
