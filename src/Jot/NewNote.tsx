@@ -36,10 +36,18 @@ export const NewNote = ({
   };
 
   return (
-    <div>
-      <form>
-        <div className="px-2 py-1 gap-1 flex">
-          <label htmlFor="content">
+    <section className="text-gray-600 body-font w-[600px]">
+      <div className="w-full bg-gray-100 rounded-lg p-8 flex flex-col ">
+        <div className="flex justify-between">
+          <h2 className="text-gray-900 text-lg font-medium title-font mb-5">
+            New Note
+          </h2>
+          <Button size="small" intent="secondary" onClick={() => onClose()}>
+            Close
+          </Button>
+        </div>
+        <div className="relative mb-4">
+          <label htmlFor="heading" className="leading-7 text-sm text-gray-600">
             <P>Header:</P>
           </label>
           <Input
@@ -52,9 +60,9 @@ export const NewNote = ({
             onChange={(e) => setHeading(e.target.value)}
           />
         </div>
-        <div className="px-2 py-1 gap-1 flex">
-          <label htmlFor="note">
-            <P>Note:</P>
+        <div className="relative mb-4">
+          <label htmlFor="note" className="leading-7 text-sm text-gray-600">
+            Note
           </label>
           <Textarea
             name="note"
@@ -65,10 +73,8 @@ export const NewNote = ({
             onChange={(e) => setNote(e.target.value)}
           />
         </div>
-        <div className="px-2 py-1 gap-1 flex">
-          <label htmlFor="toDo">
-            <P>Is to do:</P>
-          </label>
+        <label htmlFor="toDo" className="pb-6">
+          <P>Is to do:</P>
           <Checkbox
             name="toDo"
             className="border"
@@ -77,11 +83,11 @@ export const NewNote = ({
             checked={isToDo}
             onChange={(e) => setIsToDo(e.target.checked)}
           />
-        </div>
-        <Button onClick={() => onSubmit()} type="button">
+        </label>
+        <Button onClick={() => onSubmit()} type="button" fullWidth={true}>
           <P>Add +</P>
         </Button>
-      </form>
-    </div>
+      </div>
+    </section>
   );
 };

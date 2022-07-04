@@ -588,6 +588,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 40px;
 }
 
+.h-\[60px\] {
+  height: 60px;
+}
+
+.h-\[100px\] {
+  height: 100px;
+}
+
 .max-h-40 {
   max-height: 10rem;
 }
@@ -618,6 +626,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 400px;
 }
 
+.w-\[600px\] {
+  width: 600px;
+}
+
 .min-w-\[300px\] {
   min-width: 300px;
 }
@@ -636,6 +648,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .grow-\[\$\{growProp\}\] {
   flex-grow: ${growProp};
+}
+
+.resize-none {
+  resize: none;
 }
 
 .flex-row {
@@ -819,6 +835,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding: 0.75rem;
 }
 
+.p-2 {
+  padding: 0.5rem;
+}
+
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -881,6 +901,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pr-0 {
   padding-right: 0px;
+}
+
+.pb-6 {
+  padding-bottom: 1.5rem;
 }
 
 .text-3xl {

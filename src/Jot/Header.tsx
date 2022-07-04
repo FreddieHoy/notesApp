@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../Auth";
 import { Button } from "../Components";
-import { Dialog } from "../Components/Modal";
+import { Overlay } from "../Components/Modal";
 import { H1, P } from "../Components/Typography";
 import { NewNote } from "./NewNote";
 
@@ -21,16 +21,12 @@ export const Header = ({ refetchNotes }: { refetchNotes: () => void }) => {
           <P>Add Note +</P>
         </Button>
       </div>
-      <Dialog
-        isOpen={newIsOpen}
-        onClose={() => setNewIsOpen(false)}
-        title="Create new note"
-      >
+      <Overlay isOpen={newIsOpen}>
         <NewNote
           refetchNotes={refetchNotes}
           onClose={() => setNewIsOpen(false)}
         />
-      </Dialog>
+      </Overlay>
     </>
   );
 };

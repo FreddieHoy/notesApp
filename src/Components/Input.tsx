@@ -12,7 +12,14 @@ export const Input = (props: InputHTMLAttributes<HTMLInputElement>) => {
 export const Textarea = (
   props: TextareaHTMLAttributes<HTMLTextAreaElement>
 ) => {
-  return <textarea {...props} className={"px-2 border-r-2"} />;
+  return (
+    <textarea
+      {...props}
+      className={
+        "p-2 border-r-2 w-full h-[100px] resize-none rounded border border-gray-300"
+      }
+    />
+  );
 };
 
 export const Checkbox = (props: InputHTMLAttributes<HTMLInputElement>) => {

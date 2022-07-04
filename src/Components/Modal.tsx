@@ -29,3 +29,21 @@ export const Dialog = ({
     </div>
   );
 };
+
+export const Overlay = ({
+  children,
+  isOpen,
+}: {
+  children: ReactNode;
+  isOpen: boolean;
+}) => {
+  return (
+    <div>
+      {isOpen ? (
+        <div className="absolute top-0 left-0 w-screen h-screen bg-gray-600/50 z-10 flex items-center justify-center">
+          {children}
+        </div>
+      ) : null}
+    </div>
+  );
+};
