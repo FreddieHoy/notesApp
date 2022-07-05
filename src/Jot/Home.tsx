@@ -80,7 +80,7 @@ export const Jot = () => {
     <>
       <div
         className={
-          "flex flex-col h-screen w-screen p-8 box-border gap-3 dark:bg-gray-800"
+          "flex flex-col h-screen w-screen p-8 box-border gap-3 dark:bg-gray-800 overflow-hidden"
         }
       >
         <Header refetchNotes={refetchNotes} />

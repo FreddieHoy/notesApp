@@ -15,6 +15,7 @@ export const NewNote = ({
   const [heading, setHeading] = useState("");
   const [note, setNote] = useState("");
   const [isToDo, setIsToDo] = useState(false);
+  const [checked, setChecked] = useState(false);
   const { me } = useAuth();
   const userId = me?.id;
 
@@ -25,6 +26,7 @@ export const NewNote = ({
         heading,
         content: note,
         todoitem: isToDo,
+        checked: checked,
       })
       .then(async (res) => {
         await refetchNotes();
@@ -73,15 +75,22 @@ export const NewNote = ({
             onChange={(e) => setNote(e.target.value)}
           />
         </div>
-        <label htmlFor="toDo" className="pb-6">
-          <P>Is to do:</P>
+        <label htmlFor="toDo" className="pb-6 flex items-center gap-3">
+          <P>Is a TODO item:</P>
           <Checkbox
             name="toDo"
-            className="border"
-            type="toDo"
             id="toDo"
             checked={isToDo}
             onChange={(e) => setIsToDo(e.target.checked)}
+          />
+        </label>
+        <label htmlFor="checked" className="pb-6 flex items-center gap-3">
+          <P>Checked:</P>
+          <Checkbox
+            name="checked"
+            id="checked"
+            checked={checked}
+            onChange={(e) => setChecked(e.target.checked)}
           />
         </label>
         <Button onClick={() => onSubmit()} type="button" fullWidth={true}>

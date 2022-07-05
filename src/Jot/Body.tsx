@@ -24,8 +24,26 @@ export const Body = ({
   const completedItems = notes.filter((note) => note.todoitem && note.checked);
 
   return (
-    <Stack vertical grow className="w-full h-full">
+    <Stack vertical grow className="w-full h-full flex-wrap ">
       <Stack gap={10} vertical className="w-full h-full">
+        <Stack gap={10} vertical className="h-1/3">
+          <H1 underline="primary">Notes</H1>
+          <Stack gap={10} className="flex-wrap">
+            {readNotes.map((note) => {
+              return (
+                <Stack gap={6} align="center" key={note.id}>
+                  <Card
+                    key={note.id}
+                    note={note}
+                    refetchNotes={refetchNotes}
+                    setEditId={setEditId}
+                  />
+                </Stack>
+              );
+            })}
+          </Stack>
+        </Stack>
+        <H1 underline="primary">TODO</H1>
         <Stack gap={10} className="w-full h-2/3">
           <Stack gap={10} vertical className="w-1/2">
             <H1 underline="fail">Incomplete</H1>
@@ -48,23 +66,6 @@ export const Body = ({
               return (
                 <Stack gap={6} align="center" key={note.id}>
                   <Card
-                    note={note}
-                    refetchNotes={refetchNotes}
-                    setEditId={setEditId}
-                  />
-                </Stack>
-              );
-            })}
-          </Stack>
-        </Stack>
-        <Stack gap={10} vertical className="h-1/3">
-          <H1 underline="primary">Notes</H1>
-          <Stack gap={10}>
-            {readNotes.map((note) => {
-              return (
-                <Stack gap={6} align="center" key={note.id}>
-                  <Card
-                    key={note.id}
                     note={note}
                     refetchNotes={refetchNotes}
                     setEditId={setEditId}
@@ -133,7 +134,7 @@ const Card = ({
   return (
     <div
       className={
-        "max-w-sm w-[400px] bg-gray-100 dark:bg-indigo-600 rounded-md p-3 max-h-40 hover:cursor-pointer"
+        "min-h-[80px] max-w-sm w-[400px] bg-gray-100 dark:bg-indigo-600 rounded-md p-3 max-h-40 hover:cursor-pointer"
       }
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
