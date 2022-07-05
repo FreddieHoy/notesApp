@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { LoginView } from "../App";
 import { useAuth } from "../Auth";
 import { Button, Input } from "../Components";
+import { P } from "../Components/Typography";
 import { useApi } from "../useApi";
 
 export const Login = ({ setView }: { setView: (val: LoginView) => void }) => {
@@ -9,20 +10,30 @@ export const Login = ({ setView }: { setView: (val: LoginView) => void }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [error, setError] = useState<string>();
+
   const api = useApi();
 
   const onSubmit = async () => {
-    await api
-      .post("/login", {
-        email: email,
-        password: password,
-      })
-      .then(() => {
-        login();
-      })
-      .catch((err) => {
-        console.warn(err);
-      });
+    try {
+      setError(undefined);
+      await api
+        .post("/login", {
+          email: email,
+          password: password,
+        })
+        .then((res) => {
+          console.log("res", res);
+          login();
+        });
+    } catch (e: any) {
+      const message = e.response.data.message;
+      if (message) {
+        setError(message);
+      } else {
+        setError("Error connecting");
+      }
+    }
   };
 
   return (
@@ -71,6 +82,7 @@ export const Login = ({ setView }: { setView: (val: LoginView) => void }) => {
               className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
             />
           </div>
+          <P color="error">{error ? error : null}</P>
           <Button onClick={() => onSubmit()} type="button" fullWidth={true}>
             Login
           </Button>
