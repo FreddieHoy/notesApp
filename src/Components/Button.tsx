@@ -16,12 +16,14 @@ const classes = {
     fit: "w-fit",
     full: "w-full",
   },
+  active: "text-indigo-600",
 };
 
 type ButtonProps = {
   size?: "small" | "medium" | "large";
   intent?: "primary" | "secondary" | "minimal";
   fullWidth?: boolean;
+  active?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const Button = forwardRef(
@@ -34,6 +36,7 @@ export const Button = forwardRef(
       disabled = false,
       intent = "primary",
       fullWidth = false,
+      active,
       ...props
     }: ButtonProps,
     ref: Ref<HTMLButtonElement>
@@ -43,6 +46,7 @@ export const Button = forwardRef(
       disabled={disabled}
       type={type}
       className={cls(`
+      ${active ? classes.active : ""}
         ${classes.base}
         ${fullWidth ? classes.width.full : classes.width.fit}
         ${classes.size[size]}

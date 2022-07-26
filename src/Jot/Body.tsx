@@ -15,6 +15,7 @@ export const Body = ({
   refetchNotes: () => void;
 }) => {
   const [editId, setEditId] = useState<string>();
+  const [tab, setTab] = useState<"notes" | "todos">("todos");
   const editNote = notes.find((note) => note.id === editId);
 
   const readNotes = notes.filter((note) => !note.todoitem);
@@ -24,59 +25,80 @@ export const Body = ({
   const completedItems = notes.filter((note) => note.todoitem && note.checked);
 
   return (
-    <Stack vertical grow className="w-full h-full flex-wrap ">
-      <Stack gap={10} vertical className="w-full h-full">
-        <Stack gap={10} vertical className="h-1/3">
-          <H1 underline="primary">Notes</H1>
-          <Stack gap={10} className="flex-wrap">
-            {readNotes.map((note) => {
-              return (
-                <Stack gap={6} align="center" key={note.id}>
-                  <Card
-                    key={note.id}
-                    note={note}
-                    refetchNotes={refetchNotes}
-                    setEditId={setEditId}
-                  />
-                </Stack>
-              );
-            })}
+    <>
+      <Stack vertical grow className="w-full h-full flex-wrap overflow-hidden">
+        <Stack gap={10} vertical className="w-full h-full">
+          <Stack className="w-full justify-between">
+            <Button
+              intent="minimal"
+              onClick={() => setTab("todos")}
+              active={tab === "todos"}
+            >
+              Todo
+            </Button>
+            <Button
+              intent="minimal"
+              onClick={() => setTab("notes")}
+              active={tab === "notes"}
+            >
+              Notes
+            </Button>
           </Stack>
-        </Stack>
-        <H1 underline="primary">TODO</H1>
-        <Stack gap={10} className="w-full h-2/3">
-          <Stack gap={10} vertical className="w-1/2">
-            <H1 underline="fail">Incomplete</H1>
-            {incompleteItems.map((note) => {
-              return (
-                <Stack gap={6} align="center" key={note.id}>
-                  <Card
-                    key={note.id}
-                    note={note}
-                    refetchNotes={refetchNotes}
-                    setEditId={setEditId}
-                  />
-                </Stack>
-              );
-            })}
-          </Stack>
-          <Stack gap={10} vertical className="w-1/2">
-            <H1 underline="success">Complete</H1>
-            {completedItems.map((note) => {
-              return (
-                <Stack gap={6} align="center" key={note.id}>
-                  <Card
-                    note={note}
-                    refetchNotes={refetchNotes}
-                    setEditId={setEditId}
-                  />
-                </Stack>
-              );
-            })}
-          </Stack>
+          {tab === "notes" && (
+            <Stack gap={10} vertical grow className="overflow-hidden">
+              <H1 underline="primary">Notes</H1>
+              <Stack gap={10} vertical grow className="overflow-y-auto">
+                {readNotes.map((note) => {
+                  return (
+                    <Stack gap={6} align="center" key={note.id}>
+                      <Card
+                        key={note.id}
+                        note={note}
+                        refetchNotes={refetchNotes}
+                        setEditId={setEditId}
+                      />
+                    </Stack>
+                  );
+                })}
+              </Stack>
+            </Stack>
+          )}
+          {tab === "todos" && (
+            <Stack vertical gap={10} className="w-full h-2/3">
+              <H1 underline="primary">TODO</H1>
+              <Stack gap={10} vertical className="w-1/2">
+                <H1 underline="fail">Incomplete</H1>
+                {incompleteItems.map((note) => {
+                  return (
+                    <Stack gap={6} align="center" key={note.id}>
+                      <Card
+                        key={note.id}
+                        note={note}
+                        refetchNotes={refetchNotes}
+                        setEditId={setEditId}
+                      />
+                    </Stack>
+                  );
+                })}
+              </Stack>
+              <Stack gap={10} vertical className="w-1/2">
+                <H1 underline="success">Complete</H1>
+                {completedItems.map((note) => {
+                  return (
+                    <Stack gap={6} align="center" key={note.id}>
+                      <Card
+                        note={note}
+                        refetchNotes={refetchNotes}
+                        setEditId={setEditId}
+                      />
+                    </Stack>
+                  );
+                })}
+              </Stack>
+            </Stack>
+          )}
         </Stack>
       </Stack>
-
       {editNote && (
         <Overlay isOpen={!!editId}>
           <EditNote
@@ -86,7 +108,7 @@ export const Body = ({
           />
         </Overlay>
       )}
-    </Stack>
+    </>
   );
 };
 
@@ -134,7 +156,7 @@ const Card = ({
   return (
     <div
       className={
-        "min-h-[80px] max-w-sm w-[400px] bg-gray-100 dark:bg-indigo-600 rounded-md p-3 max-h-40 hover:cursor-pointer"
+        "min-h-[80px] w-full bg-gray-100 dark:bg-indigo-600 rounded-md p-3 max-h-40 hover:cursor-pointer"
       }
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
@@ -144,7 +166,6 @@ const Card = ({
         <Stack gap={6}>
           {hover && (
             <Stack gap={6}>
-              {/* <P>{`id:${note.id}`}</P> */}
               <Button
                 intent="secondary"
                 size="small"
