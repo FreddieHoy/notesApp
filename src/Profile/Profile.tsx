@@ -8,7 +8,7 @@ import { useApi } from "../useApi";
 
 type Theme = "light" | "dark";
 
-export const Profile = ({ setPage }: { setPage: (val: Page) => void }) => {
+export const Profile = () => {
   const { me, logout } = useAuth();
   const api = useApi();
   const userId = me?.id;

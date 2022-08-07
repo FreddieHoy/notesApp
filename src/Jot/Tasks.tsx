@@ -3,8 +3,9 @@ import { Page } from "../App";
 import { useAuth } from "../Auth";
 import { Card } from "../Components/Card";
 import { Stack } from "../Components/Stack";
-import { H1 } from "../Components/Typography";
+import { H1, H2 } from "../Components/Typography";
 import { useApi } from "../useApi";
+import { useGlobal, useGlobalDispatch } from "../Utils/GlobalContext";
 
 export type Note = {
   id: string;
@@ -14,7 +15,11 @@ export type Note = {
   checked: boolean;
 };
 
-export const Tasks = ({ setPage }: { setPage: (val: Page) => void }) => {
+export const Tasks = () => {
+  const { page } = useGlobal();
+  const dispatch = useGlobalDispatch();
+  const setPage = (page: Page) => dispatch({ type: "setPage", page });
+
   const { me } = useAuth();
   const api = useApi();
   const userId = me?.id;
@@ -58,28 +63,21 @@ export const Tasks = ({ setPage }: { setPage: (val: Page) => void }) => {
         "flex flex-col h-full w-full p-8 box-border gap-3 dark:bg-gray-800 overflow-hidden"
       }
     >
-      <H1>Jotter</H1>
+      <H1 underline="primary">Jotter</H1>
       <Stack vertical grow className="w-full h-full flex-wrap overflow-hidden">
         <Stack gap={10} vertical className="w-full h-full">
-          <H1 underline="primary">Tasks</H1>
+          <H2>Tasks</H2>
           <Stack gap={10} vertical grow className="overflow-hidden">
             <Stack gap={10} vertical>
               {incompleteItems.map((note) => {
-                return (
-                  <Card
-                    key={note.id}
-                    note={note}
-                    refetchNotes={refetchNotes}
-                    setEditId={() => {}}
-                  />
-                );
+                return <Card key={note.id} note={note} refetchNotes={refetchNotes} />;
               })}
             </Stack>
             <Stack gap={10} vertical>
               {completedItems.map((note) => {
                 return (
                   <Stack gap={6} align="center" key={note.id}>
-                    <Card note={note} refetchNotes={refetchNotes} setEditId={() => {}} />
+                    <Card note={note} refetchNotes={refetchNotes} />
                   </Stack>
                 );
               })}

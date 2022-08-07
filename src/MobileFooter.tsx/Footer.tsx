@@ -1,9 +1,13 @@
 import { Page } from "../App";
 import { Button } from "../Components";
 import { Stack } from "../Components/Stack";
-import { H1 } from "../Components/Typography";
+import { H2 } from "../Components/Typography";
+import { useGlobal, useGlobalDispatch } from "../Utils/GlobalContext";
 
-export const MobileFooter = ({ setPage, page }: { page: Page; setPage: (val: Page) => void }) => {
+export const MobileFooter = () => {
+  const { page } = useGlobal();
+  const dispatch = useGlobalDispatch();
+  const setPage = (page: Page) => dispatch({ type: "setPage", page });
   return (
     <Stack
       className="w-full border-t-2 border-grey-600"
@@ -12,13 +16,13 @@ export const MobileFooter = ({ setPage, page }: { page: Page; setPage: (val: Pag
       padding={"12px 0px"}
     >
       <Button intent="minimal" onClick={() => setPage("tasks")} active={page === "tasks"}>
-        <H1>Tasks</H1>
+        <H2>Tasks</H2>
       </Button>
       <Button intent="minimal" onClick={() => setPage("notes")} active={page === "notes"}>
-        <H1>Notes</H1>
+        <H2>Notes</H2>
       </Button>
       <Button intent="minimal" onClick={() => setPage("profile")} active={page === "profile"}>
-        <H1>Profile</H1>
+        <H2>Profile</H2>
       </Button>
       <Button
         intent="minimal"
@@ -27,7 +31,7 @@ export const MobileFooter = ({ setPage, page }: { page: Page; setPage: (val: Pag
         onClick={() => setPage("note")}
         disabled={page === "note"}
       >
-        <H1>Add +</H1>
+        <H2>Add +</H2>
       </Button>
     </Stack>
   );

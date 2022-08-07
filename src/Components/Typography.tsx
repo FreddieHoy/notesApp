@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { cls } from "./Button";
 
 const pClasses = {
-  base: "dark:text-white bg-none text-base",
+  base: "dark:text-white bg-none text-sm",
   color: {
     error: "text-red-600",
   },
@@ -88,6 +88,35 @@ export const H2 = ({
     <h2
       className={cls(`
         ${h2Classes.base}
+        ${color ? h2Classes.color[color] : undefined}
+        ${className}
+      `)}
+    >
+      {children}
+    </h2>
+  );
+};
+
+const h3Classes = {
+  base: "dark:text-white bg-none text-base p-0 m-0 leading-0",
+  color: {
+    error: "text-red-600",
+  },
+};
+
+export const H3 = ({
+  children,
+  color,
+  className,
+}: {
+  children: ReactNode;
+  color?: "error";
+  className?: string;
+}) => {
+  return (
+    <h2
+      className={cls(`
+        ${h3Classes.base}
         ${color ? h2Classes.color[color] : undefined}
         ${className}
       `)}

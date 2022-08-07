@@ -4,8 +4,12 @@ import { useAuth } from "../Auth";
 import { Button, Checkbox, Input, Textarea } from "../Components";
 import { P } from "../Components/Typography";
 import { useApi } from "../useApi";
+import { useGlobal, useGlobalDispatch } from "../Utils/GlobalContext";
 
-export const NewNote = ({ setPage }: { setPage: (val: Page) => void }) => {
+export const NewNote = () => {
+  const dispatch = useGlobalDispatch();
+  const setPage = (page: Page) => dispatch({ type: "setPage", page });
+
   const api = useApi();
   const [heading, setHeading] = useState("");
   const [note, setNote] = useState("");
