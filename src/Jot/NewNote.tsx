@@ -1,16 +1,11 @@
 import { useState } from "react";
+import { Page } from "../App";
 import { useAuth } from "../Auth";
 import { Button, Checkbox, Input, Textarea } from "../Components";
 import { P } from "../Components/Typography";
 import { useApi } from "../useApi";
 
-export const NewNote = ({
-  refetchNotes,
-  onClose,
-}: {
-  refetchNotes: () => void;
-  onClose: () => void;
-}) => {
+export const NewNote = ({ setPage }: { setPage: (val: Page) => void }) => {
   const api = useApi();
   const [heading, setHeading] = useState("");
   const [note, setNote] = useState("");
@@ -29,8 +24,9 @@ export const NewNote = ({
         checked: checked,
       })
       .then(async (res) => {
-        await refetchNotes();
-        onClose();
+        // await refetchNotes();
+        // onClose();
+        setPage("tasks");
       })
       .catch((err) => {
         console.warn(err);
@@ -41,10 +37,8 @@ export const NewNote = ({
     <section className="text-gray-600 body-font w-[600px]">
       <div className="w-full bg-gray-100 rounded-lg p-8 flex flex-col ">
         <div className="flex justify-between">
-          <h2 className="text-gray-900 text-lg font-medium title-font mb-5">
-            New Note
-          </h2>
-          <Button size="small" intent="secondary" onClick={() => onClose()}>
+          <h2 className="text-gray-900 text-lg font-medium title-font mb-5">New Note</h2>
+          <Button size="small" intent="secondary" onClick={() => setPage("tasks")}>
             Close
           </Button>
         </div>

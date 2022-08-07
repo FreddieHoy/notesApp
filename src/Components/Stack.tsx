@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { match } from "ts-pattern";
 import { cls } from "./Button";
+
 export type StackProps = {
   maxWidth?: number | string;
 
@@ -61,6 +62,7 @@ export const Stack = ({
   wrap,
   style,
   className,
+  ...props
 }: StackProps) => {
   const inlineStyles: React.CSSProperties = {
     gap,
@@ -86,6 +88,7 @@ export const Stack = ({
       ${className ?? ""}
     `)}
       style={inlineStyles}
+      {...props}
     >
       {children}
     </div>

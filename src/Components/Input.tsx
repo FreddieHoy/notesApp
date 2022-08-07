@@ -1,4 +1,5 @@
 import React, { InputHTMLAttributes, TextareaHTMLAttributes } from "react";
+import { Stack } from "./Stack";
 
 export const Input = (props: InputHTMLAttributes<HTMLInputElement>) => {
   return (
@@ -9,21 +10,30 @@ export const Input = (props: InputHTMLAttributes<HTMLInputElement>) => {
   );
 };
 
-export const Textarea = (
-  props: TextareaHTMLAttributes<HTMLTextAreaElement>
-) => {
+export const Textarea = (props: TextareaHTMLAttributes<HTMLTextAreaElement>) => {
   return (
     <textarea
       {...props}
-      className={
-        "p-2 border-r-2 w-full h-[100px] resize-none rounded border border-gray-300"
-      }
+      className={"p-2 border-r-2 w-full h-[100px] resize-none rounded border border-gray-300"}
     />
   );
 };
 
+interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+}
+
 const checkBoxClass =
-  "w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600";
-export const Checkbox = (props: InputHTMLAttributes<HTMLInputElement>) => {
-  return <input {...props} className={checkBoxClass} type="checkbox" />;
+  "bg-amber-200 hover:bg-amber-400 cursor-pointer w-8 h-8 border-3 border-rose-500 rounded checked:bg-green-500 ";
+export const Checkbox = ({ label, ...props }: CheckboxProps) => {
+  return (
+    <Stack gap={6} align="center">
+      <input {...props} className={checkBoxClass} type="checkbox" />
+      {label && (
+        <label htmlFor={props.name} className="ml-3">
+          {label}
+        </label>
+      )}
+    </Stack>
+  );
 };
