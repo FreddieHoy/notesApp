@@ -1,66 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Page } from "../App";
-import { useAuth } from "../Auth";
+import React from "react";
 import { Card } from "../Components/Card";
-import { Overlay } from "../Components/Modal";
 import { Stack } from "../Components/Stack";
 import { H1, H2 } from "../Components/Typography";
-import { useApi } from "../useApi";
-import { useGlobal, useGlobalDispatch } from "../Utils/GlobalContext";
-import { EditNote } from "./EditNote";
-
-export type Note = {
-  id: string;
-  heading: string;
-  content: string;
-  todoitem: boolean;
-  checked: boolean;
-};
+import { useNotes } from "../Utils/NoteContext";
 
 export const Notes = () => {
-  const [editId, setEditId] = useState<string>();
-  const { page } = useGlobal();
-  const dispatch = useGlobalDispatch();
-  const setPage = (page: Page) => dispatch({ type: "setPage", page });
-
-  const { me } = useAuth();
-  const api = useApi();
-  const userId = me?.id;
-
-  const [notes, setNotes] = useState<Note[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (userId) {
-        try {
-          const res = await api.get("/notes");
-          setNotes(res.data as Note[]);
-        } catch (e) {
-          console.error("notes error", e);
-        }
-      }
-    };
-
-    fetchData();
-    // api, dep is removed to prevent endless rerender
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
-
-  const refetchNotes = async () => {
-    if (userId) {
-      try {
-        const res = await api.get("/notes");
-        setNotes(res.data as Note[]);
-      } catch (e) {
-        console.log("error", e);
-      }
-    }
-  };
-
-  const readNotes = notes.filter((note) => !note.todoitem);
-
-  const editNote = notes.find((note) => note.id === editId);
-
+  const { readNotes, refetchNotes } = useNotes();
   return (
     <div
       className={
@@ -82,16 +27,6 @@ export const Notes = () => {
           </Stack>
         </Stack>
       </Stack>
-
-      {editNote && (
-        <Overlay isOpen={!!editId}>
-          <EditNote
-            note={editNote}
-            refetchNotes={refetchNotes}
-            onClose={() => setEditId(undefined)}
-          />
-        </Overlay>
-      )}
     </div>
   );
 };

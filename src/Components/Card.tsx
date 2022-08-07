@@ -2,9 +2,9 @@ import React from "react";
 import { Checkbox } from "../Components";
 import { Stack } from "../Components/Stack";
 import { H3, P } from "../Components/Typography";
-import { Note } from "../Jot/Tasks";
 import { useApi } from "../useApi";
 import { useGlobalDispatch } from "../Utils/GlobalContext";
+import { Note } from "../Utils/NoteContext";
 
 export const Card = ({ note, refetchNotes }: { note: Note; refetchNotes: () => void }) => {
   const api = useApi();

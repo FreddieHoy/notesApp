@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Page } from "../App";
 import { useAuth } from "../Auth";
 import { Button } from "../Components";
 import { Stack } from "../Components/Stack";

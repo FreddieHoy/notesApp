@@ -1,61 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Page } from "../App";
-import { useAuth } from "../Auth";
+import React from "react";
 import { Card } from "../Components/Card";
 import { Stack } from "../Components/Stack";
 import { H1, H2 } from "../Components/Typography";
-import { useApi } from "../useApi";
-import { useGlobal, useGlobalDispatch } from "../Utils/GlobalContext";
-
-export type Note = {
-  id: string;
-  heading: string;
-  content: string;
-  todoitem: boolean;
-  checked: boolean;
-};
+import { useNotes } from "../Utils/NoteContext";
 
 export const Tasks = () => {
-  const { page } = useGlobal();
-  const dispatch = useGlobalDispatch();
-  const setPage = (page: Page) => dispatch({ type: "setPage", page });
-
-  const { me } = useAuth();
-  const api = useApi();
-  const userId = me?.id;
-
-  const [notes, setNotes] = useState<Note[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (userId) {
-        try {
-          const res = await api.get("/notes");
-          setNotes(res.data as Note[]);
-        } catch (e) {
-          console.error("notes error", e);
-        }
-      }
-    };
-
-    fetchData();
-    // api, dep is removed to prevent endless rerender
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
-
-  const refetchNotes = async () => {
-    if (userId) {
-      try {
-        const res = await api.get("/notes");
-        setNotes(res.data as Note[]);
-      } catch (e) {
-        console.log("error", e);
-      }
-    }
-  };
-
-  const incompleteItems = notes.filter((note) => note.todoitem && !note.checked);
-  const completedItems = notes.filter((note) => note.todoitem && note.checked);
+  const { completedItems, incompleteItems, refetchNotes } = useNotes();
 
   return (
     <div

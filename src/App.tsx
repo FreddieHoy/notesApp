@@ -8,10 +8,11 @@ import { Profile } from "./Profile/Profile";
 import { useIsMobile } from "./Utils/IsMobile";
 import { MobileFooter } from "./MobileFooter.tsx/Footer";
 import { Tasks } from "./Jot/Tasks";
-import { NewNote } from "./Jot/NewNote";
+import { NoteForm } from "./Jot/NoteForm";
 import { Notes } from "./Jot/Notes";
 import { Stack } from "./Components/Stack";
 import { GlobalProvider, useGlobal } from "./Utils/GlobalContext";
+import { NoteProvider } from "./Utils/NoteContext";
 
 export type Page = "tasks" | "notes" | "profile" | "note";
 
@@ -21,7 +22,9 @@ export const Providers = () => {
   return (
     <AuthProvider>
       <GlobalProvider>
-        <App />
+        <NoteProvider>
+          <App />
+        </NoteProvider>
       </GlobalProvider>
     </AuthProvider>
   );
@@ -54,7 +57,7 @@ const Jot = () => {
           .with("tasks", () => <Tasks />)
           .with("notes", () => <Notes />)
           .with("profile", () => <Profile />)
-          .with("note", () => <NewNote />)
+          .with("note", () => <NoteForm />)
           .exhaustive()}
       </Stack>
       {isMobile && <MobileFooter />}
