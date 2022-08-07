@@ -544,12 +544,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: fit-content;
 }
 
-.h-\[100px\] {
-  height: 100px;
+.h-\[200px\] {
+  height: 200px;
 }
 
 .h-8 {
   height: 2rem;
+}
+
+.h-1\/2 {
+  height: 50%;
 }
 
 .h-\[10px\] {
@@ -588,10 +592,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-8 {
   width: 2rem;
-}
-
-.w-\[600px\] {
-  width: 600px;
 }
 
 .shrink {

@@ -4,7 +4,10 @@ import { Page } from "../App";
 
 interface GlobalContextState {
   page: Page;
-  noteId?: string;
+  noteState: {
+    visable: boolean;
+    noteId?: string;
+  };
 }
 
 interface GlobalContextType {
@@ -13,7 +16,10 @@ interface GlobalContextType {
 }
 
 const intialState: GlobalContextState = {
-  page: "tasks",
+  page: "profile",
+  noteState: {
+    visable: false,
+  },
 };
 
 const defualtValue: GlobalContextType = {
@@ -21,18 +27,25 @@ const defualtValue: GlobalContextType = {
   dispatch: () => {},
 };
 
-type Msg = { type: "setPage"; page: Page } | { type: "openNote"; id: string };
+type Msg = { type: "setPage"; page: Page } | { type: "openNote"; id?: string };
 
 const GlobalContext = createContext<GlobalContextType>(defualtValue);
 
 const reducer = (state: GlobalContextState, msg: Msg): GlobalContextState => {
   const newState: GlobalContextState = match<Msg, GlobalContextState>(msg)
     .with({ type: "setPage" }, ({ page }) => ({
+      noteState: {
+        visable: false,
+        noteId: undefined,
+      },
       page,
     }))
     .with({ type: "openNote" }, ({ id }) => ({
-      page: "note",
-      noteId: id,
+      ...state,
+      noteState: {
+        visable: true,
+        noteId: id,
+      },
     }))
     .exhaustive();
   return newState;

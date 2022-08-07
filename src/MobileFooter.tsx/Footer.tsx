@@ -5,7 +5,7 @@ import { H2 } from "../Components/Typography";
 import { useGlobal, useGlobalDispatch } from "../Utils/GlobalContext";
 
 export const MobileFooter = () => {
-  const { page } = useGlobal();
+  const { page, noteState } = useGlobal();
   const dispatch = useGlobalDispatch();
   const setPage = (page: Page) => dispatch({ type: "setPage", page });
   return (
@@ -28,8 +28,8 @@ export const MobileFooter = () => {
         intent="minimal"
         type="button"
         size="small"
-        onClick={() => setPage("note")}
-        disabled={page === "note"}
+        onClick={() => dispatch({ type: "openNote" })}
+        disabled={noteState.visable}
       >
         <H2>Add +</H2>
       </Button>

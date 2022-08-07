@@ -17,6 +17,7 @@ type NoteFormValues = {
 
 export const NoteForm = ({ id }: { id?: string }) => {
   const note = useGetNote(id);
+  console.log("note", note);
   if (note && id) {
     return (
       <Form
@@ -66,6 +67,7 @@ const Form = ({ initialValues }: { initialValues?: NoteFormValues }) => {
     handleSubmit,
     watch,
     formState: { errors },
+    getValues,
   } = useForm<NoteFormValues>({
     defaultValues: {
       ...initialValues,
@@ -93,13 +95,25 @@ const Form = ({ initialValues }: { initialValues?: NoteFormValues }) => {
             <label htmlFor="heading" className="leading-7 text-sm text-gray-600">
               <P>Header:</P>
             </label>
-            <Input className="border" {...register("heading")} placeholder="Dinner idea" />
+            <Input
+              className="border"
+              {...register("heading", { required: "A heading is required" })}
+              placeholder="Dinner idea"
+            />
+            {errors.heading && <p>{errors.heading.message}</p>}
           </div>
           <div className="relative mb-4">
             <label htmlFor="note" className="leading-7 text-sm text-gray-600">
               Note
             </label>
-            <Textarea {...register("body")} className="border" placeholder="I will need..." />
+            <Textarea
+              {...register("body", {
+                maxLength: 450,
+              })}
+              className="border"
+              placeholder="I will need..."
+            />
+            {errors.body && <p>{`Character limit is 450 (${getValues().body.length})`}</p>}
           </div>
           <label htmlFor="toDo" className="pb-6 flex items-center gap-3">
             <P>Is a TODO item:</P>

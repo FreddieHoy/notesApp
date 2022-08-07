@@ -20,7 +20,7 @@ export const Textarea = forwardRef<
   return (
     <textarea
       {...props}
-      className={"p-2 border-r-2 w-full h-[100px] resize-none rounded border border-gray-300"}
+      className={"p-2 border-r-2 w-full h-[200px] resize-none rounded border border-gray-300"}
       ref={ref}
     />
   );

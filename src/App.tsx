@@ -13,8 +13,9 @@ import { Notes } from "./Jot/Notes";
 import { Stack } from "./Components/Stack";
 import { GlobalProvider, useGlobal } from "./Utils/GlobalContext";
 import { NoteProvider } from "./Utils/NoteContext";
+import { Overlay } from "./Components/Modal";
 
-export type Page = "tasks" | "notes" | "profile" | "note";
+export type Page = "tasks" | "notes" | "profile";
 
 export type LoginView = "login" | "register";
 
@@ -48,19 +49,41 @@ export const App = () => {
 
 const Jot = () => {
   const isMobile = useIsMobile();
-  const { page } = useGlobal();
+  const { page, noteState } = useGlobal();
+  const showNote = noteState.visable;
+
+  console.log("isMobile", isMobile);
+
+  if (isMobile) {
+    return (
+      <Stack className="h-screen overflow-hidden" vertical>
+        <Stack vertical grow className="w-full overflow-hidden">
+          {match({ page, showNote })
+            .with({ showNote: true }, () => <NoteForm id={noteState.noteId} />)
+            .with({ page: "tasks" }, () => <Tasks />)
+            .with({ page: "notes" }, () => <Notes />)
+            .with({ page: "profile" }, () => <Profile />)
+            .exhaustive()}
+        </Stack>
+        <MobileFooter />
+      </Stack>
+    );
+  }
 
   return (
-    <Stack className="h-screen overflow-hidden" vertical>
-      <Stack vertical grow className="w-full overflow-hidden">
-        {match(page)
-          .with("tasks", () => <Tasks />)
-          .with("notes", () => <Notes />)
-          .with("profile", () => <Profile />)
-          .with("note", () => <NoteForm />)
+    <Stack className="h-screen overflow-hidden">
+      <Stack vertical grow className="w-1/2 overflow-hidden">
+        {match({ page, isMobile })
+          .with({ page: "tasks" }, () => <Tasks />)
+          .with({ page: "notes" }, () => <Notes />)
+          .with({ page: "profile" }, () => <Profile />)
           .exhaustive()}
       </Stack>
-      {isMobile && <MobileFooter />}
+      {showNote && (
+        <Overlay isOpen={showNote}>
+          <NoteForm id={noteState.noteId} />
+        </Overlay>
+      )}
     </Stack>
   );
 };
