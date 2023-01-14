@@ -43,7 +43,6 @@ const Form = ({ initialValues }: { initialValues?: NoteFormValues }) => {
   const userId = me?.id;
 
   const onSubmit = async (values: NoteFormValues) => {
-    console.log("submit values", values);
     await api
       .post("/notes", {
         userId,
@@ -65,8 +64,8 @@ const Form = ({ initialValues }: { initialValues?: NoteFormValues }) => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
+    watch,
     getValues,
   } = useForm<NoteFormValues>({
     defaultValues: {
@@ -78,11 +77,10 @@ const Form = ({ initialValues }: { initialValues?: NoteFormValues }) => {
     },
   });
 
-  console.log("heading ", watch("heading"));
-  console.log("errors", errors);
+  console.log("text area", watch("body"));
 
   return (
-    <section className="text-gray-600 body-font w-full h-full ">
+    <section className="text-gray-600 bg-white border-2 body-font w-full h-full ">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full  rounded-lg p-8 flex flex-col ">
           <div className="flex justify-between">

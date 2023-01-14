@@ -48,8 +48,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(undefined);
   };
 
-  console.log("user", user);
-
   const value: AuthContent = {
     login,
     logout,

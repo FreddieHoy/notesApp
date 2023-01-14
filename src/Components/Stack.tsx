@@ -17,8 +17,6 @@ export type StackProps = {
 
   inline?: boolean;
 
-  borderBottom?: boolean;
-
   justify?:
     | "start"
     | "end"
@@ -52,7 +50,6 @@ export const Stack = ({
   gap,
   align,
   basis,
-  borderBottom,
   fixedHeight,
   grow,
   justify,
@@ -73,7 +70,6 @@ export const Stack = ({
     alignItems: align,
     height: fixedHeight,
     flexBasis: basis,
-    borderBottom: borderBottom ? "1px solid grey" : "0",
     flexWrap: wrap,
     ...style,
   };
@@ -81,12 +77,12 @@ export const Stack = ({
   return (
     <div
       className={cls(`
-      flex
-      ${convertGrow(grow)}
-      ${getFlexDirection(!!vertical, !!reverse)}
-      ${shrink ? "shrink" : ""}
-      ${className ?? ""}
-    `)}
+        flex
+        ${convertGrow(grow)}
+        ${getFlexDirection(!!vertical, !!reverse)}
+        ${shrink ? "shrink" : ""}
+        ${className ?? ""}
+      `)}
       style={inlineStyles}
       {...props}
     >

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../Auth";
 import { Button } from "../Components";
 import { Stack } from "../Components/Stack";
-import { H1, P } from "../Components/Typography";
+import { H2, P } from "../Components/Typography";
 import { useApi } from "../useApi";
 
 type Theme = "light" | "dark";
@@ -38,9 +38,9 @@ export const Profile = () => {
   };
 
   return (
-    <Stack vertical className="w-full" gap={12} padding={12}>
-      <H1>Welome to Jotter, {me?.name}.</H1>
-      <Stack gap={6}>
+    <Stack vertical className="w-full" gap={12}>
+      <H2>Welome to Jotter, {me?.name}.</H2>
+      <Stack gap={6} vertical>
         <Button intent="secondary" size="small" type="button" onClick={() => handleLogout()}>
           <P>Logout</P>
         </Button>

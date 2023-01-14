@@ -54,6 +54,8 @@ const reducer = (state: GlobalContextState, msg: Msg): GlobalContextState => {
 export const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, intialState);
 
+  console.log("state", state);
+
   const value: GlobalContextType = {
     state,
     dispatch,

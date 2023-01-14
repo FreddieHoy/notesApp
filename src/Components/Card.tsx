@@ -33,7 +33,7 @@ export const Card = ({ note, refetchNotes }: { note: Note; refetchNotes: () => v
       )}
       <Stack
         className={
-          "min-h-[80px] w-full bg-gray-100 dark:bg-indigo-600 rounded-md max-h-40 hover:cursor-pointer grow overflow-hidden"
+          "w-full bg-gray-50 dark:bg-indigo-600 rounded-md hover:cursor-pointer grow overflow-hidden border border-gray-300"
         }
         onClick={() => setPage(note.id)}
         padding={12}
@@ -41,10 +41,10 @@ export const Card = ({ note, refetchNotes }: { note: Note; refetchNotes: () => v
         <Stack vertical gap={6} grow className="overflow-hidden">
           <Stack gap={6} justify="space-between">
             <H3 className={"overflow-ellipsis whitespace-nowrap overflow-hidden"}>
-              {`${note.heading}`}
+              {note.heading}
             </H3>
           </Stack>
-          <P>{note.content}</P>
+          <P className="whitespace-pre-line">{note.content}</P>
         </Stack>
       </Stack>
     </Stack>
