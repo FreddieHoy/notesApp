@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { forwardRef, ReactNode, Ref } from "react";
 import { match } from "ts-pattern";
 import { cls } from "./Button";
 
@@ -42,54 +42,60 @@ export type StackProps = {
   className?: string;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-export const Stack = ({
-  children,
-  maxHeight,
-  maxWidth,
-  padding,
-  gap,
-  align,
-  basis,
-  fixedHeight,
-  grow,
-  justify,
-  reverse,
-  shrink,
-  vertical,
-  wrap,
-  style,
-  className,
-  ...props
-}: StackProps) => {
-  const inlineStyles: React.CSSProperties = {
-    gap,
-    maxHeight,
-    maxWidth,
-    padding,
-    justifyContent: justify,
-    alignItems: align,
-    height: fixedHeight,
-    flexBasis: basis,
-    flexWrap: wrap,
-    ...style,
-  };
+export const Stack = forwardRef(
+  (
+    {
+      children,
+      maxHeight,
+      maxWidth,
+      padding,
+      gap,
+      align,
+      basis,
+      fixedHeight,
+      grow,
+      justify,
+      reverse,
+      shrink,
+      vertical,
+      wrap,
+      style,
+      className,
+      ...props
+    }: StackProps,
+    ref: Ref<HTMLDivElement>
+  ) => {
+    const inlineStyles: React.CSSProperties = {
+      gap,
+      maxHeight,
+      maxWidth,
+      padding,
+      justifyContent: justify,
+      alignItems: align,
+      height: fixedHeight,
+      flexBasis: basis,
+      flexWrap: wrap,
+      ...style,
+    };
 
-  return (
-    <div
-      className={cls(`
+    return (
+      <div
+        className={cls(`
         flex
         ${convertGrow(grow)}
         ${getFlexDirection(!!vertical, !!reverse)}
         ${shrink ? "shrink" : ""}
         ${className ?? ""}
       `)}
-      style={inlineStyles}
-      {...props}
-    >
-      {children}
-    </div>
-  );
-};
+        style={inlineStyles}
+        ref={ref}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+);
 
 const convertGrow = (growProp: StackProps["grow"]): string => {
   if (typeof growProp === "number") {

@@ -32,20 +32,19 @@ export const Dialog = ({
   );
 };
 
+const root = document.createElement("div");
+root.className = "modal-root";
+document.body.append(root);
+
 export const Overlay = ({ children, isOpen }: { children: ReactNode; isOpen: boolean }) => {
-  const root = document.getElementById("root");
   return root
     ? createPortal(
         <Stack
-          className="absolute top-0 left-0 w-screen h-screen bg-gray-600/50 z-10 flex items-center justify-center"
+          className="absolute bg-gray-600/50 w-screen h-screen z-10 top-0 left-0 right-0 bottom-0"
           align="center"
           justify="center"
         >
-          {isOpen ? (
-            <div className="absolute h-1/2  z-11 flex items-center justify-center w-1/2">
-              {children}
-            </div>
-          ) : null}
+          {children}
         </Stack>,
         root
       )

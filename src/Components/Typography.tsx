@@ -98,7 +98,7 @@ export const H2 = ({
 };
 
 const h3Classes = {
-  base: "dark:text-white bg-none text-base p-0 m-0 leading-0",
+  base: "dark:text-white bg-none text-base p-0 m-0 leading-0 font-semibold",
   color: {
     error: "text-red-600",
   },

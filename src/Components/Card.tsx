@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useRef } from "react";
 import { Checkbox } from "../Components";
 import { Stack } from "../Components/Stack";
 import { H3, P } from "../Components/Typography";
@@ -10,6 +10,12 @@ export const Card = ({ note, refetchNotes }: { note: Note; refetchNotes: () => v
   const api = useApi();
   const dispatch = useGlobalDispatch();
   const setPage = (id: string) => dispatch({ type: "openNote", id });
+  const overflowRef = useRef<HTMLDivElement>(null);
+
+  const hasOverflow = useMemo(() => {
+    if (!overflowRef.current) return false;
+    return overflowRef.current.scrollHeight > overflowRef.current.clientHeight;
+  }, [overflowRef]);
 
   const handleCheck = async (e: React.ChangeEvent<HTMLInputElement>, noteId: string) => {
     await api
@@ -33,18 +39,20 @@ export const Card = ({ note, refetchNotes }: { note: Note; refetchNotes: () => v
       )}
       <Stack
         className={
-          "w-full bg-gray-50 dark:bg-indigo-600 rounded-md hover:cursor-pointer grow overflow-hidden border border-gray-300"
+          "w-full bg-gray-50 dark:bg-indigo-600 rounded-md hover:cursor-pointer grow overflow-hidden border border-gray-300 "
         }
         onClick={() => setPage(note.id)}
         padding={12}
+        maxHeight={note.todoitem ? "" : 300}
       >
-        <Stack vertical gap={6} grow className="overflow-hidden">
+        <Stack vertical gap={6} grow className="overflow-hidden relavtive" ref={overflowRef}>
           <Stack gap={6} justify="space-between">
             <H3 className={"overflow-ellipsis whitespace-nowrap overflow-hidden"}>
               {note.heading}
             </H3>
           </Stack>
-          <P className="whitespace-pre-line">{note.content}</P>
+          <P className="whitespace-pre-line flex">{note.content}</P>
+          {hasOverflow && <P className="top-10 right-10">...</P>}
         </Stack>
       </Stack>
     </Stack>
