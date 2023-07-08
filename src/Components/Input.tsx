@@ -31,7 +31,7 @@ interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const checkBoxClass =
-  "bg-amber-200 hover:bg-amber-400 cursor-pointer w-8 h-8 border-3 border-rose-500 rounded checked:bg-green-500 ";
+  "bg-amber-200 hover:bg-amber-400 cursor-pointer w-8 h-4 border-3 border-rose-500 rounded checked:bg-green-500 ";
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(({ label, ...props }, ref) => {
   return (
     <Stack gap={6} align="center">

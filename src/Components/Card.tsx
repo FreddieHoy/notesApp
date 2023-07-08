@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import { Checkbox } from "../Components";
 import { Stack } from "../Components/Stack";
 import { H3, P } from "../Components/Typography";
@@ -9,7 +9,8 @@ import { Note } from "../Utils/NoteContext";
 export const Card = ({ note, refetchNotes }: { note: Note; refetchNotes: () => void }) => {
   const api = useApi();
   const dispatch = useGlobalDispatch();
-  const setPage = (id: string) => dispatch({ type: "openNote", id });
+  const setPage = useCallback((id: string) => dispatch({ type: "openNote", id }), [dispatch]);
+
   const overflowRef = useRef<HTMLDivElement>(null);
 
   const hasOverflow = useMemo(() => {

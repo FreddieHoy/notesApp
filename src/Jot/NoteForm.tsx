@@ -30,13 +30,20 @@ export const NoteForm = ({ id }: { id?: string }) => {
           heading: note.heading,
           isToDo: note.todoitem,
         }}
+        noteId={id}
       />
     );
   }
-  return <Form />;
+  return <Form noteId={id} />;
 };
 
-const Form = ({ initialValues }: { initialValues?: NoteFormValues }) => {
+const Form = ({
+  initialValues,
+  noteId,
+}: {
+  initialValues?: NoteFormValues;
+  noteId: string | undefined;
+}) => {
   const dispatch = useGlobalDispatch();
   const setPage = useCallback((page: Page) => dispatch({ type: "setPage", page }), [dispatch]);
   const { refetchNotes } = useNotes();
@@ -49,14 +56,18 @@ const Form = ({ initialValues }: { initialValues?: NoteFormValues }) => {
 
   const onSubmit = useCallback(
     async (values: NoteFormValues) => {
-      await api
-        .post("/notes", {
-          userId,
-          heading: values.heading,
-          content: values.body,
-          todoitem: values.isToDo,
-          checked: values.checked,
-        })
+      const endpoint = noteId ? `/notes/${noteId}` : "/notes";
+      const vars = {
+        userId,
+        heading: values.heading,
+        content: values.body,
+        todoitem: values.isToDo,
+        checked: values.checked,
+      };
+
+      const request = noteId ? api.put(endpoint, vars) : api.post(endpoint, vars);
+
+      Promise.resolve(request)
         .then(async (res) => {
           await refetchNotes();
           setPage(values.isToDo ? "tasks" : "notes");
@@ -65,14 +76,17 @@ const Form = ({ initialValues }: { initialValues?: NoteFormValues }) => {
           console.warn(err);
         });
     },
-    [api, refetchNotes, setPage, userId]
+    [api, noteId, refetchNotes, setPage, userId]
   );
 
   const onDeleteNote = useCallback(async () => {
     if (initialValues?.id) {
-      await api.delete(`notes/${initialValues.id}`);
+      await api.delete(`notes/${initialValues.id}`).then(async (res) => {
+        await refetchNotes();
+        setPage(initialValues.isToDo ? "tasks" : "notes");
+      });
     }
-  }, [api, initialValues?.id]);
+  }, [api, initialValues?.id, initialValues?.isToDo, refetchNotes, setPage]);
 
   const {
     register,
