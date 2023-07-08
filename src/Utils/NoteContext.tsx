@@ -57,7 +57,7 @@ export const NoteProvider = ({ children }: { children: ReactNode }) => {
         const res = await api.get("/notes");
         setNotes(res.data as Note[]);
       } catch (e) {
-        console.log("error", e);
+        console.warn("error", e);
       }
     }
   };

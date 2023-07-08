@@ -23,7 +23,6 @@ export const Login = ({ setView }: { setView: (val: LoginView) => void }) => {
           password: password,
         })
         .then((res) => {
-          console.log("res", res);
           login();
         });
     } catch (e: any) {

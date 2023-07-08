@@ -19,7 +19,6 @@ type NoteFormValues = {
 
 export const NoteForm = ({ id }: { id?: string }) => {
   const note = useGetNote(id);
-  console.log("note", note);
   if (note && id) {
     return (
       <Form
@@ -102,9 +101,6 @@ const Form = ({
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="w-full rounded-lg flex flex-col">
         <div className="relative mb-4">
-          {/* <label htmlFor="heading" className="leading-7 text-sm text-gray-600">
-            <P>Header:</P>
-          </label> */}
           <Input
             className="border"
             {...register("heading", { required: "A heading is required" })}
@@ -113,9 +109,6 @@ const Form = ({
           {errors.heading && <p>{errors.heading.message}</p>}
         </div>
         <div className="relative mb-4">
-          {/* <label htmlFor="note" className="leading-7 text-sm text-gray-600">
-            Note
-          </label> */}
           <Textarea
             {...register("body", {
               maxLength: 450,
@@ -153,7 +146,7 @@ const Form = ({
               </Button>
             )}
             <Button type="submit">
-              <P>{isEdit ? "Save" : "Add +"}</P>
+              <P>{isEdit ? "Save" : "Add"}</P>
             </Button>
           </Stack>
         </Stack>

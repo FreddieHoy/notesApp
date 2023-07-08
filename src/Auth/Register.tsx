@@ -21,7 +21,6 @@ export const Register = ({ setView }: { setView: (val: LoginView) => void }) => 
         confirmPassword: confirmPassword,
       })
       .then((res) => {
-        console.log("success", res.data);
         setView("login");
       })
       .catch((err) => {
