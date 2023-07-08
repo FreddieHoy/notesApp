@@ -85,61 +85,65 @@ const Form = ({ initialValues }: { initialValues?: NoteFormValues }) => {
   });
 
   return (
-    <section className="text-gray-600 bg-white border-2 body-font w-1/2 max-h-3/4">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="w-full  rounded-lg p-8 flex flex-col ">
-          <div className="flex justify-between">
-            <h2 className="text-gray-900 text-lg font-medium title-font mb-5">Jotter</h2>
-            <Stack gap={6}>
-              <Button onClick={onDeleteNote}>Delete 🗑</Button>
-              <Button
-                size="small"
-                intent="secondary"
-                onClick={() => setPage(watch("isToDo") ? "tasks" : "notes")}
-              >
-                Close
-              </Button>
-            </Stack>
-          </div>
-          <div className="relative mb-4">
-            <label htmlFor="heading" className="leading-7 text-sm text-gray-600">
-              <P>Header:</P>
-            </label>
-            <Input
-              className="border"
-              {...register("heading", { required: "A heading is required" })}
-              placeholder="Dinner idea"
-            />
-            {errors.heading && <p>{errors.heading.message}</p>}
-          </div>
-          <div className="relative mb-4">
-            <label htmlFor="note" className="leading-7 text-sm text-gray-600">
-              Note
-            </label>
-            <Textarea
-              {...register("body", {
-                maxLength: 450,
-              })}
-              className="border"
-              placeholder="I will need..."
-            />
-            {errors.body && <p>{`Character limit is 450 (${getValues().body.length})`}</p>}
-          </div>
-          <label htmlFor="toDo" className="pb-6 flex items-center gap-3">
-            <P>Is todo:</P>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="w-full rounded-lg flex flex-col">
+        <div className="relative mb-4">
+          {/* <label htmlFor="heading" className="leading-7 text-sm text-gray-600">
+            <P>Header:</P>
+          </label> */}
+          <Input
+            className="border"
+            {...register("heading", { required: "A heading is required" })}
+            placeholder="Header"
+          />
+          {errors.heading && <p>{errors.heading.message}</p>}
+        </div>
+        <div className="relative mb-4">
+          {/* <label htmlFor="note" className="leading-7 text-sm text-gray-600">
+            Note
+          </label> */}
+          <Textarea
+            {...register("body", {
+              maxLength: 450,
+            })}
+            className="border"
+            placeholder="Content"
+          />
+          {errors.body && <p>{`Character limit is 450 (${getValues().body.length})`}</p>}
+        </div>
+        <Stack>
+          <label htmlFor="toDo" className="pb-6 flex items-center">
+            <P>Task</P>
             <Checkbox {...register("isToDo")} />
           </label>
           {!!watch("isToDo") && (
-            <label htmlFor="checked" className="pb-6 flex items-center gap-3">
-              <P>Checked:</P>
+            <label htmlFor="checked" className="pb-6 flex items-center">
+              <P>Complete</P>
               <Checkbox {...register("checked")} />
             </label>
           )}
-          <Button type="submit" fullWidth={true}>
-            <P>{isEdit ? "Save" : "Add +"}</P>
+        </Stack>
+
+        <Stack gap={6} align="center" justify="space-between" className="w-full">
+          <Button
+            size="small"
+            intent="secondary"
+            onClick={() => setPage(watch("isToDo") ? "tasks" : "notes")}
+          >
+            Back
           </Button>
-        </div>
-      </form>
-    </section>
+          <Stack gap={6} align="center">
+            {noteId && (
+              <Button size="small" onClick={onDeleteNote} intent="danger">
+                Delete
+              </Button>
+            )}
+            <Button type="submit">
+              <P>{isEdit ? "Save" : "Add +"}</P>
+            </Button>
+          </Stack>
+        </Stack>
+      </div>
+    </form>
   );
 };

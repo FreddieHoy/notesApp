@@ -11,6 +11,8 @@ const classes = {
     primary: "text-white bg-indigo-500 hover:bg-indigo-600",
     secondary: "bg-indigo-100 text-black hover:bg-indigo-200",
     minimal: "hover:text-indigo-600 px-0 py-0",
+
+    danger: "text-white bg-red-600 hover:bg-red-800",
   },
   width: {
     fit: "w-fit",
@@ -21,7 +23,7 @@ const classes = {
 
 type ButtonProps = {
   size?: "small" | "medium" | "large";
-  intent?: "primary" | "secondary" | "minimal";
+  intent?: "primary" | "secondary" | "minimal" | "danger";
   fullWidth?: boolean;
   active?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
