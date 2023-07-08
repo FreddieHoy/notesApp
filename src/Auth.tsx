@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState, useCallback } from "react";
 import { useApi } from "./useApi";
 
 type UserAuth = {
@@ -10,6 +10,7 @@ type UserAuth = {
 
 type AuthContent = {
   isAuthed: boolean;
+  isLoadingAuth: boolean;
   me: UserAuth | undefined;
   login: () => void;
   logout: () => void;
@@ -20,8 +21,10 @@ const Authcontext = createContext<AuthContent>({} as any);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const api = useApi();
   const [user, setUser] = useState<UserAuth | undefined>(undefined);
+  const [loading, setLoading] = useState(true);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
+    setLoading(true);
     await api
       .get("/me")
       .then(({ data }) => {
@@ -30,10 +33,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
       })
       .catch((e) => {
-        console.log("error", e);
+        console.log("error fetching auth", e);
         setUser(undefined);
       });
-  };
+    setLoading(false);
+  }, [api]);
 
   useEffect(() => {
     fetchData();
@@ -53,6 +57,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     logout,
     me: user,
     isAuthed: !!user?.token,
+    isLoadingAuth: loading,
   };
   return <Authcontext.Provider value={value}>{children}</Authcontext.Provider>;
 };

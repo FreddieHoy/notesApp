@@ -35,8 +35,10 @@ export const Providers = () => {
 };
 
 export const App = () => {
-  const { isAuthed } = useAuth();
+  const { isAuthed, isLoadingAuth } = useAuth();
   const [view, setView] = useState<LoginView>("login");
+
+  if (isLoadingAuth) return <>Loading....</>;
 
   if (isAuthed) return <Jot />;
 
@@ -85,7 +87,9 @@ const Jot = () => {
         </Stack>
         {showNote && (
           <Overlay isOpen={showNote}>
-            <NoteForm id={noteState.noteId} />
+            <section className="text-gray-600 bg-white body-font w-1/2 max-h-3/4 p-8 rounded-lg">
+              <NoteForm id={noteState.noteId} />
+            </section>
           </Overlay>
         )}
       </Stack>
