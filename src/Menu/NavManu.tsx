@@ -1,5 +1,5 @@
 import { Page } from "../App";
-import { Button } from "../Components";
+import { NavButton } from "../Components/NavButton";
 import { Stack } from "../Components/Stack";
 import { H1, H2 } from "../Components/Typography";
 import { useGlobal, useGlobalDispatch } from "../Utils/GlobalContext";
@@ -10,26 +10,26 @@ export const NavManu = () => {
   const setPage = (page: Page) => dispatch({ type: "setPage", page });
 
   return (
-    <Stack className="border-grey-600 border-r-2 w-40" padding={12} vertical gap={12}>
-      <H1 underline="primary">Jotter</H1>
-      <Button intent="minimal" onClick={() => setPage("tasks")} active={page === "tasks"}>
+    <Stack className="border-grey-600 min-w-[220px]" vertical gap={12}>
+      <Stack padding={"12px 24px"}>
+        <H1 underline="primary">Jotter</H1>
+      </Stack>
+      <NavButton onClick={() => setPage("tasks")} active={page === "tasks"}>
         <H2>Tasks</H2>
-      </Button>
-      <Button intent="minimal" onClick={() => setPage("notes")} active={page === "notes"}>
+      </NavButton>
+      <NavButton onClick={() => setPage("notes")} active={page === "notes"}>
         <H2>Notes</H2>
-      </Button>
-      <Button
-        intent="minimal"
+      </NavButton>
+      <NavButton
         type="button"
-        size="small"
         onClick={() => dispatch({ type: "openNote" })}
         disabled={noteState.visable}
       >
         <H2>Add +</H2>
-      </Button>
-      <Button intent="minimal" onClick={() => setPage("profile")} active={page === "profile"}>
+      </NavButton>
+      <NavButton onClick={() => setPage("profile")} active={page === "profile"}>
         <H2>Profile</H2>
-      </Button>
+      </NavButton>
     </Stack>
   );
 };

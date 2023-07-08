@@ -74,7 +74,7 @@ const Jot = () => {
 
   return (
     <>
-      <Stack className="h-screen w-screen overflow-hidden relative p-0 m-0">
+      <Stack className="h-screen w-screen overflow-hidden relative p-0 m-0 dark:bg-indigo-900">
         <NavManu />
         <Stack>
           <Stack vertical grow className="w-1/2 overflow-hidden" padding={24}>
