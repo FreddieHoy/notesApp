@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { cls } from "./Button";
+import { cls } from "./StyleUtils";
 
 const pClasses = {
   base: "dark:text-white bg-none text-sm",

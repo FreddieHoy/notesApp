@@ -115,6 +115,7 @@ const Form = ({
             })}
             className="border"
             placeholder="Content"
+            canResize
           />
           {errors.body && <p>{`Character limit is 450 (${getValues().body.length})`}</p>}
         </div>

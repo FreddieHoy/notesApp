@@ -34,17 +34,18 @@ export const Card = ({ note, refetchNotes }: { note: Note; refetchNotes: () => v
   };
 
   return (
-    <Stack gap={12} align="center" className={"w-fit"}>
+    <Stack gap={12} align="center" className={"w-full"}>
       {note.todoitem && (
         <Checkbox checked={note.checked} onChange={(e) => handleCheck(e, note.id)} />
       )}
       <Stack
         className={
-          "w-full bg-gray-50 dark:bg-indigo-600 rounded-md hover:cursor-pointer grow overflow-hidden border border-gray-300 "
+          "w-full bg-gray-50 dark:bg-indigo-600 rounded-md hover:cursor-pointer grow border border-gray-300 "
         }
         onClick={() => setPage(note.id)}
         padding={12}
         maxHeight={note.todoitem ? "" : 300}
+        vertical
       >
         <Stack vertical gap={6} grow className="overflow-hidden relative" ref={overflowRef}>
           <Stack gap={6} justify="space-between">
@@ -52,11 +53,11 @@ export const Card = ({ note, refetchNotes }: { note: Note; refetchNotes: () => v
               {note.heading}
             </H3>
           </Stack>
-          <P className="whitespace-pre-line flex">
+          <P className="whitespace-pre-line flex grow">
             {note.content || <span className="italic text-gray-400">Add content..</span>}
           </P>
-          {hasOverflow && <P className="top-10 right-10">...</P>}
         </Stack>
+        {hasOverflow && <P className="top-10 right-10 italic text-gray-400">See more..</P>}
       </Stack>
     </Stack>
   );

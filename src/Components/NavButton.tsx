@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes, Ref, forwardRef } from "react";
-import { cls } from "./Button";
+import { cls } from "./StyleUtils";
 
 const classes = {
   base: "flex border-0 focus:outline-none rounded-r-full text-lg items-center h-fit p-2 pl-6 hover:bg-indigo-100 dark:hover:bg-indigo-800",

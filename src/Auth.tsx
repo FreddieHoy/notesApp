@@ -16,7 +16,7 @@ type AuthContent = {
   logout: () => void;
 };
 
-const Authcontext = createContext<AuthContent>({} as any);
+const AuthContext = createContext<AuthContent>({} as any);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const api = useApi();
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     isAuthed: !!user?.token,
     isLoadingAuth: loading,
   };
-  return <Authcontext.Provider value={value}>{children}</Authcontext.Provider>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-export const useAuth = () => useContext(Authcontext);
+export const useAuth = () => useContext(AuthContext);

@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes, forwardRef, Ref } from "react";
+import { cls } from "./StyleUtils";
 
 const classes = {
   base: "flex border-0 focus:outline-none rounded text-lg justify-center items-center h-fit",
@@ -61,11 +62,3 @@ export const Button = forwardRef(
     </button>
   )
 );
-
-export const cls = (input: string) =>
-  input
-    .replace(/\s+/gm, " ")
-    .split(" ")
-    .filter((cond) => typeof cond === "string")
-    .join(" ")
-    .trim();

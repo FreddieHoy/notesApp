@@ -1,5 +1,6 @@
-import React, { forwardRef, InputHTMLAttributes, TextareaHTMLAttributes } from "react";
+import React, { forwardRef, InputHTMLAttributes, Ref, TextareaHTMLAttributes } from "react";
 import { Stack } from "./Stack";
+import { cls } from "./StyleUtils";
 
 export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
   (props, ref) => {
@@ -13,18 +14,19 @@ export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputE
   }
 );
 
-export const Textarea = forwardRef<
-  HTMLTextAreaElement,
-  TextareaHTMLAttributes<HTMLTextAreaElement>
->((props, ref) => {
-  return (
-    <textarea
-      {...props}
-      className={"p-2 border-r-2 w-full h-[200px] resize-none rounded border border-gray-300"}
-      ref={ref}
-    />
-  );
-});
+type TextAreaProps = { canResize?: boolean } & TextareaHTMLAttributes<HTMLTextAreaElement>;
+
+export const Textarea = forwardRef(
+  ({ canResize = false, ...props }: TextAreaProps, ref: Ref<HTMLTextAreaElement>) => {
+    return (
+      <textarea
+        {...props}
+        className={cls(`p-2 border-r-2 w-full h-[200px] rounded border border-gray-300`)}
+        ref={ref}
+      />
+    );
+  }
+);
 
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;

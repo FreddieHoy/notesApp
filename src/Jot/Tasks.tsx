@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "../Components/Card";
 import { Stack } from "../Components/Stack";
-import { H2, P } from "../Components/Typography";
+import { H2 } from "../Components/Typography";
 import { useNotes } from "../Utils/NoteContext";
 import { Button } from "../Components";
 import { useGlobalDispatch } from "../Utils/GlobalContext";
@@ -25,7 +25,7 @@ export const Tasks = () => {
         <Stack gap={10} vertical>
           {incompleteItems.map((note) => {
             return (
-              <Stack gap={6} align="center" key={note.id} className="min-w-[400px]">
+              <Stack gap={6} align="center" key={note.id}>
                 <Card key={note.id} note={note} refetchNotes={refetchNotes} />
               </Stack>
             );

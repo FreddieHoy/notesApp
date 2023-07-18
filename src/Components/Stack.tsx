@@ -1,6 +1,6 @@
 import { forwardRef, ReactNode, Ref } from "react";
 import { match } from "ts-pattern";
-import { cls } from "./Button";
+import { cls } from "./StyleUtils";
 
 export type StackProps = {
   maxWidth?: number | string;
