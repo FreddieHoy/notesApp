@@ -26,9 +26,9 @@ export const MobileFooterMenu = () => {
         type="button"
         size="small"
         onClick={() => dispatch({ type: "openNote" })}
-        disabled={noteState.visable}
+        disabled={noteState.visible}
       >
-        <H2>Add +</H2>
+        <H2>+</H2>
       </Button>
       <Button intent="minimal" onClick={() => setPage("profile")} active={page === "profile"}>
         <H2>Profile</H2>

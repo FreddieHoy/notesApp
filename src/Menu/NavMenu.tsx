@@ -4,13 +4,13 @@ import { Stack } from "../Components/Stack";
 import { H1, H2 } from "../Components/Typography";
 import { useGlobal, useGlobalDispatch } from "../Utils/GlobalContext";
 
-export const NavManu = () => {
+export const NavMenu = () => {
   const { page, noteState } = useGlobal();
   const dispatch = useGlobalDispatch();
   const setPage = (page: Page) => dispatch({ type: "setPage", page });
 
   return (
-    <Stack className="border-grey-600 min-w-[220px]" vertical gap={12}>
+    <Stack className="bg-gray-100 min-w-[220px] pr-5" vertical gap={12}>
       <Stack padding={"12px 24px"}>
         <H1 underline="primary">Jotter</H1>
       </Stack>
@@ -23,7 +23,7 @@ export const NavManu = () => {
       <NavButton
         type="button"
         onClick={() => dispatch({ type: "openNote" })}
-        disabled={noteState.visable}
+        disabled={noteState.visible}
       >
         <H2>Add +</H2>
       </NavButton>

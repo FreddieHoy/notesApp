@@ -15,9 +15,9 @@ export const Notes = () => {
   };
   return (
     <Stack gap={12} vertical>
-      <Stack className="w-full" align="center" gap={6}>
+      <Stack className="w-full" align="center" justify="space-between" gap={6}>
         <H2>Notes</H2>
-        <Button intent="minimal" onClick={handleAdd}>
+        <Button intent="secondary" size="small" onClick={handleAdd}>
           +
         </Button>
       </Stack>

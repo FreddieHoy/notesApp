@@ -5,7 +5,7 @@ import { Page } from "../App";
 interface GlobalContextState {
   page: Page;
   noteState: {
-    visable: boolean;
+    visible: boolean;
     noteId?: string;
   };
 }
@@ -18,7 +18,7 @@ interface GlobalContextType {
 const intialState: GlobalContextState = {
   page: "profile",
   noteState: {
-    visable: false,
+    visible: false,
   },
 };
 
@@ -35,7 +35,7 @@ const reducer = (state: GlobalContextState, msg: Msg): GlobalContextState => {
   const newState: GlobalContextState = match<Msg, GlobalContextState>(msg)
     .with({ type: "setPage" }, ({ page }) => ({
       noteState: {
-        visable: false,
+        visible: false,
         noteId: undefined,
       },
       page,
@@ -43,7 +43,7 @@ const reducer = (state: GlobalContextState, msg: Msg): GlobalContextState => {
     .with({ type: "openNote" }, ({ id }) => ({
       ...state,
       noteState: {
-        visable: true,
+        visible: true,
         noteId: id,
       },
     }))

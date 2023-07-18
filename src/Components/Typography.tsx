@@ -38,7 +38,7 @@ const hStyle = {
 };
 
 const h1Classes = {
-  base: "dark:text-white bg-none text-xl white-space-nowrap w-fit p-0 m-0 leading-0",
+  base: "dark:text-white bg-none text-xl white-space-nowrap w-fit p-0 m-0 leading-0 relative",
   color: {
     error: "text-red-600",
   },
@@ -54,17 +54,20 @@ export const H1 = ({
   className?: string;
 }) => {
   return (
-    <h1
-      className={cls(`
+    <span className="relative w-fit">
+      <h1
+        className={cls(`
         ${h1Classes.base}
         ${className}
+        ${underline && "z-10"}
       `)}
-    >
-      {children}
+      >
+        {children}
+      </h1>
       {underline && (
-        <div className={cls(`h-[10px] w-full ${hStyle[underline]} relative bottom-3 -z-10`)} />
+        <div className={cls(`h-[10px] w-full ${hStyle[underline]} absolute bottom-[1px]`)} />
       )}
-    </h1>
+    </span>
   );
 };
 

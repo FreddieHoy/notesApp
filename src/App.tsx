@@ -15,7 +15,7 @@ import { GlobalProvider, useGlobal } from "./Utils/GlobalContext";
 import { NoteProvider } from "./Utils/NoteContext";
 import { Overlay } from "./Components/Modal";
 import { H1 } from "./Components/Typography";
-import { NavManu } from "./Menu/NavManu";
+import { NavMenu } from "./Menu/NavMenu";
 import { NotesMobile } from "./Jot/NotesMobile";
 
 export type Page = "tasks" | "notes" | "profile";
@@ -51,7 +51,7 @@ export const App = () => {
 const Jot = () => {
   const isMobile = useIsMobile();
   const { page, noteState } = useGlobal();
-  const showNote = noteState.visable;
+  const showNote = noteState.visible;
 
   if (isMobile) {
     return (
@@ -75,15 +75,13 @@ const Jot = () => {
   return (
     <>
       <Stack className="h-screen w-screen overflow-hidden relative p-0 m-0 dark:bg-indigo-900">
-        <NavManu />
-        <Stack>
-          <Stack vertical grow className="w-1/2 overflow-hidden" padding={24}>
-            {match({ page, isMobile })
-              .with({ page: "tasks" }, () => <Tasks />)
-              .with({ page: "notes" }, () => <Notes />)
-              .with({ page: "profile" }, () => <Profile />)
-              .exhaustive()}
-          </Stack>
+        <NavMenu />
+        <Stack vertical grow className="overflow-hidden" padding={24}>
+          {match({ page, isMobile })
+            .with({ page: "tasks" }, () => <Tasks />)
+            .with({ page: "notes" }, () => <Notes />)
+            .with({ page: "profile" }, () => <Profile />)
+            .exhaustive()}
         </Stack>
         {showNote && (
           <Overlay isOpen={showNote}>

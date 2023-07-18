@@ -34,7 +34,7 @@ export const Card = ({ note, refetchNotes }: { note: Note; refetchNotes: () => v
   };
 
   return (
-    <Stack gap={12} className="w-full" align="center">
+    <Stack gap={12} align="center" className={"w-fit"}>
       {note.todoitem && (
         <Checkbox checked={note.checked} onChange={(e) => handleCheck(e, note.id)} />
       )}
@@ -46,13 +46,15 @@ export const Card = ({ note, refetchNotes }: { note: Note; refetchNotes: () => v
         padding={12}
         maxHeight={note.todoitem ? "" : 300}
       >
-        <Stack vertical gap={6} grow className="overflow-hidden relavtive" ref={overflowRef}>
+        <Stack vertical gap={6} grow className="overflow-hidden relative" ref={overflowRef}>
           <Stack gap={6} justify="space-between">
             <H3 className={"overflow-ellipsis whitespace-nowrap overflow-hidden"}>
               {note.heading}
             </H3>
           </Stack>
-          <P className="whitespace-pre-line flex">{note.content}</P>
+          <P className="whitespace-pre-line flex">
+            {note.content || <span className="italic text-gray-400">Add content..</span>}
+          </P>
           {hasOverflow && <P className="top-10 right-10">...</P>}
         </Stack>
       </Stack>
