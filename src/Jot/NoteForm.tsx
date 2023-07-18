@@ -99,7 +99,7 @@ const Form = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="w-full rounded-lg flex flex-col">
+      <div className="w-full rounded-lg flex flex-col ">
         <div className="relative mb-4">
           <Input
             className="border"

@@ -55,7 +55,7 @@ const Jot = () => {
 
   if (isMobile) {
     return (
-      <Stack className="h-screen overflow-hidden dark:bg-purple-900" vertical>
+      <Stack className="h-screen overflow-hidden dark:bg-gray-800" vertical>
         <Stack vertical padding={"12px 12px 0 12px"} gap={4}>
           <H1 underline="primary">Jotter</H1>
         </Stack>
@@ -74,7 +74,7 @@ const Jot = () => {
 
   return (
     <>
-      <Stack className="h-screen w-screen overflow-hidden relative p-0 m-0 dark:bg-indigo-900">
+      <Stack className="h-screen w-screen overflow-hidden relative p-0 m-0 dark:bg-gray-800">
         <NavMenu />
         <Stack vertical grow className="overflow-hidden" padding={24}>
           {match({ page, isMobile })
@@ -85,7 +85,7 @@ const Jot = () => {
         </Stack>
         {showNote && (
           <Overlay isOpen={showNote}>
-            <section className="text-gray-600 bg-white body-font w-1/2 max-h-3/4 p-8 rounded-lg">
+            <section className="text-gray-600 border bg-white dark:bg-gray-800 body-font w-1/2 max-h-3/4 p-8 rounded-lg dark:border-gray-600">
               <NoteForm id={noteState.noteId} />
             </section>
           </Overlay>

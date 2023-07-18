@@ -10,7 +10,7 @@ export const NavMenu = () => {
   const setPage = (page: Page) => dispatch({ type: "setPage", page });
 
   return (
-    <Stack className="bg-gray-100 min-w-[220px] pr-5" vertical gap={12}>
+    <Stack className="bg-gray-100 dark:bg-gray-900 min-w-[220px] pr-5" vertical gap={12}>
       <Stack padding={"12px 24px"}>
         <H1 underline="primary">Jotter</H1>
       </Stack>

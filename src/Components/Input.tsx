@@ -7,7 +7,7 @@ export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputE
     return (
       <input
         {...props}
-        className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        className="w-full bg-white dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 dark:text-gray-200 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         ref={ref}
       />
     );
@@ -21,7 +21,9 @@ export const Textarea = forwardRef(
     return (
       <textarea
         {...props}
-        className={cls(`p-2 border-r-2 w-full h-[200px] rounded border border-gray-300`)}
+        className={cls(
+          `p-2 border-r-2 w-full h-[200px] rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200`
+        )}
         ref={ref}
       />
     );

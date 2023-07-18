@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { cls } from "./StyleUtils";
 
 const pClasses = {
-  base: "dark:text-white bg-none text-sm",
+  base: "dark:text-gray-200 bg-none text-sm",
   color: {
     error: "text-red-600",
   },
@@ -30,15 +30,14 @@ export const P = ({
   );
 };
 
-// TODO remove underline
-const hStyle = {
-  primary: "bg-indigo-300",
+const underlineStyle = {
+  primary: "bg-indigo-300 dark:bg-indigo-800",
   success: "bg-green-400",
   fail: "bg-red-400",
 };
 
 const h1Classes = {
-  base: "dark:text-white bg-none text-xl white-space-nowrap w-fit p-0 m-0 leading-0 relative",
+  base: "dark:text-gray-200 bg-none text-xl white-space-nowrap w-fit p-0 m-0 leading-0 relative",
   color: {
     error: "text-red-600",
   },
@@ -65,14 +64,16 @@ export const H1 = ({
         {children}
       </h1>
       {underline && (
-        <div className={cls(`h-[10px] w-full ${hStyle[underline]} absolute bottom-[1px]`)} />
+        <div
+          className={cls(`h-[10px] w-full ${underlineStyle[underline]} absolute bottom-[1px]`)}
+        />
       )}
     </span>
   );
 };
 
 const h2Classes = {
-  base: "dark:text-white bg-none text-lg p-0 m-0 leading-0",
+  base: "dark:text-gray-200 bg-none text-lg p-0 m-0 leading-0",
   color: {
     error: "text-red-600",
   },
@@ -101,7 +102,7 @@ export const H2 = ({
 };
 
 const h3Classes = {
-  base: "dark:text-white bg-none text-base p-0 m-0 leading-0 font-semibold",
+  base: "dark:text-gray-200 bg-none text-base p-0 m-0 leading-0 font-semibold",
   color: {
     error: "text-red-600",
   },

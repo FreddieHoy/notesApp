@@ -12,7 +12,8 @@ export const Profile = () => {
   const api = useApi();
   const userId = me?.id;
 
-  const [theme, setTheme] = useState<Theme>();
+  // TODO save to local storage
+  const [theme, setTheme] = useState<Theme>("light");
 
   const handleLogout = async () => {
     await api
@@ -39,7 +40,7 @@ export const Profile = () => {
 
   return (
     <Stack vertical className="w-full" gap={12}>
-      <H2>Welome to Jotter, {me?.name}.</H2>
+      <H2>Welcome to Jotter, {me?.name}.</H2>
       <Stack gap={6} vertical>
         <Button intent="secondary" size="small" type="button" onClick={() => handleLogout()}>
           <P>Logout</P>

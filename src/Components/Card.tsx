@@ -40,7 +40,7 @@ export const Card = ({ note, refetchNotes }: { note: Note; refetchNotes: () => v
       )}
       <Stack
         className={
-          "w-full bg-gray-50 dark:bg-indigo-600 rounded-md hover:cursor-pointer grow border border-gray-300 "
+          "w-full bg-gray-50 dark:bg-neutral-800 rounded-md hover:cursor-pointer grow border border-gray-300 dark:border-gray-600"
         }
         onClick={() => setPage(note.id)}
         padding={12}
