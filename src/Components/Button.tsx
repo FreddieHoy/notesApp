@@ -12,7 +12,7 @@ const classes = {
     primary: "text-white bg-indigo-500 hover:bg-indigo-600",
     secondary:
       "bg-indigo-100 dark:bg-indigo-900 text-black hover:bg-indigo-200 dark:hover:bg-indigo-700 dark:text-gray-200",
-    minimal: "hover:text-indigo-600 px-0 py-0",
+    minimal: "hover:text-indigo-600 px-0 py-0 border-0",
     danger: "text-white bg-red-600 hover:bg-red-800",
   },
   width: {

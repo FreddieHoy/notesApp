@@ -1,19 +1,17 @@
-import { useState } from "react";
 import { useAuth } from "../Auth";
 import { Button } from "../Components";
 import { Stack } from "../Components/Stack";
 import { H2, P } from "../Components/Typography";
 import { useApi } from "../useApi";
-
-type Theme = "light" | "dark";
+import { Theme, useGlobal, useGlobalDispatch } from "../Utils/GlobalContext";
 
 export const Profile = () => {
   const { me, logout } = useAuth();
   const api = useApi();
   const userId = me?.id;
 
-  // TODO save to local storage
-  const [theme, setTheme] = useState<Theme>("light");
+  const { theme } = useGlobal();
+  const dispatch = useGlobalDispatch();
 
   const handleLogout = async () => {
     await api
@@ -33,6 +31,7 @@ export const Profile = () => {
 
     if (theme === "dark") {
       htmlRoot.setAttribute("class", "dark");
+      dispatch({ type: "setTheme", theme });
     } else {
       htmlRoot.removeAttribute("class");
     }
@@ -49,10 +48,7 @@ export const Profile = () => {
           intent="secondary"
           size="small"
           type="button"
-          onClick={() => {
-            setTheme(theme === "light" ? "dark" : "light");
-            handleToggleTheme(theme === "light" ? "dark" : "light");
-          }}
+          onClick={() => handleToggleTheme(theme === "light" ? "dark" : "light")}
         >
           <P>{theme === "light" ? "Dark Theme" : "Light Theme"}</P>
         </Button>

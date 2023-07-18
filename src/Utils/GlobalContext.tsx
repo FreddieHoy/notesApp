@@ -2,12 +2,16 @@ import { createContext, ReactNode, useContext, useReducer } from "react";
 import { match } from "ts-pattern";
 import { Page } from "../App";
 
+export type Theme = "light" | "dark";
+
 interface GlobalContextState {
   page: Page;
   noteState: {
     visible: boolean;
     noteId?: string;
   };
+
+  theme: Theme;
 }
 
 interface GlobalContextType {
@@ -15,25 +19,30 @@ interface GlobalContextType {
   dispatch: (val: Msg) => void;
 }
 
-const intialState: GlobalContextState = {
+const initialState: GlobalContextState = {
   page: "profile",
   noteState: {
     visible: false,
   },
+  theme: "light",
 };
 
-const defualtValue: GlobalContextType = {
-  state: intialState,
+const defaultValue: GlobalContextType = {
+  state: initialState,
   dispatch: () => {},
 };
 
-type Msg = { type: "setPage"; page: Page } | { type: "openNote"; id?: string };
+type Msg =
+  | { type: "setPage"; page: Page }
+  | { type: "openNote"; id?: string }
+  | { type: "setTheme"; theme: Theme };
 
-const GlobalContext = createContext<GlobalContextType>(defualtValue);
+const GlobalContext = createContext<GlobalContextType>(defaultValue);
 
 const reducer = (state: GlobalContextState, msg: Msg): GlobalContextState => {
   const newState: GlobalContextState = match<Msg, GlobalContextState>(msg)
     .with({ type: "setPage" }, ({ page }) => ({
+      ...state,
       noteState: {
         visible: false,
         noteId: undefined,
@@ -47,14 +56,16 @@ const reducer = (state: GlobalContextState, msg: Msg): GlobalContextState => {
         noteId: id,
       },
     }))
+    .with({ type: "setTheme" }, ({ theme }) => ({
+      ...state,
+      theme,
+    }))
     .exhaustive();
   return newState;
 };
 
 export const GlobalProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(reducer, intialState);
-
-  console.info("state", state);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const value: GlobalContextType = {
     state,
