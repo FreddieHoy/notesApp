@@ -28,10 +28,10 @@ export const Profile = () => {
 
   const handleToggleTheme = (theme: Theme) => {
     const htmlRoot = document.getElementsByTagName("html")[0];
+    dispatch({ type: "setTheme", theme });
 
     if (theme === "dark") {
       htmlRoot.setAttribute("class", "dark");
-      dispatch({ type: "setTheme", theme });
     } else {
       htmlRoot.removeAttribute("class");
     }

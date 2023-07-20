@@ -3,25 +3,26 @@ import { cls } from "./StyleUtils";
 
 const pClasses = {
   base: "dark:text-gray-200 bg-none text-sm",
-  color: {
-    error: "text-red-600",
-  },
+  error: "text-red-600",
+  placeholder: "italic text-gray-400 dark:text-gray-400",
 };
 
 export const P = ({
   children,
-  color,
+  intent,
   className,
+  light,
 }: {
   children: ReactNode;
-  color?: "error";
+  intent?: "error" | "placeholder";
   className?: string;
+  light?: boolean;
 }) => {
   return (
     <p
       className={cls(`
-        ${pClasses.base}
-        ${color ? pClasses.color[color] : undefined}
+      ${pClasses.base}
+      ${intent ? pClasses[intent] : undefined}
         ${className}
       `)}
     >

@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, Ref, forwardRef } from "react";
 import { cls } from "./StyleUtils";
 
 const classes = {
-  base: "flex border-0 focus:outline-none rounded-r-full text-lg items-center h-fit p-2 pl-6 hover:bg-indigo-100 dark:hover:bg-indigo-800",
+  base: "flex border-0 focus:outline-none gap-6 rounded-r-full text-lg items-center h-fit p-2 pl-6 hover:bg-gray-300 dark:hover:bg-indigo-800 transition-all duration-400",
   active: "bg-indigo-200 dark:bg-gray-800",
 };
 

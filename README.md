@@ -5,22 +5,46 @@
 Then need to connect and run docker, then run the BE, FE css and FE.
 
 
-#### Big issues
+# FrontEnd notes
 
-- Auth - Solved using cookies
+### Colors
 
-- sharing types with the BE
-  
-- URL management. Everything is just '/'
+So tailwind provides a color pallet and theming. But the issue is I don't know what my primary theme colors are. So I'm going to outline them here. FYI just going to steal some nice colors themes from the internet.
+
+So to save time I'm going to stick with the standard colors that come with tailwind instead of configuring the color scheme. I'm just going to write down the ones that I use a lot of keep things matching.
+
+
+
+So light theme.
+- gray-300
+- gray-100
+- indigo-300
+- indigo-100
+- 
+- text - gray-200
+- light text - gray-400
+- border - gray-200
+
+
+Dark theme.
+- gray-900
+- gray-800
+- indigo-900
+- indigo-700
+- 
+- text - gray-200
+- border - gray-600
+
+
 
 
 ---
 
-## API notes
+# Backend Notes
 
-Pretty fun just hammering away for a bit making end points for notes and users.
+### Journey with using docker
 
-Started off using brew to run the DB.
+Started off using brew to run the DB locally on my machine
 
 `brew services list` to see my running database
 
@@ -31,8 +55,6 @@ Use `brew services start`
 check what users are installed - \du (inside Postgres)
 
 Basically all the good set up notes were here for interacting with the database - https://blog.logrocket.com/nodejs-expressjs-postgresql-crud-rest-api-example/
-
-#### Started using docker
 
 Okay after having issues with software versioning I was told the best thing to do is to run the DB on Docker. They you get an nice image and container you can connect to and don't have to worry about the version of node etc..
 

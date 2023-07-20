@@ -1,8 +1,15 @@
 import { Page } from "../App";
 import { NavButton } from "../Components/NavButton";
 import { Stack } from "../Components/Stack";
-import { H1, H2 } from "../Components/Typography";
+import { H1, H3 } from "../Components/Typography";
 import { useGlobal, useGlobalDispatch } from "../Utils/GlobalContext";
+
+import {
+  PlusIcon,
+  PencilSquareIcon,
+  RectangleStackIcon,
+  UserIcon,
+} from "@heroicons/react/24/solid";
 
 export const NavMenu = () => {
   const { page, noteState } = useGlobal();
@@ -15,20 +22,24 @@ export const NavMenu = () => {
         <H1 underline="primary">Jotter</H1>
       </Stack>
       <NavButton onClick={() => setPage("tasks")} active={page === "tasks"}>
-        <H2>Tasks</H2>
+        <RectangleStackIcon className="h-6 w-6" />
+        <H3>Tasks</H3>
       </NavButton>
       <NavButton onClick={() => setPage("notes")} active={page === "notes"}>
-        <H2>Notes</H2>
+        <PencilSquareIcon className="h-6 w-6" />
+        <H3>Notes</H3>
       </NavButton>
       <NavButton
         type="button"
         onClick={() => dispatch({ type: "openNote" })}
         disabled={noteState.visible}
       >
-        <H2>Add +</H2>
+        <PlusIcon className="h-6 w-6" />
+        <H3>Add</H3>
       </NavButton>
       <NavButton onClick={() => setPage("profile")} active={page === "profile"}>
-        <H2>Profile</H2>
+        <UserIcon className="h-6 w-6" />
+        <H3>Profile</H3>
       </NavButton>
     </Stack>
   );
