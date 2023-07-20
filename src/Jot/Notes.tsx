@@ -5,6 +5,7 @@ import { H2 } from "../Components/Typography";
 import { useNotes } from "../Utils/NoteContext";
 import { Button } from "../Components";
 import { useGlobalDispatch } from "../Utils/GlobalContext";
+import { PlusIcon } from "@heroicons/react/24/solid";
 
 export const Notes = () => {
   const { readNotes, refetchNotes } = useNotes();
@@ -14,14 +15,21 @@ export const Notes = () => {
     dispatch({ type: "openNote" });
   };
   return (
-    <Stack gap={12} vertical>
-      <Stack className="w-full" align="center" justify="space-between" gap={6}>
+    <Stack vertical className="overflow-hidden">
+      <Stack
+        className="w-full border-b"
+        align="center"
+        justify="space-between"
+        gap={6}
+        padding={24}
+      >
         <H2>Notes</H2>
         <Button intent="secondary" size="small" onClick={handleAdd}>
-          +
+          <PlusIcon className="h-6 w-6" />
         </Button>
       </Stack>
-      <Stack gap={12} grow className="overflow-y-hidden" wrap="wrap" align="start">
+
+      <Stack gap={12} grow wrap="wrap" align="start" className="overflow-scroll" padding={24}>
         {readNotes.map((note) => {
           return (
             <Stack key={note.id} className="w-64">

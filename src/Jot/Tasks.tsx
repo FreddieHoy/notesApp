@@ -5,6 +5,7 @@ import { H2 } from "../Components/Typography";
 import { useNotes } from "../Utils/NoteContext";
 import { Button } from "../Components";
 import { useGlobalDispatch } from "../Utils/GlobalContext";
+import { PlusIcon } from "@heroicons/react/24/solid";
 
 export const Tasks = () => {
   const { completedItems, incompleteItems, refetchNotes } = useNotes();
@@ -14,14 +15,20 @@ export const Tasks = () => {
   };
 
   return (
-    <Stack gap={10} vertical className="w-full h-full">
-      <Stack className="w-full" align="center" justify="space-between" gap={6}>
+    <Stack vertical className="w-full h-full">
+      <Stack
+        className="w-full border-b"
+        align="center"
+        justify="space-between"
+        gap={6}
+        padding={24}
+      >
         <H2>Tasks</H2>
         <Button intent="secondary" size="small" onClick={handleAdd}>
-          +
+          <PlusIcon className="h-6 w-6" />
         </Button>
       </Stack>
-      <Stack gap={20} vertical>
+      <Stack gap={20} vertical grow className="overflow-scroll" padding={24}>
         <Stack gap={10} vertical>
           {incompleteItems.map((note) => {
             return (

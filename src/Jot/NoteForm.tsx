@@ -100,39 +100,46 @@ const Form = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="w-full rounded-lg flex flex-col ">
-        <div className="relative mb-4">
-          <Input
-            className="border"
-            {...register("heading", { required: "A heading is required" })}
-            placeholder="Header"
-          />
-          {errors.heading && <p>{errors.heading.message}</p>}
-        </div>
-        <div className="relative mb-4">
-          <Textarea
-            {...register("body", {
-              maxLength: 450,
-            })}
-            className="border"
-            placeholder="Content"
-            canResize
-          />
-          {errors.body && <p>{`Character limit is 450 (${getValues().body.length})`}</p>}
-        </div>
-        <Stack>
-          <label htmlFor="toDo" className="pb-6 flex items-center">
-            <P>Task</P>
-            <Checkbox {...register("isToDo")} />
-          </label>
-          {!!watch("isToDo") && (
-            <label htmlFor="checked" className="pb-6 flex items-center">
-              <P>Complete</P>
-              <Checkbox {...register("checked")} />
+        <Stack padding={18} vertical>
+          <div className="relative mb-4">
+            <Input
+              className="border"
+              {...register("heading", { required: "A heading is required" })}
+              placeholder="Header"
+            />
+            {errors.heading && <p>{errors.heading.message}</p>}
+          </div>
+          <div className="relative">
+            <Textarea
+              {...register("body", {
+                maxLength: 450,
+              })}
+              className="border"
+              placeholder="Content"
+              canResize
+            />
+            {errors.body && <p>{`Character limit is 450 (${getValues().body.length})`}</p>}
+          </div>
+          <Stack className="items-center">
+            <label htmlFor="toDo" className="flex">
+              <Checkbox {...register("isToDo")} />
+              <P>Task</P>
             </label>
-          )}
+            {!!watch("isToDo") && (
+              <label htmlFor="checked" className="flex">
+                <Checkbox {...register("checked")} />
+                <P>Complete</P>
+              </label>
+            )}
+          </Stack>
         </Stack>
-
-        <Stack gap={6} align="center" justify="space-between" className="w-full">
+        <Stack
+          gap={6}
+          padding={18}
+          align="center"
+          justify="space-between"
+          className="w-full border-t"
+        >
           <Button
             size="small"
             intent="secondary"

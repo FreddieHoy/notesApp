@@ -76,7 +76,7 @@ const Jot = () => {
     <>
       <Stack className="h-screen w-screen overflow-hidden relative p-0 m-0 dark:bg-gray-800">
         <NavMenu />
-        <Stack vertical grow className="overflow-hidden" padding={24}>
+        <Stack vertical grow className="overflow-hidden">
           {match({ page, isMobile })
             .with({ page: "tasks" }, () => <Tasks />)
             .with({ page: "notes" }, () => <Notes />)
@@ -85,7 +85,7 @@ const Jot = () => {
         </Stack>
         {showNote && (
           <Overlay isOpen={showNote}>
-            <section className="text-gray-600 border bg-white dark:bg-gray-800 body-font w-1/2 max-h-3/4 p-8 rounded-lg dark:border-gray-600">
+            <section className="text-gray-600 border bg-white shadow-xl body-font w-1/2 max-h-3/4 rounded-lg dark:border-gray-600 dark:bg-gray-800">
               <NoteForm id={noteState.noteId} />
             </section>
           </Overlay>
