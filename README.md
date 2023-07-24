@@ -1,4 +1,4 @@
-# Getting started locally
+### Getting started locally
 
 - Clone, cd in, install node modules.
 
@@ -13,14 +13,12 @@ So tailwind provides a color pallet and theming. But the issue is I don't know w
 
 So to save time I'm going to stick with the standard colors that come with tailwind instead of configuring the color scheme. I'm just going to write down the ones that I use a lot of keep things matching.
 
-
-
 So light theme.
 - gray-300
 - gray-100
 - indigo-300
 - indigo-100
-- 
+  
 - text - gray-200
 - light text - gray-400
 - border - gray-200
@@ -31,7 +29,7 @@ Dark theme.
 - gray-800
 - indigo-900
 - indigo-700
-- 
+  
 - text - gray-200
 - border - gray-600
 

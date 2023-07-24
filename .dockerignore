@@ -1,0 +1,5 @@
+node_modules
+.git
+.vscode
+
+# should I ignore my .env??

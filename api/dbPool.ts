@@ -1,12 +1,10 @@
 import { Pool } from "pg";
 
-// should be hidden using .env
-// This is connecting to the DB created using the pgsql command line
 export const pool = new Pool({
-  user: process.env.POSTGRES_USER || "freddie",
-  host: "localhost",
-  database: "postgres",
-  password: process.env.POSTGRES_PW || "freddielovescake",
+  user: "freddie", //process.env.POSTGRES_USER ||
+  host: "postgres", //process.env.POSTGRES_HOST ||
+  database: "postgres", //process.env.POSTGRES_DB ||
+  password: "freddielovescake", //process.env.POSTGRES_PASSWORD ||
   port: 5432,
 });
 

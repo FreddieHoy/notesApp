@@ -1,14 +1,14 @@
-DROP DATABASE IF EXISTS api;
+-- DROP DATABASE IF EXISTS postgres;
 
--- Create the db
-CREATE DATABASE api;
+-- -- Create the db
+-- CREATE DATABASE postgres;
 
--- Move into the db
-\c api
+-- -- Move into the db
+-- \c postgres
 
--- drop tables if they exist 
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS notes;
+-- -- drop tables if they exist 
+-- DROP TABLE IF EXISTS users;
+-- DROP TABLE IF EXISTS notes;
 
 -- (Re)Create Tables 
 

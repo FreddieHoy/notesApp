@@ -1,9 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { router } from "./api/Routing/Router";
-import cors from "cors";
 import cookieParser from "cookie-parser";
-
 import dotEnv from "dotenv";
 
 dotEnv.config();
@@ -19,13 +17,6 @@ app.use(
 );
 
 app.use(cookieParser());
-
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-  })
-);
 
 app.get("/", (request, response) => {
   response.json({ info: "Node.js, Express, and Postgres API" });

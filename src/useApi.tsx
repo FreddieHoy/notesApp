@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const backendBaseURL = "http://localhost:8000";
+const backendBaseURL = ""; // We are using a proxy
 
 export const useApi = () => {
   const instance = axios.create({

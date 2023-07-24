@@ -94,6 +94,8 @@ export const logOut = (request: Request, response: Response) => {
 export const registerUser = async (request: Request, response: Response) => {
   const { name, email, password, confirmPassword } = request.body;
 
+  console.log("registerubng!");
+
   if (!name || !email || !password || !confirmPassword) {
     throw new Error("Please enter all fields");
   }
@@ -102,10 +104,12 @@ export const registerUser = async (request: Request, response: Response) => {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
+  console.log("query!");
 
   pool.query(`SELECT * FROM users WHERE email = $1`, [email], (err, results) => {
+    console.log("erorrr", err);
     if (err) {
-      throw new Error("error from dbquery: " + err.message);
+      throw new Error("error trying to register: " + err.message);
     }
     if (results.rows.length > 0) {
       throw new Error("Email already registered");
@@ -125,4 +129,5 @@ export const registerUser = async (request: Request, response: Response) => {
       );
     }
   });
+  console.log("query done");
 };
