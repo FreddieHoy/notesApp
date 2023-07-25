@@ -21,7 +21,7 @@ export const Notes = () => {
         align="center"
         justify="space-between"
         gap={6}
-        padding={24}
+        padding={12}
       >
         <H2>Notes</H2>
         <Button intent="secondary" size="small" onClick={handleAdd}>
@@ -29,10 +29,17 @@ export const Notes = () => {
         </Button>
       </Stack>
 
-      <Stack gap={12} grow wrap="wrap" align="start" className="overflow-scroll" padding={24}>
+      <Stack
+        gap={12}
+        grow
+        wrap="wrap"
+        align="start"
+        className="overflow-y-scroll w-full"
+        padding={12}
+      >
         {readNotes.map((note) => {
           return (
-            <Stack key={note.id} className="w-64">
+            <Stack key={note.id} className="w-full">
               <Card note={note} refetchNotes={refetchNotes} />
             </Stack>
           );

@@ -85,3 +85,5 @@ The big challenges
 In the end the issue was solved by changing the url:
 
 > "proxy": "http://localhost:8000" -> "http://127.0.0.1:8000/",
+
+When running this container locally I loose the tailwind css generation. Need to solve that issue.

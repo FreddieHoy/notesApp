@@ -17,7 +17,15 @@ type NoteFormValues = {
   checked: boolean;
 };
 
-export const NoteForm = ({ id }: { id?: string }) => {
+type NoteFormInitialValues = {
+  id?: string;
+  heading?: string;
+  body?: string;
+  isToDo?: boolean;
+  checked?: boolean;
+};
+
+export const NoteForm = ({ id, isInitiallyToDo }: { id?: string; isInitiallyToDo?: boolean }) => {
   const note = useGetNote(id);
   if (note && id) {
     return (
@@ -33,14 +41,22 @@ export const NoteForm = ({ id }: { id?: string }) => {
       />
     );
   }
-  return <Form noteId={id} />;
+  console.log("form", isInitiallyToDo);
+  return (
+    <Form
+      noteId={id}
+      initialValues={{
+        isToDo: isInitiallyToDo,
+      }}
+    />
+  );
 };
 
 const Form = ({
   initialValues,
   noteId,
 }: {
-  initialValues?: NoteFormValues;
+  initialValues?: NoteFormInitialValues;
   noteId: string | undefined;
 }) => {
   const dispatch = useGlobalDispatch();
@@ -97,15 +113,17 @@ const Form = ({
     defaultValues: initialValues,
   });
 
+  console.log("initialValues", initialValues);
+  console.log("istodo", watch("isToDo"));
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="w-full rounded-lg flex flex-col ">
-        <Stack padding={18} vertical>
+    <form onSubmit={handleSubmit(onSubmit)} className="h-full">
+      <Stack className="w-full rounded-lg flex flex-col justify-between h-full">
+        <Stack padding={"18px 18px 12px"} vertical>
           <div className="relative mb-4">
             <Input
-              className="border"
               {...register("heading", { required: "A heading is required" })}
-              placeholder="Header"
+              placeholder="Title.."
             />
             {errors.heading && <p>{errors.heading.message}</p>}
           </div>
@@ -114,23 +132,14 @@ const Form = ({
               {...register("body", {
                 maxLength: 450,
               })}
-              className="border"
-              placeholder="Content"
+              placeholder="Content.."
               canResize
             />
             {errors.body && <p>{`Character limit is 450 (${getValues().body.length})`}</p>}
           </div>
-          <Stack className="items-center">
-            <label htmlFor="toDo" className="flex">
-              <Checkbox {...register("isToDo")} />
-              <P>Task</P>
-            </label>
-            {!!watch("isToDo") && (
-              <label htmlFor="checked" className="flex">
-                <Checkbox {...register("checked")} />
-                <P>Complete</P>
-              </label>
-            )}
+          <Stack className="items-center" gap={12}>
+            <Checkbox {...register("isToDo")} label="Task" />
+            {!!watch("isToDo") && <Checkbox {...register("checked")} label={"Checked"} />}
           </Stack>
         </Stack>
         <Stack
@@ -158,7 +167,7 @@ const Form = ({
             </Button>
           </Stack>
         </Stack>
-      </div>
+      </Stack>
     </form>
   );
 };

@@ -22,11 +22,11 @@ export const NavMenu = () => {
         <H1 underline="primary">Jotter</H1>
       </Stack>
       <NavButton onClick={() => setPage("tasks")} active={page === "tasks"}>
-        <RectangleStackIcon className="h-6 w-6" />
+        <RectangleStackIcon className="h-6 w-6 dark:text-gray-300" />
         <H3>Tasks</H3>
       </NavButton>
       <NavButton onClick={() => setPage("notes")} active={page === "notes"}>
-        <PencilSquareIcon className="h-6 w-6" />
+        <PencilSquareIcon className="h-6 w-6 dark:text-gray-300" />
         <H3>Notes</H3>
       </NavButton>
       <NavButton
@@ -34,11 +34,11 @@ export const NavMenu = () => {
         onClick={() => dispatch({ type: "openNote" })}
         disabled={noteState.visible}
       >
-        <PlusIcon className="h-6 w-6" />
+        <PlusIcon className="h-6 w-6 dark:text-gray-300" />
         <H3>Add</H3>
       </NavButton>
       <NavButton onClick={() => setPage("profile")} active={page === "profile"}>
-        <UserIcon className="h-6 w-6" />
+        <UserIcon className="h-6 w-6 dark:text-gray-300" />
         <H3>Profile</H3>
       </NavButton>
     </Stack>

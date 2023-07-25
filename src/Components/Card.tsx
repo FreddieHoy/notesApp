@@ -28,18 +28,19 @@ export const Card = ({ note, refetchNotes }: { note: Note; refetchNotes: () => v
   };
 
   return (
-    <Stack className={"w-full"}>
+    <Stack className={"w-full overflow-hidden"}>
       {note.todoitem && (
         <Checkbox checked={note.checked} onChange={(e) => handleCheck(e, note.id)} />
       )}
       <Stack
         className={
-          "w-full bg-gray-50 dark:bg-gray-800 rounded-md hover:cursor-pointer hover:shadow grow border border-gray-300 dark:border-gray-600 transition-all duration-400"
+          "bg-gray-50 dark:bg-gray-800 rounded-md hover:cursor-pointer hover:shadow grow border border-gray-300 dark:border-gray-600 transition-all duration-400 overflow-hidden"
         }
         onClick={() => setPage(note.id)}
         padding={12}
         maxHeight={note.todoitem ? "" : 300}
         vertical
+        grow
       >
         <Stack
           vertical

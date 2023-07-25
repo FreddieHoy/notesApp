@@ -42,7 +42,7 @@ export const Register = ({ setView }: { setView: (val: LoginView) => void }) => 
               className="border"
               type="name"
               id="name"
-              placeholder="John@doe.com"
+              placeholder="John Doe"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />

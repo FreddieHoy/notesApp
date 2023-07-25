@@ -16,7 +16,6 @@ import { NoteProvider } from "./Utils/NoteContext";
 import { Overlay } from "./Components/Modal";
 import { H1 } from "./Components/Typography";
 import { NavMenu } from "./Menu/NavMenu";
-import { NotesMobile } from "./Jot/NotesMobile";
 
 export type Page = "tasks" | "notes" | "profile";
 
@@ -59,11 +58,13 @@ const Jot = () => {
         <Stack vertical padding={"12px 12px 0 12px"} gap={4}>
           <H1 underline="primary">Jotter</H1>
         </Stack>
-        <Stack vertical grow className="w-full overflow-scroll" padding={12}>
+        <Stack vertical grow className="w-full overflow-scroll">
           {match({ page, showNote })
-            .with({ showNote: true }, () => <NoteForm id={noteState.noteId} />)
+            .with({ showNote: true }, () => (
+              <NoteForm id={noteState.noteId} isInitiallyToDo={noteState.isInitiallyToDo} />
+            ))
             .with({ page: "tasks" }, () => <Tasks />)
-            .with({ page: "notes" }, () => <NotesMobile />)
+            .with({ page: "notes" }, () => <Notes />)
             .with({ page: "profile" }, () => <Profile />)
             .exhaustive()}
         </Stack>
@@ -83,10 +84,10 @@ const Jot = () => {
             .with({ page: "profile" }, () => <Profile />)
             .exhaustive()}
         </Stack>
-        {showNote && (
+        {noteState.visible && (
           <Overlay isOpen={showNote}>
             <section className="text-gray-600 border bg-white shadow-xl body-font w-1/2 max-h-3/4 rounded-lg dark:border-gray-600 dark:bg-gray-800">
-              <NoteForm id={noteState.noteId} />
+              <NoteForm id={noteState.noteId} isInitiallyToDo={noteState.isInitiallyToDo} />
             </section>
           </Overlay>
         )}

@@ -8,6 +8,7 @@ interface GlobalContextState {
   page: Page;
   noteState: {
     visible: boolean;
+    isInitiallyToDo?: boolean;
     noteId?: string;
   };
 
@@ -23,6 +24,7 @@ const initialState: GlobalContextState = {
   page: "profile",
   noteState: {
     visible: false,
+    isInitiallyToDo: false,
   },
   theme: "light",
 };
@@ -34,12 +36,13 @@ const defaultValue: GlobalContextType = {
 
 type Msg =
   | { type: "setPage"; page: Page }
-  | { type: "openNote"; id?: string }
+  | { type: "openNote"; id?: string; isInitiallyToDo?: boolean }
   | { type: "setTheme"; theme: Theme };
 
 const GlobalContext = createContext<GlobalContextType>(defaultValue);
 
 const reducer = (state: GlobalContextState, msg: Msg): GlobalContextState => {
+  console.log("state", state, msg);
   const newState: GlobalContextState = match<Msg, GlobalContextState>(msg)
     .with({ type: "setPage" }, ({ page }) => ({
       ...state,
@@ -49,13 +52,17 @@ const reducer = (state: GlobalContextState, msg: Msg): GlobalContextState => {
       },
       page,
     }))
-    .with({ type: "openNote" }, ({ id }) => ({
-      ...state,
-      noteState: {
-        visible: true,
-        noteId: id,
-      },
-    }))
+    .with({ type: "openNote" }, ({ id, isInitiallyToDo }) => {
+      console.log("heree", isInitiallyToDo);
+      return {
+        ...state,
+        noteState: {
+          noteId: id,
+          isInitiallyToDo,
+          visible: true,
+        },
+      };
+    })
     .with({ type: "setTheme" }, ({ theme }) => ({
       ...state,
       theme,

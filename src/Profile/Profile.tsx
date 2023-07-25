@@ -1,7 +1,7 @@
 import { useAuth } from "../Auth";
 import { Button } from "../Components";
 import { Stack } from "../Components/Stack";
-import { H2, P } from "../Components/Typography";
+import { H2, H3, P } from "../Components/Typography";
 import { useApi } from "../useApi";
 import { Theme, useGlobal, useGlobalDispatch } from "../Utils/GlobalContext";
 
@@ -38,19 +38,43 @@ export const Profile = () => {
   };
 
   return (
-    <Stack vertical className="w-full" gap={12}>
+    <Stack vertical className="w-full" gap={12} padding={24}>
       <H2>Welcome to Jotter, {me?.name}.</H2>
-      <Stack gap={6} vertical>
+      <Stack gap={24} vertical>
+        <Stack gap={12} vertical>
+          <H3>Theme</H3>
+          <Stack gap={12}>
+            <Stack gap={12}>
+              <input
+                type="radio"
+                id="light"
+                name="theme"
+                value={"light"}
+                defaultChecked={theme === "light"}
+                onClick={() => handleToggleTheme("light")}
+              />
+              <label htmlFor="light" className="dark:text-gray-300">
+                Light
+              </label>
+            </Stack>
+
+            <Stack gap={12}>
+              <input
+                type="radio"
+                id="dark"
+                name="theme"
+                value={"dark"}
+                onClick={() => handleToggleTheme("dark")}
+              />
+              <label htmlFor="dark" className="dark:text-gray-300">
+                Dark
+              </label>
+            </Stack>
+          </Stack>
+        </Stack>
+
         <Button intent="secondary" size="small" type="button" onClick={() => handleLogout()}>
           <P>Logout</P>
-        </Button>
-        <Button
-          intent="secondary"
-          size="small"
-          type="button"
-          onClick={() => handleToggleTheme(theme === "light" ? "dark" : "light")}
-        >
-          <P>{theme === "light" ? "Dark Theme" : "Light Theme"}</P>
         </Button>
       </Stack>
     </Stack>

@@ -22,7 +22,7 @@ export const Textarea = forwardRef(
       <textarea
         {...props}
         className={cls(
-          `p-2 border-r-2 w-full h-[200px] rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200`
+          `p-2 w-full h-[200px] rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200`
         )}
         ref={ref}
       />
@@ -34,14 +34,17 @@ interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
 }
 
-const checkBoxClass =
-  "bg-amber-200 hover:bg-amber-400 cursor-pointer w-8 h-4 border-3 border-rose-500 rounded checked:bg-green-500 ";
+const checkBoxClass = "cursor-pointer mr-[6px] h-4 outline-gray-200 hover:outline-gray-600 rounded";
+
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(({ label, ...props }, ref) => {
   return (
-    <Stack gap={6} align="center">
-      <input {...props} className={checkBoxClass} type="checkbox" ref={ref} />
+    <Stack
+      align="center"
+      className="cursor-pointer text-gray-400 hover:text-gray-600 dark:text-gray-300"
+    >
+      <input {...props} id={props.name} className={checkBoxClass} type="checkbox" ref={ref} />
       {label && (
-        <label htmlFor={props.name} className="ml-3">
+        <label htmlFor={props.name} className="cursor-pointer">
           {label}
         </label>
       )}
