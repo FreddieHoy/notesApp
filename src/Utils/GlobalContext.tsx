@@ -42,7 +42,6 @@ type Msg =
 const GlobalContext = createContext<GlobalContextType>(defaultValue);
 
 const reducer = (state: GlobalContextState, msg: Msg): GlobalContextState => {
-  console.log("state", state, msg);
   const newState: GlobalContextState = match<Msg, GlobalContextState>(msg)
     .with({ type: "setPage" }, ({ page }) => ({
       ...state,
@@ -52,17 +51,14 @@ const reducer = (state: GlobalContextState, msg: Msg): GlobalContextState => {
       },
       page,
     }))
-    .with({ type: "openNote" }, ({ id, isInitiallyToDo }) => {
-      console.log("heree", isInitiallyToDo);
-      return {
-        ...state,
-        noteState: {
-          noteId: id,
-          isInitiallyToDo,
-          visible: true,
-        },
-      };
-    })
+    .with({ type: "openNote" }, ({ id, isInitiallyToDo }) => ({
+      ...state,
+      noteState: {
+        noteId: id,
+        isInitiallyToDo,
+        visible: true,
+      },
+    }))
     .with({ type: "setTheme" }, ({ theme }) => ({
       ...state,
       theme,

@@ -41,7 +41,7 @@ export const NoteForm = ({ id, isInitiallyToDo }: { id?: string; isInitiallyToDo
       />
     );
   }
-  console.log("form", isInitiallyToDo);
+
   return (
     <Form
       noteId={id}
@@ -112,9 +112,6 @@ const Form = ({
   } = useForm<NoteFormValues>({
     defaultValues: initialValues,
   });
-
-  console.log("initialValues", initialValues);
-  console.log("istodo", watch("isToDo"));
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="h-full">
