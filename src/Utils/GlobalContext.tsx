@@ -21,7 +21,7 @@ interface GlobalContextType {
 }
 
 const initialState: GlobalContextState = {
-  page: "profile",
+  page: "tasks",
   noteState: {
     visible: false,
     isInitiallyToDo: false,
