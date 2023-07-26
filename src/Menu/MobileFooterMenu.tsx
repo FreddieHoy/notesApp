@@ -2,7 +2,7 @@ import { Page } from "../App";
 import { Button } from "../Components";
 import { Stack } from "../Components/Stack";
 import { H2 } from "../Components/Typography";
-import { useGlobal, useGlobalDispatch } from "../Utils/GlobalContext";
+import { useGlobal, useGlobalDispatch } from "../Global/GlobalContext";
 
 export const MobileFooterMenu = () => {
   const { page, noteState } = useGlobal();

@@ -1,9 +1,9 @@
-import { useAuth } from "../Auth";
+import { useAuth } from "../Global/Auth";
 import { Button } from "../Components";
 import { Stack } from "../Components/Stack";
 import { H2, H3, P } from "../Components/Typography";
-import { useApi } from "../useApi";
-import { Theme, useGlobal, useGlobalDispatch } from "../Utils/GlobalContext";
+import { useApi } from "../Utils/useApi";
+import { Theme, useGlobal, useGlobalDispatch } from "../Global/GlobalContext";
 
 export const Profile = () => {
   const { me, logout } = useAuth();

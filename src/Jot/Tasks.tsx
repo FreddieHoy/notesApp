@@ -4,7 +4,7 @@ import { Stack } from "../Components/Stack";
 import { H2 } from "../Components/Typography";
 import { useNotes } from "../Utils/NoteContext";
 import { Button } from "../Components";
-import { useGlobalDispatch } from "../Utils/GlobalContext";
+import { useGlobalDispatch } from "../Global/GlobalContext";
 import { PlusIcon } from "@heroicons/react/24/solid";
 
 export const Tasks = () => {

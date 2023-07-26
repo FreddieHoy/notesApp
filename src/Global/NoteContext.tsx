@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { useAuth } from "../Auth";
-import { useApi } from "../useApi";
+import { useAuth } from "./Auth";
+import { useApi } from "../Utils/useApi";
 
 export type Note = {
   id: string;

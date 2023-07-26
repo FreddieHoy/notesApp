@@ -1,9 +1,9 @@
 import { useState } from "react";
 import type { LoginView } from "../App";
-import { useAuth } from "../Auth";
+import { useAuth } from "../Global/Auth";
 import { Button, Input } from "../Components";
 import { P } from "../Components/Typography";
-import { useApi } from "../useApi";
+import { useApi } from "../Utils/useApi";
 
 export const Login = ({ setView }: { setView: (val: LoginView) => void }) => {
   const { login } = useAuth();

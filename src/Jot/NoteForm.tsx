@@ -1,12 +1,12 @@
 import { useMemo, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { Page } from "../App";
-import { useAuth } from "../Auth";
+import { useAuth } from "../Global/Auth";
 import { Button, Checkbox, Input, Textarea } from "../Components";
 import { Stack } from "../Components/Stack";
 import { P } from "../Components/Typography";
-import { useApi } from "../useApi";
-import { useGlobalDispatch } from "../Utils/GlobalContext";
+import { useApi } from "../Utils/useApi";
+import { useGlobalDispatch } from "../Global/GlobalContext";
 import { useGetNote, useNotes } from "../Utils/NoteContext";
 
 type NoteFormValues = {

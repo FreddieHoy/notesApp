@@ -1,13 +1,14 @@
 import express from "express";
 import bodyParser from "body-parser";
-import { router } from "./api/Routing/Router";
+import { router } from "./src/api/Routing/Router";
 import cookieParser from "cookie-parser";
 import dotEnv from "dotenv";
 
+const port = 8000;
+
 dotEnv.config();
 
-const app = express();
-const port = 8000;
+export const app = express();
 
 app.use(bodyParser.json());
 app.use(

@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { LoginView } from "../App";
 import { Input } from "../Components";
 import { Button } from "../Components/Button";
-import { useApi } from "../useApi";
+import { useApi } from "../Utils/useApi";
 
 export const Register = ({ setView }: { setView: (val: LoginView) => void }) => {
   const [name, setName] = useState("");

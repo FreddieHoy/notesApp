@@ -2,8 +2,8 @@ import React, { useCallback, useState } from "react";
 import { Checkbox } from "../Components";
 import { Stack } from "../Components/Stack";
 import { H3, P } from "../Components/Typography";
-import { useApi } from "../useApi";
-import { useGlobalDispatch } from "../Utils/GlobalContext";
+import { useApi } from "../Utils/useApi";
+import { useGlobalDispatch } from "../Global/GlobalContext";
 import { Note } from "../Utils/NoteContext";
 
 export const Card = ({ note, refetchNotes }: { note: Note; refetchNotes: () => void }) => {

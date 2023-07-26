@@ -2,7 +2,7 @@ import { Page } from "../App";
 import { NavButton } from "../Components/NavButton";
 import { Stack } from "../Components/Stack";
 import { H1, H3 } from "../Components/Typography";
-import { useGlobal, useGlobalDispatch } from "../Utils/GlobalContext";
+import { useGlobal, useGlobalDispatch } from "../Global/GlobalContext";
 
 import {
   PlusIcon,

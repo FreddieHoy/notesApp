@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState, useCallback } from "react";
-import { useApi } from "./useApi";
+import { useApi } from "../Utils/useApi";
 
 type UserAuth = {
   id?: string;
