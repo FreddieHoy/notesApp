@@ -1,6 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
-import { router } from "./src/api/Routing/Router";
+import { router } from "./Routing/Router";
 import cookieParser from "cookie-parser";
 import dotEnv from "dotenv";
 

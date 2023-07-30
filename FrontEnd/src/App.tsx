@@ -12,7 +12,7 @@ import { NoteForm } from "./Jot/NoteForm";
 import { Notes } from "./Jot/Notes";
 import { Stack } from "./Components/Stack";
 import { GlobalProvider, useGlobal } from "./Global/GlobalContext";
-import { NoteProvider } from "./Utils/NoteContext";
+import { NoteProvider } from "./Global/NoteContext";
 import { Overlay } from "./Components/Modal";
 import { H1 } from "./Components/Typography";
 import { NavMenu } from "./Menu/NavMenu";
