@@ -7,7 +7,7 @@ import { Stack } from "../Components/Stack";
 import { P } from "../Components/Typography";
 import { useApi } from "../Utils/useApi";
 import { useGlobalDispatch } from "../Global/GlobalContext";
-import { useGetNote, useNotes } from "../Utils/NoteContext";
+import { useGetNote, useNotes } from "../Global/NoteContext";
 
 type NoteFormValues = {
   id: string;

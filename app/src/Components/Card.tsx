@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from "react";
-import { Checkbox } from "../Components";
-import { Stack } from "../Components/Stack";
-import { H3, P } from "../Components/Typography";
+import { Checkbox } from ".";
+import { Stack } from "./Stack";
+import { H3, P } from "./Typography";
 import { useApi } from "../Utils/useApi";
 import { useGlobalDispatch } from "../Global/GlobalContext";
-import { Note } from "../Utils/NoteContext";
+import { Note } from "../Global/NoteContext";
 
 export const Card = ({ note, refetchNotes }: { note: Note; refetchNotes: () => void }) => {
   const [hasOverflow, setHasOverflow] = useState(false);

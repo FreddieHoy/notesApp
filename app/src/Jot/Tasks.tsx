@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "../Components/Card";
 import { Stack } from "../Components/Stack";
 import { H2 } from "../Components/Typography";
-import { useNotes } from "../Utils/NoteContext";
+import { useNotes } from "../Global/NoteContext";
 import { Button } from "../Components";
 import { useGlobalDispatch } from "../Global/GlobalContext";
 import { PlusIcon } from "@heroicons/react/24/solid";

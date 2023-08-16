@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { pool, secret } from "../dbPool";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 export const getMe = (request: Request, response: Response) => {
   const token = request.cookies.authToken;
