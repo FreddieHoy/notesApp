@@ -1,10 +1,10 @@
 import { Pool } from "pg";
 
 export const pool = new Pool({
-  user: "freddie", //process.env.POSTGRES_USER ||
-  host: "postgres", //process.env.POSTGRES_HOST ||
-  database: "postgres", //process.env.POSTGRES_DB ||
-  password: "freddielovescake", //process.env.POSTGRES_PASSWORD ||
+  user: process.env.POSTGRES_USER || "freddie",
+  host: process.env.POSTGRES_HOST || "postgres",
+  database: process.env.POSTGRES_DB || "postgres",
+  password: process.env.POSTGRES_PASSWORD || "freddielovescake",
   port: 5432,
 });
 

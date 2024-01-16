@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import { router } from "./Routing/Router";
 import cookieParser from "cookie-parser";
 import dotEnv from "dotenv";
+import cors from "cors";
 
 const port = 8000;
 
@@ -19,7 +20,14 @@ app.use(
 
 app.use(cookieParser());
 
-app.get("/", (request, response) => {
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
+
+app.get("/", (_request, response) => {
   response.json({ info: "Node.js, Express, and Postgres API" });
 });
 

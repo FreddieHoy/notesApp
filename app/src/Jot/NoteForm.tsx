@@ -71,7 +71,8 @@ const Form = ({
 
   const onSubmit = useCallback(
     async (values: NoteFormValues) => {
-      const endpoint = noteId ? `/notes/${noteId}` : "/notes";
+      const endpoint = `/notes${noteId ? "/" + noteId : ""}`;
+
       const vars = {
         userId,
         heading: values.heading,
