@@ -1,4 +1,4 @@
-version: '1'
+version: "1"
 services:
   app:
     build: ./app
@@ -9,25 +9,26 @@ services:
     volumes:
       - ./app:/usr/src/app/
       - /usr/src/app/node_modules
-
   api:
     build: ./api
     depends_on:
-      - postgres
+      - db
     ports:
       - "8000:8000"
     volumes:
       - ./api:/usr/src/api/
       - /usr/src/api/node_modules
-
-  postgres:
-    image: postgres:alpine
+  db:
+    build:
+      context: ./db
+      dockerfile: Dockerfile.yml
+    # image: postgres:alpine
     restart: always
     environment:
       - POSTGRES_USER=freddie
       - POSTGRES_PASSWORD=freddielovescake
-      - POSTGRES_DB=postgres
+      - POSTGRES_DB=jotterdb
     ports:
       - "5432:5432"
-    volumes:
-      - ./api/scripts/seed.sql:/docker-entrypoint-initdb.d/seed.sql
+    # volumes:
+    #   - ./api/scripts/seed.sql:/docker-entrypoint-initdb.d/seed.sql

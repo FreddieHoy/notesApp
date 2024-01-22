@@ -1,16 +1,15 @@
--- DROP DATABASE IF EXISTS postgres;
+-- Create user
+CREATE USER freddie PASSWORD 'freddieLovesCake';
 
 -- -- Create the db
--- CREATE DATABASE postgres;
+CREATE DATABASE jotterdb ENCODING 'UTF8';
 
 -- -- Move into the db
 -- \c postgres
 
--- -- drop tables if they exist 
--- DROP TABLE IF EXISTS users;
--- DROP TABLE IF EXISTS notes;
+\connect tranch
 
--- (Re)Create Tables 
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE users (
   ID SERIAL PRIMARY KEY,

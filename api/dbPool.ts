@@ -2,9 +2,9 @@ import { Pool } from "pg";
 
 export const pool = new Pool({
   user: process.env.POSTGRES_USER || "freddie",
-  host: process.env.POSTGRES_HOST || "postgres",
-  database: process.env.POSTGRES_DB || "postgres",
+  database: process.env.POSTGRES_DB || "jotterdb",
   password: process.env.POSTGRES_PASSWORD || "freddielovescake",
+  host: process.env.POSTGRES_HOST || "localhost",
   port: 5432,
 });
 

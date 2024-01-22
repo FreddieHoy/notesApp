@@ -1,0 +1,7 @@
+FROM postgres:14.5
+
+WORKDIR /app
+
+COPY populate.sql /app
+
+CMD ["/bin/bash", "-c", "sleep 5 && psql -h db -p 5432 -U tranch -d tranch -a -f /app/populate.sql -v ON_ERROR_STOP=1"]
