@@ -1,23 +1,5 @@
 version: "1"
 services:
-  app:
-    build: ./app
-    depends_on:
-      - api
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./app:/usr/src/app/
-      - /usr/src/app/node_modules
-  api:
-    build: ./api
-    depends_on:
-      - db
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./api:/usr/src/api/
-      - /usr/src/api/node_modules
   db:
     build:
       context: ./db
@@ -32,3 +14,30 @@ services:
       - "5432:5432"
     # volumes:
     #   - ./api/scripts/seed.sql:/docker-entrypoint-initdb.d/seed.sql
+  flyway:
+    build:
+      context: ./db
+      dockerfile: Dockerfile.flyway.yml
+    command: -locations="filesystem:/schema" -connectRetries=60 info migrate
+    # env_file: ./docker.db.env
+    depends_on:
+      - db
+  app:
+    build: ./app
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app:/usr/src/app/
+      - /usr/src/app/node_modules
+
+  api:
+    build: ./api
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api:/usr/src/api/
+      - /usr/src/api/node_modules

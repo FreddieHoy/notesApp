@@ -1,0 +1,11 @@
+CREATE SCHEMA IF NOT EXISTS note;
+
+CREATE TABLE note.notes (
+  ID SERIAL PRIMARY KEY,
+  userId VARCHAR(100) NOT NULL,
+  heading VARCHAR(100) NOT NULL,
+  content VARCHAR(450),
+  to_do_item BOOLEAN NOT NULL,
+  checked BOOLEAN
+);
+

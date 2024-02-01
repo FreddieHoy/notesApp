@@ -1,0 +1,9 @@
+CREATE SCHEMA IF NOT EXISTS user;
+
+CREATE TABLE user.users (
+  ID SERIAL PRIMARY KEY,
+  name VARCHAR(30),
+  email VARCHAR(50),
+  password VARCHAR(100),
+  token VARCHAR(200)
+);

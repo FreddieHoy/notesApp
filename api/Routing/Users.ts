@@ -94,6 +94,8 @@ export const logOut = (request: Request, response: Response) => {
 export const registerUser = async (request: Request, response: Response) => {
   const { name, email, password, confirmPassword } = request.body;
 
+  console.log("Register!");
+
   if (!name || !email || !password || !confirmPassword) {
     throw new Error("Please enter all fields");
   }

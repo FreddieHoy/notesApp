@@ -1,0 +1,5 @@
+FROM flyway/flyway
+
+WORKDIR /flyway
+
+ADD schema /schema

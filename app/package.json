@@ -19,6 +19,7 @@
     "ts-pattern": "^3.3.5"
   },
   "scripts": {
+    "dev": "react-scripts start",
     "start": "react-scripts start",
     "start:css": "npx tailwindcss -i ./src/app.css -o ./dist/output.css --watch",
     "build": "react-scripts build",

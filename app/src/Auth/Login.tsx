@@ -26,7 +26,7 @@ export const Login = ({ setView }: { setView: (val: LoginView) => void }) => {
           login();
         });
     } catch (e: any) {
-      const message = e.response.data.message;
+      const message = e.response?.data.message;
       if (message) {
         setError(message);
       } else {

@@ -32,7 +32,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setUser(data[0]);
         }
       })
-      .catch((e) => {
+      .catch((e: any) => {
+        console.log("error", e);
         setUser(undefined);
       });
     setLoading(false);
