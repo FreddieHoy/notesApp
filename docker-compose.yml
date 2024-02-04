@@ -4,22 +4,24 @@ services:
     build:
       context: ./db
       dockerfile: Dockerfile.yml
-    # image: postgres:alpine
     restart: always
-    environment:
-      - POSTGRES_USER=freddie
-      - POSTGRES_PASSWORD=freddielovescake
-      - POSTGRES_DB=jotterdb
+    env_file: ./docker.db.env
     ports:
       - "5432:5432"
-    # volumes:
-    #   - ./api/scripts/seed.sql:/docker-entrypoint-initdb.d/seed.sql
   flyway:
     build:
       context: ./db
       dockerfile: Dockerfile.flyway.yml
-    command: -locations="filesystem:/schema" -connectRetries=60 info migrate
-    # env_file: ./docker.db.env
+    command: -locations="filesystem:/schema" -connectRetries=3 info migrate
+    env_file: ./docker.db.env
+    depends_on:
+      - db
+  populate:
+    build:
+      context: ./db
+      dockerfile: Dockerfile.populate.yml
+    env_file: ./docker.db.env
+    restart: on-failure
     depends_on:
       - db
   app:

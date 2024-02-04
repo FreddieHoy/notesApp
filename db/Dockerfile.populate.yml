@@ -5,3 +5,4 @@ WORKDIR /app
 COPY populate.sql /app
 
 CMD ["/bin/bash", "-c", "sleep 5 && psql -h db -p 5432 -U freddie -d jotterdb -a -f /app/populate.sql -v ON_ERROR_STOP=1"]
+# It didn't work as new user jotter?
