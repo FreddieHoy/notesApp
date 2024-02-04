@@ -1,17 +1,16 @@
-## Getting started
+# Note taking app.
 
-### Locally
+Set up using
 
-cd into app/ and api/
+- docker
+- postgres
+- flyway
+- BE - express.js
+- FE - react.js
+- typescript
 
-> npm run start
+## Getting Started
 
-start docker
+#### Set up DB using docker
 
-### Deployment
-
-This app has been 'dockerised' so that it can all be set up with 1 command.
-
-> docker compose up --build
-
-Docker is required to run the app.
+> docker-compose up -d --force-recreate --renew-anon-volumes --build db flyway populate

@@ -1,12 +1,12 @@
 import { Response } from "express";
-import { pool } from "../dbPool";
+import { pool } from "../../dbPool";
 import { AuthRequest } from "./types";
 
 export const getNotes = (request: AuthRequest, response: Response) => {
   const userId = request.user?.sub;
 
   pool.query(
-    "SELECT * FROM notes WHERE userId = $1 ORDER BY id ASC",
+    "SELECT * FROM note.notes WHERE userId = $1 ORDER BY id ASC",
     [userId],
     (error, results) => {
       if (error) {
@@ -22,7 +22,7 @@ export const getNote = (request: AuthRequest, response: Response) => {
   const userId = request.user?.sub;
 
   pool.query(
-    "SELECT * FROM notes WHERE userId = $1, id = $2 ORDER BY id ASC",
+    "SELECT * FROM note.notes WHERE userId = $1, id = $2 ORDER BY id ASC",
     [userId, id],
     (error, results) => {
       if (error) {
@@ -77,7 +77,7 @@ export const editNote = (request: AuthRequest, response: Response) => {
 export const deleteNote = (request: AuthRequest, response: Response) => {
   const id = request.params.id;
   pool.query(
-    `DELETE From notes 
+    `DELETE FROM note.notes 
       WHERE id = $1
     `,
     [id],

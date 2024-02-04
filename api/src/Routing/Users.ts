@@ -1,12 +1,13 @@
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import { pool, secret } from "../dbPool";
+import { pool, secret } from "../../dbPool";
+import db from "../db";
 
 export const getMe = (request: Request, response: Response) => {
   const token = request.cookies.authToken;
 
-  pool.query("SELECT * FROM users WHERE token = $1", [token], (error, results) => {
+  pool.query("SELECT * FROM account.accounts WHERE token = $1", [token], (error, results) => {
     if (error) {
       throw error;
     }
@@ -14,25 +15,12 @@ export const getMe = (request: Request, response: Response) => {
   });
 };
 
-export const logInUser = (request: Request, response: Response) => {
-  const { email, password } = request.body;
+export const logIn = async (request: Request, response: Response) => {
+  const { email, password } = request.body as { email: string; password: string };
 
-  pool.query("SELECT * FROM users WHERE email = $1", [email], (error, results) => {
-    if (error) {
-      throw error;
-    }
-
-    const user = results.rows[0];
-
-    if (!user) {
-      response.status(404).json({
-        message: "User not found.",
-      });
-      response.end();
-      return;
-    }
-
-    const { password: hashedPassword } = user;
+  try {
+    const account = await db.account.getByEmail(email);
+    const { password: hashedPassword } = account;
 
     bcrypt.compare(password, hashedPassword, function (err, result) {
       if (err) {
@@ -50,18 +38,18 @@ export const logInUser = (request: Request, response: Response) => {
         response.end();
         return;
       } else {
-        const token = jwt.sign({ sub: user.id }, secret, {
+        const token = jwt.sign({ sub: account.id }, secret, {
           expiresIn: "6h",
         });
 
         response.cookie("authToken", token, { httpOnly: true });
 
         response.json({
-          message: `Welcome back ${user.name}! (With Cookie)`,
-          user,
+          message: `Welcome back ${account.name}! (With Cookie)`,
+          account,
         });
 
-        pool.query("UPDATE users SET token = $1 WHERE email = $2", [token, email], (error) => {
+        pool.query("UPDATE account SET token = $1 WHERE email = $2", [token, email], (error) => {
           if (error) {
             response.status(500).json({
               message: "error from db query:  " + error.message,
@@ -72,7 +60,9 @@ export const logInUser = (request: Request, response: Response) => {
         });
       }
     });
-  });
+  } catch (e) {
+    throw e;
+  }
 };
 
 export const logOut = (request: Request, response: Response) => {
@@ -82,7 +72,7 @@ export const logOut = (request: Request, response: Response) => {
     throw new Error("No user id found");
   }
 
-  pool.query("UPDATE users SET token = NULL WHERE id = $1", [userId], (error, res) => {
+  pool.query("UPDATE account SET token = NULL WHERE id = $1", [userId], (error, res) => {
     if (error) {
       throw new Error("logout error: " + error.message);
     }
@@ -91,10 +81,8 @@ export const logOut = (request: Request, response: Response) => {
   });
 };
 
-export const registerUser = async (request: Request, response: Response) => {
+export const register = async (request: Request, response: Response) => {
   const { name, email, password, confirmPassword } = request.body;
-
-  console.log("Register!");
 
   if (!name || !email || !password || !confirmPassword) {
     throw new Error("Please enter all fields");
@@ -105,7 +93,7 @@ export const registerUser = async (request: Request, response: Response) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  pool.query(`SELECT * FROM users WHERE email = $1`, [email], (err, results) => {
+  pool.query(`SELECT * FROM account.accounts WHERE email = $1`, [email], (err, results) => {
     if (err) {
       throw new Error("error trying to register: " + err.message);
     }
@@ -113,7 +101,7 @@ export const registerUser = async (request: Request, response: Response) => {
       throw new Error("Email already registered");
     } else {
       pool.query(
-        "INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *",
+        "INSERT INTO account (name, email, password) VALUES ($1, $2, $3) RETURNING *",
         [name, email, hashedPassword],
         (error, result) => {
           if (error) {

@@ -5,9 +5,9 @@ import { secureRoute } from "./SecureRoute";
 
 export const router = Router();
 
-router.post("/login", UserDb.logInUser);
+router.post("/login", UserDb.logIn);
 router.post("/logout", secureRoute, UserDb.logOut);
-router.post("/register", UserDb.registerUser);
+router.post("/register", UserDb.register);
 
 router.get("/notes", secureRoute, NoteDb.getNotes);
 router.get("/notes/:id", secureRoute, NoteDb.getNote);
