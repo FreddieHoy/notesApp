@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as UserDb from "./Users";
+import * as UserDb from "./Authentication/Users";
 import * as NoteDb from "./Notes";
 import { secureRoute } from "./SecureRoute";
 

@@ -1,9 +1,9 @@
-import express from "express";
 import bodyParser from "body-parser";
-import { router } from "./src/Routing/Router";
 import cookieParser from "cookie-parser";
-import dotEnv from "dotenv";
 import cors from "cors";
+import dotEnv from "dotenv";
+import express from "express";
+import { router } from "./src/Routing/Router";
 
 const port = 8000;
 
@@ -19,6 +19,9 @@ app.use(
 );
 
 app.use(cookieParser());
+
+// Causing problems
+// app.use(pino);
 
 app.use(
   cors({

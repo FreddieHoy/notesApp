@@ -5,9 +5,13 @@
     "rootDir": "./",
     "outDir": "./build",
     "esModuleInterop": true,
-    "strict": true,
-    "jsx": "react-jsx"
+    "strict": true
   },
+  "ts-node": {
+    "files": true
+  },
+  "files": ["./custom.d.ts"],
+  "include": ["./src/**/*.ts", "./src/**/*.d.ts"],
   "exclude": [
     "node_modules",
     "./node_modules",

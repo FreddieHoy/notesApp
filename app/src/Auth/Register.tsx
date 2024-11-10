@@ -10,9 +10,12 @@ export const Register = ({ setView }: { setView: (val: LoginView) => void }) => 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const api = useApi();
 
   const onSubmit = async () => {
+    setLoading(true);
     await api
       .post("/register", {
         name: name,
@@ -21,9 +24,11 @@ export const Register = ({ setView }: { setView: (val: LoginView) => void }) => 
         confirmPassword: confirmPassword,
       })
       .then((res) => {
+        setLoading(false);
         setView("login");
       })
       .catch((err) => {
+        setLoading(false);
         console.warn(err);
       });
   };
@@ -89,6 +94,8 @@ export const Register = ({ setView }: { setView: (val: LoginView) => void }) => 
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
+
+          {loading && <p>Loading...</p>}
           <Button onClick={() => onSubmit()} type="button">
             Register
           </Button>

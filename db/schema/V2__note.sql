@@ -1,7 +1,7 @@
 CREATE SCHEMA IF NOT EXISTS note;
 
 CREATE TABLE note.notes(
-  ID SERIAL PRIMARY KEY,
+  id uuid PRIMARY KEY NOT NULL DEFAULT uuid_generate_v4(),
   userId TEXT NOT NULL,
   heading TEXT NOT NULL,
   content TEXT,

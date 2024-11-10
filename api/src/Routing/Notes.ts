@@ -1,9 +1,8 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import { pool } from "../../dbPool";
-import { AuthRequest } from "./types";
 
-export const getNotes = (request: AuthRequest, response: Response) => {
-  const userId = request.user?.sub;
+export const getNotes = (request: Request, response: Response) => {
+  const userId = request.decodedAccountId;
 
   pool.query(
     "SELECT * FROM note.notes WHERE userId = $1 ORDER BY id ASC",
@@ -17,9 +16,9 @@ export const getNotes = (request: AuthRequest, response: Response) => {
   );
 };
 
-export const getNote = (request: AuthRequest, response: Response) => {
+export const getNote = (request: Request, response: Response) => {
   const { id } = request.params;
-  const userId = request.user?.sub;
+  const userId = request.decodedAccountId;
 
   pool.query(
     "SELECT * FROM note.notes WHERE userId = $1, id = $2 ORDER BY id ASC",
@@ -35,9 +34,9 @@ export const getNote = (request: AuthRequest, response: Response) => {
 
 // TODO Change to use token and not user id
 // const token = request.cookies.authToken;
-export const createNote = (request: AuthRequest, response: Response) => {
+export const createNote = (request: Request, response: Response) => {
   const { heading, content, todoitem, checked } = request.body;
-  const userId = request.user?.sub;
+  const userId = request.decodedAccountId;
 
   pool.query(
     "INSERT INTO notes (userId, heading, content, todoitem, checked) VALUES ($1, $2, $3, $4, $5) RETURNING *",
@@ -51,7 +50,7 @@ export const createNote = (request: AuthRequest, response: Response) => {
   );
 };
 
-export const editNote = (request: AuthRequest, response: Response) => {
+export const editNote = (request: Request, response: Response) => {
   const { heading, content, todoitem, checked } = request.body;
   const id = request.params.id;
 
@@ -74,7 +73,7 @@ export const editNote = (request: AuthRequest, response: Response) => {
   );
 };
 
-export const deleteNote = (request: AuthRequest, response: Response) => {
+export const deleteNote = (request: Request, response: Response) => {
   const id = request.params.id;
   pool.query(
     `DELETE FROM note.notes 

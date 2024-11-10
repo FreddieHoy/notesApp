@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useEffect, useState, useCallback } from "react";
+import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
 import { useApi } from "../Utils/useApi";
 
 type UserAuth = {
@@ -29,11 +29,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       .get("/me")
       .then(({ data }) => {
         if (data) {
-          setUser(data[0]);
+          setUser(data);
         }
       })
       .catch((e: any) => {
-        console.log("error", e);
         setUser(undefined);
       });
     setLoading(false);
@@ -41,6 +40,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     fetchData();
+    // Only run once
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

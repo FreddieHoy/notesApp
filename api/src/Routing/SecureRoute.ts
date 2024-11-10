@@ -1,43 +1,39 @@
-import { Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import type { JwtPayload } from "jsonwebtoken";
 import { pool, secret } from "../../dbPool";
-import { AuthRequest } from "./types";
+import { isJWTPayload } from "./utils/typeGuards";
 
-export const secureRoute = (request: AuthRequest, response: Response, next: NextFunction) => {
+export const secureRoute = async (request: Request, response: Response, next: NextFunction) => {
+  console.log("START");
+
   if (!request.cookies.authToken) {
     return response.sendStatus(401);
   }
+  console.log("1");
 
   const token: string = request.cookies.authToken;
+  console.log("2");
 
-  jwt.verify(token, secret, (err, payload) => {
-    if (err) {
-      return response.sendStatus(401);
-    }
-
-    if (!payload) throw new Error("No payload on request");
+  try {
+    const payload = await jwt.verify(token, secret);
+    console.log("3", payload, token);
 
     if (token && isJWTPayload(payload)) {
-      pool.query("SELECT * FROM account.accounts WHERE token = $1", [token], (error, results) => {
-        if (error) {
-          throw error;
-        }
+      const results = await pool.query("SELECT * FROM account.accounts WHERE id = $1", [
+        payload.sub,
+      ]);
+      const account = results.rows[0];
 
-        const account = results.rows[0];
+      console.log("Account", account);
+      if (!account) return response.sendStatus(404).json("No account found please login again");
 
-        if (!account) return response.sendStatus(401);
+      request.decodedAccountId = payload.sub;
+      console.log("4");
 
-        request.user = payload;
-
-        next();
-      });
-    } else {
-      response.sendStatus(404).json("No account found please login again");
+      next();
     }
-  });
-};
-
-const isJWTPayload = (payload: string | JwtPayload): payload is JwtPayload => {
-  return typeof payload === "object";
+  } catch (e) {
+    console.log("Secure Route Error", e);
+    return response.sendStatus(401);
+  }
 };
