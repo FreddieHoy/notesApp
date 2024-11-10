@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from "react";
 import { Checkbox } from ".";
+import { useGlobalDispatch } from "../Global/GlobalContext";
+import { INote } from "../Global/NoteContext";
+import { useApi } from "../Utils/useApi";
 import { Stack } from "./Stack";
 import { H3, P } from "./Typography";
-import { useApi } from "../Utils/useApi";
-import { useGlobalDispatch } from "../Global/GlobalContext";
-import { Note } from "../Global/NoteContext";
 
-export const Card = ({ note, refetchNotes }: { note: Note; refetchNotes: () => void }) => {
+export const Card = ({ note, refetchNotes }: { note: INote; refetchNotes: () => void }) => {
   const [hasOverflow, setHasOverflow] = useState(false);
   const api = useApi();
   const dispatch = useGlobalDispatch();

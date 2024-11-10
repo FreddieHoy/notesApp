@@ -1,11 +1,15 @@
-import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
-import { useApi } from "../Utils/useApi";
+import { createContext, ReactNode, useContext } from "react";
+import { useGetMe } from "../client";
 
-type UserAuth = {
-  id?: string;
-  token?: string;
-  name?: string;
-  email?: string;
+export const deleteCookies = (name = "authToken") => {
+  document.cookie = `${name}=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+  localStorage.clear();
+};
+
+export type UserAuth = {
+  id: string;
+  name: string;
+  email: string;
 };
 
 type AuthContent = {
@@ -19,45 +23,22 @@ type AuthContent = {
 const AuthContext = createContext<AuthContent>({} as any);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const api = useApi();
-  const [user, setUser] = useState<UserAuth | undefined>(undefined);
-  const [loading, setLoading] = useState(true);
-
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    await api
-      .get("/me")
-      .then(({ data }) => {
-        if (data) {
-          setUser(data);
-        }
-      })
-      .catch((e: any) => {
-        setUser(undefined);
-      });
-    setLoading(false);
-  }, [api]);
-
-  useEffect(() => {
-    fetchData();
-    // Only run once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const login = () => {
-    fetchData();
-  };
+  const { data: me, isLoading, mutate } = useGetMe();
 
   const logout = () => {
-    setUser(undefined);
+    deleteCookies();
+  };
+
+  const login = () => {
+    mutate();
   };
 
   const value: AuthContent = {
-    login,
     logout,
-    me: user,
-    isAuthed: !!user?.token,
-    isLoadingAuth: loading,
+    login,
+    me,
+    isAuthed: !!me?.id,
+    isLoadingAuth: isLoading,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

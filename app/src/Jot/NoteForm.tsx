@@ -1,13 +1,13 @@
-import { useMemo, useCallback, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { Page } from "../App";
-import { useAuth } from "../Global/Auth";
 import { Button, Checkbox, Input, Textarea } from "../Components";
 import { Stack } from "../Components/Stack";
 import { P } from "../Components/Typography";
-import { useApi } from "../Utils/useApi";
+import { useAuth } from "../Global/Auth";
 import { useGlobalDispatch } from "../Global/GlobalContext";
 import { useGetNote, useNotes } from "../Global/NoteContext";
+import { useApi } from "../Utils/useApi";
 
 type NoteFormValues = {
   id: string;

@@ -1,11 +1,10 @@
-import React from "react";
+import { PlusIcon } from "@heroicons/react/24/solid";
+import { Button } from "../Components";
 import { Card } from "../Components/Card";
 import { Stack } from "../Components/Stack";
 import { H2 } from "../Components/Typography";
-import { useNotes } from "../Global/NoteContext";
-import { Button } from "../Components";
 import { useGlobalDispatch } from "../Global/GlobalContext";
-import { PlusIcon } from "@heroicons/react/24/solid";
+import { useNotes } from "../Global/NoteContext";
 
 export const Tasks = () => {
   const { completedItems, incompleteItems, refetchNotes } = useNotes();

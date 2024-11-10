@@ -1,20 +1,20 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { useAuth } from "./Auth";
 import { useApi } from "../Utils/useApi";
+import { useAuth } from "./Auth";
 
-export type Note = {
+export interface INote {
   id: string;
   heading: string;
   content: string;
   todoitem: boolean;
   checked: boolean;
-};
+}
 
 type NoteContextType = {
-  allNotes: Note[];
-  incompleteItems: Note[];
-  completedItems: Note[];
-  readNotes: Note[];
+  allNotes: INote[];
+  incompleteItems: INote[];
+  completedItems: INote[];
+  readNotes: INote[];
   refetchNotes: () => void;
 };
 
@@ -31,7 +31,7 @@ export const NoteProvider = ({ children }: { children: ReactNode }) => {
   const api = useApi();
   const userId = me?.id;
 
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<INote[]>([]);
 
   // Improve API
   useEffect(() => {
@@ -39,7 +39,7 @@ export const NoteProvider = ({ children }: { children: ReactNode }) => {
       if (userId) {
         try {
           const res = await api.get("/notes");
-          setNotes(res.data as Note[]);
+          setNotes(res.data as INote[]);
         } catch (e) {
           console.error("notes error", e);
         }
@@ -55,7 +55,7 @@ export const NoteProvider = ({ children }: { children: ReactNode }) => {
     if (userId) {
       try {
         const res = await api.get("/notes");
-        setNotes(res.data as Note[]);
+        setNotes(res.data as INote[]);
       } catch (e) {
         console.warn("error", e);
       }
