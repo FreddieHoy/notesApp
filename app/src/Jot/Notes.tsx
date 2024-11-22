@@ -4,15 +4,19 @@ import { Card } from "../Components/Card";
 import { Stack } from "../Components/Stack";
 import { H2 } from "../Components/Typography";
 import { useGlobalDispatch } from "../Global/GlobalContext";
-import { useNotes } from "../Global/NoteContext";
+import { useGetNotes } from "../client";
 
 export const Notes = () => {
-  const { readNotes, refetchNotes } = useNotes();
+  const { data: notes, isLoading, error } = useGetNotes();
   const dispatch = useGlobalDispatch();
 
   const handleAdd = () => {
-    dispatch({ type: "openNote" });
+    dispatch({ type: "setPage", page: "note" });
   };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error || !notes) return <div>Error getting notes</div>;
+
   return (
     <Stack vertical className="overflow-hidden">
       <Stack
@@ -36,10 +40,10 @@ export const Notes = () => {
         className="overflow-y-scroll w-full"
         padding={12}
       >
-        {readNotes.map((note) => {
+        {notes.map((note) => {
           return (
             <Stack key={note.id} className="w-full">
-              <Card note={note} refetchNotes={refetchNotes} />
+              <Card note={note} />
             </Stack>
           );
         })}

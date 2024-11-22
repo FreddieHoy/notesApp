@@ -20,9 +20,6 @@ app.use(
 
 app.use(cookieParser());
 
-// Causing problems
-// app.use(pino);
-
 app.use(
   cors({
     origin: "http://localhost:3000",

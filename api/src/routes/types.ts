@@ -3,9 +3,6 @@ export type INote = {
   userId: string;
   heading: string;
   content: string;
-  // date_created: Date;
-  toDoItem: boolean;
-  checked?: boolean;
 };
 
 export type IAccount = {

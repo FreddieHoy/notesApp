@@ -1,17 +1,13 @@
 import { createContext, ReactNode, useContext, useReducer } from "react";
 import { match } from "ts-pattern";
-import { Page } from "../App";
 
 export type Theme = "light" | "dark";
+export type PageType = "note" | "notes" | "profile";
+
+export type PageState = { page: "note"; noteId?: string } | { page: "notes" } | { page: "profile" };
 
 interface GlobalContextState {
-  page: Page;
-  noteState: {
-    visible: boolean;
-    isInitiallyToDo?: boolean;
-    noteId?: string;
-  };
-
+  pageState: PageState;
   theme: Theme;
 }
 
@@ -21,11 +17,7 @@ interface GlobalContextType {
 }
 
 const initialState: GlobalContextState = {
-  page: "tasks",
-  noteState: {
-    visible: false,
-    isInitiallyToDo: false,
-  },
+  pageState: { page: "notes" },
   theme: "light",
 };
 
@@ -35,28 +27,18 @@ const defaultValue: GlobalContextType = {
 };
 
 type Msg =
-  | { type: "setPage"; page: Page }
-  | { type: "openNote"; id?: string; isInitiallyToDo?: boolean }
+  | { type: "setPage"; page: PageType; noteId?: string }
   | { type: "setTheme"; theme: Theme };
 
 const GlobalContext = createContext<GlobalContextType>(defaultValue);
 
 const reducer = (state: GlobalContextState, msg: Msg): GlobalContextState => {
   const newState: GlobalContextState = match<Msg, GlobalContextState>(msg)
-    .with({ type: "setPage" }, ({ page }) => ({
+    .with({ type: "setPage" }, ({ page, noteId }) => ({
       ...state,
-      noteState: {
-        visible: false,
-        noteId: undefined,
-      },
-      page,
-    }))
-    .with({ type: "openNote" }, ({ id, isInitiallyToDo }) => ({
-      ...state,
-      noteState: {
-        noteId: id,
-        isInitiallyToDo,
-        visible: true,
+      pageState: {
+        page,
+        noteId: page === "note" ? noteId : undefined,
       },
     }))
     .with({ type: "setTheme" }, ({ theme }) => ({

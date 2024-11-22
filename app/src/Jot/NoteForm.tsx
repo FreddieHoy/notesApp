@@ -1,55 +1,32 @@
 import { useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
-import { Page } from "../App";
-import { Button, Checkbox, Input, Textarea } from "../Components";
+import { Button, Input, Textarea } from "../Components";
 import { Stack } from "../Components/Stack";
 import { P } from "../Components/Typography";
 import { useAuth } from "../Global/Auth";
 import { useGlobalDispatch } from "../Global/GlobalContext";
-import { useGetNote, useNotes } from "../Global/NoteContext";
 import { useApi } from "../Utils/useApi";
+import { useGetNote } from "../client";
 
 type NoteFormValues = {
   id: string;
   heading: string;
   body: string;
-  isToDo: boolean;
-  checked: boolean;
 };
 
 type NoteFormInitialValues = {
   id?: string;
   heading?: string;
   body?: string;
-  isToDo?: boolean;
-  checked?: boolean;
 };
 
 export const NoteForm = ({ id, isInitiallyToDo }: { id?: string; isInitiallyToDo?: boolean }) => {
-  const note = useGetNote(id);
-  if (note && id) {
-    return (
-      <Form
-        initialValues={{
-          id,
-          body: note.content,
-          checked: note.checked,
-          heading: note.heading,
-          isToDo: note.todoitem,
-        }}
-        noteId={id}
-      />
-    );
-  }
+  const { data: note, isLoading, error } = useGetNote(id);
 
-  return (
-    <Form
-      noteId={id}
-      initialValues={{
-        isToDo: isInitiallyToDo,
-      }}
-    />
-  );
+  if (isLoading) return <div>Loading...</div>;
+  if (error || !note) return <div>Error getting note</div>;
+
+  return <Form noteId={id} initialValues={{}} />;
 };
 
 const Form = ({
@@ -60,8 +37,6 @@ const Form = ({
   noteId: string | undefined;
 }) => {
   const dispatch = useGlobalDispatch();
-  const setPage = useCallback((page: Page) => dispatch({ type: "setPage", page }), [dispatch]);
-  const { refetchNotes } = useNotes();
 
   const api = useApi();
   const { me } = useAuth();
@@ -77,38 +52,33 @@ const Form = ({
         userId,
         heading: values.heading,
         content: values.body,
-        todoitem: values.isToDo,
-        checked: values.checked,
       };
 
       const request = noteId ? api.put(endpoint, vars) : api.post(endpoint, vars);
 
       Promise.resolve(request)
         .then(async (res) => {
-          await refetchNotes();
-          setPage(values.isToDo ? "tasks" : "notes");
+          dispatch({ type: "setPage", page: "notes" });
         })
         .catch((err) => {
           console.warn(err);
         });
     },
-    [api, noteId, refetchNotes, setPage, userId]
+    [api, dispatch, noteId, userId]
   );
 
   const onDeleteNote = useCallback(async () => {
     if (initialValues?.id) {
       await api.delete(`notes/${initialValues.id}`).then(async (res) => {
-        await refetchNotes();
-        setPage(initialValues.isToDo ? "tasks" : "notes");
+        dispatch({ type: "setPage", page: "notes" });
       });
     }
-  }, [api, initialValues?.id, initialValues?.isToDo, refetchNotes, setPage]);
+  }, [api, initialValues?.id, dispatch]);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
     getValues,
   } = useForm<NoteFormValues>({
     defaultValues: initialValues,
@@ -118,6 +88,8 @@ const Form = ({
     <form onSubmit={handleSubmit(onSubmit)} className="h-full">
       <Stack className="w-full rounded-lg flex flex-col justify-between h-full">
         <Stack padding={"18px 18px 12px"} vertical>
+          <div>Editing note: {initialValues?.heading}</div>
+
           <div className="relative mb-4">
             <Input
               {...register("heading", { required: "A heading is required" })}
@@ -135,10 +107,6 @@ const Form = ({
             />
             {errors.body && <p>{`Character limit is 450 (${getValues().body.length})`}</p>}
           </div>
-          <Stack className="items-center" gap={12}>
-            <Checkbox {...register("isToDo")} label="Task" />
-            {!!watch("isToDo") && <Checkbox {...register("checked")} label={"Checked"} />}
-          </Stack>
         </Stack>
         <Stack
           gap={6}
@@ -150,7 +118,7 @@ const Form = ({
           <Button
             size="small"
             intent="secondary"
-            onClick={() => setPage(watch("isToDo") ? "tasks" : "notes")}
+            onClick={() => dispatch({ type: "setPage", page: "notes" })}
           >
             Back
           </Button>

@@ -2,10 +2,14 @@ CREATE SCHEMA IF NOT EXISTS note;
 
 CREATE TABLE note.notes(
   id uuid PRIMARY KEY NOT NULL DEFAULT uuid_generate_v4(),
-  userId TEXT NOT NULL,
   heading TEXT NOT NULL,
   content TEXT,
-  to_do_item BOOLEAN NOT NULL,
-  checked BOOLEAN
+  account_id uuid NOT NULL
 );
+
+-- PURPOSE: Constraints
+ALTER TABLE note.notes 
+  ADD CONSTRAINT note_notes_account_id_fkey FOREIGN KEY (account_id) 
+  REFERENCES account.accounts (id) 
+  ON DELETE CASCADE;
 

@@ -1,5 +1,5 @@
 import { pool } from "../../../dbPool";
-import { IAccount } from "../../Routing/types";
+import { IAccount } from "../../routes/types";
 
 const get = async ({ id }: { id: string }): Promise<IAccount> => {
   try {

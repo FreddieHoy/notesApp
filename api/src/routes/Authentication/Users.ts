@@ -10,7 +10,7 @@ export const getMe = async (request: Request, response: Response) => {
   const accountId = request.decodedAccountId;
 
   logger.info({
-    path: "me",
+    path: "/me",
   });
 
   const res = await pool.query("SELECT * FROM account.accounts WHERE id = $1", [accountId]);

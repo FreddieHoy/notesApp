@@ -1,44 +1,22 @@
-import React, { useCallback, useState } from "react";
-import { Checkbox } from ".";
+import { useState } from "react";
 import { useGlobalDispatch } from "../Global/GlobalContext";
-import { INote } from "../Global/NoteContext";
-import { useApi } from "../Utils/useApi";
+import { INote } from "../types";
 import { Stack } from "./Stack";
 import { H3, P } from "./Typography";
 
-export const Card = ({ note, refetchNotes }: { note: INote; refetchNotes: () => void }) => {
+export const Card = ({ note }: { note: INote }) => {
   const [hasOverflow, setHasOverflow] = useState(false);
-  const api = useApi();
   const dispatch = useGlobalDispatch();
-  const setPage = useCallback((id: string) => dispatch({ type: "openNote", id }), [dispatch]);
-
-  const handleCheck = async (e: React.ChangeEvent<HTMLInputElement>, noteId: string) => {
-    await api
-      .put(`/notes/${note.id}`, {
-        ...note,
-        checked: !note.checked,
-      })
-      .then(async () => {
-        await refetchNotes();
-      })
-      .catch((err) => {
-        console.warn(err);
-      });
-    e.stopPropagation();
-  };
 
   return (
     <Stack className={"w-full overflow-hidden"}>
-      {note.todoitem && (
-        <Checkbox checked={note.checked} onChange={(e) => handleCheck(e, note.id)} />
-      )}
       <Stack
         className={
           "bg-gray-50 dark:bg-gray-800 rounded-md hover:cursor-pointer hover:shadow grow border border-gray-300 dark:border-gray-600 transition-all duration-400 overflow-hidden"
         }
-        onClick={() => setPage(note.id)}
+        onClick={() => dispatch({ type: "setPage", page: "note", noteId: note.id })}
         padding={12}
-        maxHeight={note.todoitem ? "" : 300}
+        maxHeight={300}
         vertical
         grow
       >
