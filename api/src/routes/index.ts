@@ -3,7 +3,7 @@ import * as UserDb from "./Authentication/Users";
 import note from "./notes";
 import { secureRoute } from "./SecureRoute";
 
-export const router = Router();
+const router = Router();
 
 router.post("/login", UserDb.logIn);
 router.post("/logout", secureRoute, UserDb.logOut);
@@ -16,3 +16,5 @@ router.put("/notes/:id", secureRoute, note.update);
 router.delete("/notes/:id", secureRoute, note.remove);
 
 router.get("/me", secureRoute, UserDb.getMe);
+
+export default router;

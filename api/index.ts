@@ -3,7 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotEnv from "dotenv";
 import express from "express";
-import { router } from "./src/routes/index.ts";
+import router from "./src/routes";
 
 const port = 8000;
 
