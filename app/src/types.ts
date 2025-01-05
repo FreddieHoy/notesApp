@@ -4,3 +4,10 @@ export interface INote {
   content?: string;
   accountId: string;
 }
+
+export type IAccount = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+};

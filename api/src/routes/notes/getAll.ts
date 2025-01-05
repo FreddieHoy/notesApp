@@ -3,7 +3,7 @@ import { pool } from "../../../dbPool";
 import logger from "../../logger";
 import { INote } from "../types";
 
-const PATH = "/notes";
+const PATH = "/notes/getAll";
 
 export const getAll = async (request: Request, response: Response) => {
   const userId = request.decodedAccountId;

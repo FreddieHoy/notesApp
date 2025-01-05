@@ -3,7 +3,7 @@
 -- Accounts 
 INSERT INTO account.accounts (id, name, email, password) VALUES 
 ('4bc38315-f925-4703-9ec2-60a73635b3cf', 'Freddie Hoy', 'freddiehoy0@gmail.com', '$2a$10$.AXk8hPzaKzgQ6I0jSwZfOmlnT99C4X9LEqhTcwQ059FgWQIHDnBu');
-
+-- Password "pass"
 
 -- Notes
 INSERT INTO note.notes (id, heading, content, account_id) VALUES 

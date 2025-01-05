@@ -1,13 +1,16 @@
 import { PlusIcon } from "@heroicons/react/24/solid";
+import { useGetNotes } from "../client";
 import { Button } from "../Components";
 import { Card } from "../Components/Card";
+import { ErrorMessage } from "../Components/Error";
 import { Stack } from "../Components/Stack";
 import { H2 } from "../Components/Typography";
+import { useAuth } from "../Global/Auth";
 import { useGlobalDispatch } from "../Global/GlobalContext";
-import { useGetNotes } from "../client";
 
 export const Notes = () => {
-  const { data: notes, isLoading, error } = useGetNotes();
+  const { account } = useAuth();
+  const { data: notes, isLoading, error } = useGetNotes(account?.id);
   const dispatch = useGlobalDispatch();
 
   const handleAdd = () => {
@@ -15,10 +18,10 @@ export const Notes = () => {
   };
 
   if (isLoading) return <div>Loading...</div>;
-  if (error || !notes) return <div>Error getting notes</div>;
+  if (error || !notes) return <ErrorMessage error="Error fetching notes" />;
 
   return (
-    <Stack vertical className="overflow-hidden">
+    <div className="flex flex-col">
       <Stack
         className="w-full border-b"
         align="center"
@@ -32,22 +35,11 @@ export const Notes = () => {
         </Button>
       </Stack>
 
-      <Stack
-        gap={12}
-        grow
-        wrap="wrap"
-        align="start"
-        className="overflow-y-scroll w-full"
-        padding={12}
-      >
+      <div className="flex flex-col gap-4 p-4">
         {notes.map((note) => {
-          return (
-            <Stack key={note.id} className="w-full">
-              <Card note={note} />
-            </Stack>
-          );
+          return <Card note={note} key={note.id} />;
         })}
-      </Stack>
-    </Stack>
+      </div>
+    </div>
   );
 };

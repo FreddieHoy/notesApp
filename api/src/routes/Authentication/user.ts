@@ -55,11 +55,15 @@ export const logIn = async (request: Request, response: Response) => {
       expiresIn: "6h",
     });
 
-    response.cookie("authToken", token, { httpOnly: true });
+    response.cookie("authToken", token, { httpOnly: true, secure: true });
 
     response.json({
       message: `Welcome back ${account.name}! (With Cookie)`,
-      account,
+      account: {
+        id: account.id,
+        name: account.name,
+        email: account.email,
+      },
     });
   } catch (e) {
     logger.error({
@@ -71,24 +75,14 @@ export const logIn = async (request: Request, response: Response) => {
 };
 
 export const logOut = (request: Request, response: Response) => {
-  const userId = request.body.userId;
+  const accountId = request.decodedAccountId;
 
   logger.info({
     path: "logOut",
-    data: { userId },
+    data: { accountId },
   });
 
-  if (!userId) {
-    throw new Error("No user id found");
-  }
-
-  pool.query("UPDATE account SET token = NULL WHERE id = $1", [userId], (error, res) => {
-    if (error) {
-      throw new Error("logout error: " + error.message);
-    }
-
-    response.status(200).clearCookie("authToken").send("Successfully logged out");
-  });
+  response.status(200).clearCookie("authToken").send();
 };
 
 export const register = async (request: Request, response: Response) => {
@@ -115,25 +109,27 @@ export const register = async (request: Request, response: Response) => {
       throw new Error("Email already registered");
     }
 
-    pool.query(
+    const res = await pool.query(
       "INSERT INTO account.accounts (name, email, password) VALUES ($1, $2, $3) RETURNING *",
-      [name, email, hashedPassword],
-      (error, result) => {
-        if (error) {
-          throw new Error("error from reg db:" + error.message);
-        }
-        // should have safer type checking..
-        const newUserId = result.rows[0].id;
-
-        response.status(201).send(`User added with ID: ${newUserId ?? "unknown"}`);
-      }
+      [name, email, hashedPassword]
     );
-  } catch (e) {
-    if (isErrorWithMessage(e)) {
+
+    if (res.rows.length !== 1) throw new Error("Failed to register user");
+
+    const newUserId = res.rows[0].id;
+
+    response.status(201).send(`User added with ID: ${newUserId ?? "unknown"}`);
+  } catch (error) {
+    logger.error({
+      path: "register",
+      error,
+    });
+
+    if (isErrorWithMessage(error)) {
       return response.status(400).json({
-        message: e.message,
+        message: error.message,
       });
     }
-    return response.status(400).json(e);
+    return response.status(400).json(error);
   }
 };

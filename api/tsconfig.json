@@ -10,7 +10,7 @@
   "ts-node": {
     "files": true
   },
-  "files": ["./custom.d.ts"],
+  "files": ["./src/custom.d.ts"],
   "include": ["./src/**/*.ts", "./src/**/*.d.ts"],
   "exclude": [
     "node_modules",

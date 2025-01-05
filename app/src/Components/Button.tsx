@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, forwardRef, Ref } from "react";
 import { cls } from "./StyleUtils";
 
 const classes = {
-  base: "flex focus:outline-none rounded text-lg justify-center items-center h-fit transition-all duration-400 dark:border-gray-600",
+  base: "flex focus:outline-2 outline-offset-2 rounded text-lg justify-center items-center h-fit transition-all duration-400 dark:border-gray-600 gap-2",
   size: {
     small: "py-2 px-4 text-sm",
     medium: "py-2 px-6 text-base",
@@ -60,8 +60,8 @@ export const Button = forwardRef(
       `)}
       {...props}
     >
-      {loading ? <Spinner /> : null}
       {children}
+      {loading ? <Spinner /> : null}
     </button>
   )
 );
@@ -71,7 +71,7 @@ const Spinner = () => {
     <div role="status">
       <svg
         aria-hidden="true"
-        className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+        className="w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

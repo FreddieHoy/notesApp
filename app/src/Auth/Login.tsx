@@ -1,49 +1,40 @@
 import { useState } from "react";
-import type { LoginView } from "../App";
-import { useAuth } from "../Global/Auth";
+import { type LoginView } from "../App";
 import { Button, Input } from "../Components";
 import { P } from "../Components/Typography";
-import { useApi } from "../Utils/useApi";
+import { useLogin } from "../client";
+import { IAccount } from "../types";
 
-export const Login = ({ setView }: { setView: (val: LoginView) => void }) => {
-  const { login } = useAuth();
+export const Login = ({
+  setView,
+  setUser,
+}: {
+  setView: (val: LoginView) => void;
+  setUser: (user: IAccount) => void;
+}) => {
+  const { isLoading, mutate: login, error } = useLogin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [error, setError] = useState<string>();
-
-  const api = useApi();
-
   const onSubmit = async () => {
-    try {
-      setError(undefined);
-      await api
-        .post("/login", {
-          email: email,
-          password: password,
-        })
-        .then((res) => {
-          login();
-        });
-    } catch (e: any) {
-      const message = e.response?.data.message;
-      if (message) {
-        setError(message);
-      } else {
-        setError("Error connecting");
-      }
-    }
+    login(
+      {
+        email: email,
+        password: password,
+      },
+      { onSuccess: (res) => setUser(res) }
+    );
   };
 
   return (
     <div className="flex h-screen w-screen justify-center items-center box-border">
-      <section className="text-gray-600 body-font ">
-        <div className="px-5 py-24 flex  items-center">
-          <div className="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0 ">
-            <h1 className="title-font font-medium text-3xl text-gray-900">Welcome to Jotter</h1>
+      <section className="text-gray-600 body-font">
+        <div className="px-5 py-24 flex items-center">
+          <div className="flex flex-col pr-6">
+            <h1 className="title-font font-medium text-lg text-gray-900">Welcome to Jotter</h1>
             <p className="leading-relaxed mt-4">The greatest note taking app on the planet</p>
           </div>
-          <div className="w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto mt-10 md:mt-0">
+          <div className="min-w-[400px] bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto mt-10 md:mt-0">
             <h2 className="text-gray-900 text-lg font-medium title-font mb-5">Login</h2>
             <div className="relative mb-4">
               <label htmlFor="email" className="leading-7 text-sm text-gray-600">
@@ -73,12 +64,20 @@ export const Login = ({ setView }: { setView: (val: LoginView) => void }) => {
                 className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
-            <P intent="error">{error ? error : null}</P>
-            <Button onClick={() => onSubmit()} type="button" fullWidth={true}>
-              Login
-            </Button>
+            <div className="flex flex-col gap-2">
+              <P intent="error">{error ? "Failed logging in." : null}</P>
+              <Button onClick={() => onSubmit()} type="button" fullWidth={true}>
+                Login
+              </Button>
+            </div>
             <p className="text-xs text-gray-500 mt-3">Need an account?</p>
-            <Button onClick={() => setView("register")} intent="secondary" size="small" fullWidth>
+            <Button
+              loading={isLoading}
+              onClick={() => setView("register")}
+              intent="secondary"
+              size="small"
+              fullWidth
+            >
               Register here
             </Button>
           </div>

@@ -1,44 +1,30 @@
 import { createContext, ReactNode, useContext } from "react";
-import { useGetMe } from "../client";
+import { IAccount } from "../types";
 
-export const deleteCookies = (name = "authToken") => {
+export const deleteCookies = () => {
+  const name = "authToken";
   document.cookie = `${name}=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
-  localStorage.clear();
-};
-
-export type UserAuth = {
-  id: string;
-  name: string;
-  email: string;
 };
 
 type AuthContent = {
-  isAuthed: boolean;
-  isLoadingAuth: boolean;
-  me: UserAuth | undefined;
-  login: () => void;
+  account: IAccount;
   logout: () => void;
 };
 
 const AuthContext = createContext<AuthContent>({} as any);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { data: me, isLoading, mutate } = useGetMe();
-
-  const logout = () => {
-    deleteCookies();
-  };
-
-  const login = () => {
-    mutate();
-  };
-
+export const AuthProvider = ({
+  children,
+  account,
+  logout,
+}: {
+  children: ReactNode;
+  account: IAccount;
+  logout: () => void;
+}) => {
   const value: AuthContent = {
+    account,
     logout,
-    login,
-    me,
-    isAuthed: !!me?.id,
-    isLoadingAuth: isLoading,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
