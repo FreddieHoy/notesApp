@@ -1,13 +1,14 @@
-import { useCallback } from "react";
-import { useForm } from "react-hook-form";
-import { Button, Input, Textarea } from "../Components";
-import { Stack } from "../Components/Stack";
-import { P } from "../Components/Typography";
-import { useAuth } from "../Global/Auth";
-import { useGlobalDispatch } from "../Global/GlobalContext";
-import { useApi } from "../Utils/useApi";
-import { useCreateNote, useGetNote, useUpdateNote } from "../client";
-import { INote } from "../types";
+import { useCallback, useEffect, useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import { queryClient } from '../App';
+import { Button, Input, Textarea } from '../Components';
+import { Stack } from '../Components/Stack';
+import { P } from '../Components/Typography';
+import { useAuth } from '../Global/Auth';
+import { useGlobalDispatch } from '../Global/GlobalContext';
+import { useApi } from '../Utils/useApi';
+import { QueryKeys, useCreateNote, useGetNote, useUpdateNote } from '../client';
+import { INote } from '../types';
 
 type NoteFormValues = {
   id: string;
@@ -25,6 +26,7 @@ export const NoteForm = ({ id }: { id?: string }) => {
 };
 
 const Form = ({ note, noteId }: { note?: INote; noteId: string | undefined }) => {
+  const targetRef = useRef<HTMLDivElement>(null);
   const dispatch = useGlobalDispatch();
   const { mutate: updateNote } = useUpdateNote();
   const { mutate: createNote } = useCreateNote();
@@ -56,9 +58,11 @@ const Form = ({ note, noteId }: { note?: INote; noteId: string | undefined }) =>
         },
         {
           onSuccess: () => {
-            dispatch({ type: "setPage", page: "notes" });
+            dispatch({ type: 'setPage', page: 'notes' });
+            queryClient.invalidateQueries([QueryKeys.GET_NOTE, note.id]);
+            queryClient.invalidateQueries([QueryKeys.GET_All_NOTES]);
           },
-        }
+        },
       );
     } else {
       createNote({
@@ -71,27 +75,52 @@ const Form = ({ note, noteId }: { note?: INote; noteId: string | undefined }) =>
   const onDeleteNote = useCallback(async () => {
     if (note?.id) {
       await api.delete(`notes/${note.id}`).then(async (res) => {
-        dispatch({ type: "setPage", page: "notes" });
+        dispatch({ type: 'setPage', page: 'notes' });
       });
     }
   }, [api, note?.id, dispatch]);
 
+  /**
+   Click outside logic
+   */
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (!targetRef?.current?.contains(e.target as Node)) {
+        e.stopPropagation();
+        e.preventDefault();
+        dispatch({ type: 'setPage', page: 'notes' });
+      }
+    };
+    document.addEventListener('click', handleClickOutside, { capture: true });
+    return () => {
+      document.removeEventListener('click', handleClickOutside, {
+        capture: true,
+      });
+    };
+  }, [dispatch, targetRef]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="h-full">
-      <div className="w-full flex rounded-lg flex-col h-full border-l">
-        <div className="p-4 flex flex-col gap-4">
-          {note ? <div>Editing note: {note.heading}</div> : <div>Add a new note</div>}
+      <div ref={targetRef} className="flex h-full w-full flex-col rounded-lg border-l">
+        <div className="flex flex-col gap-4 p-4">
+          {note ? (
+            <span>
+              Editing: <span className="font-semibold">{note.heading}</span>
+            </span>
+          ) : (
+            <span>Add a new note</span>
+          )}
 
           <div className="relative">
             <Input
-              {...register("heading", { required: "A heading is required" })}
+              {...register('heading', { required: 'A heading is required' })}
               placeholder="Title.."
             />
             {errors.heading && <p>{errors.heading.message}</p>}
           </div>
           <div className="relative">
             <Textarea
-              {...register("body", {
+              {...register('body', {
                 maxLength: 450,
               })}
               placeholder="Content.."
@@ -110,9 +139,9 @@ const Form = ({ note, noteId }: { note?: INote; noteId: string | undefined }) =>
           <Button
             size="small"
             intent="secondary"
-            onClick={() => dispatch({ type: "setPage", page: "notes" })}
+            onClick={() => dispatch({ type: 'setPage', page: 'notes' })}
           >
-            Back
+            Close
           </Button>
           <Stack gap={6} align="center">
             {noteId && (
@@ -121,7 +150,7 @@ const Form = ({ note, noteId }: { note?: INote; noteId: string | undefined }) =>
               </Button>
             )}
             <Button type="submit">
-              <P>{isEdit ? "Save" : "Add"}</P>
+              <P>{isEdit ? 'Save' : 'Add'}</P>
             </Button>
           </Stack>
         </Stack>

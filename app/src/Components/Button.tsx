@@ -1,30 +1,30 @@
-import { ButtonHTMLAttributes, forwardRef, Ref } from "react";
-import { cls } from "./StyleUtils";
+import { ButtonHTMLAttributes, forwardRef, Ref } from 'react';
+import { cls } from './StyleUtils';
 
 const classes = {
-  base: "flex focus:outline-2 outline-offset-2 rounded text-lg justify-center items-center h-fit transition-all duration-400 dark:border-gray-600 gap-2",
+  base: 'flex focus:outline-2 outline-offset-2 rounded text-lg justify-center items-center h-fit transition-all duration-400 dark:border-gray-600 gap-2',
   size: {
-    small: "py-2 px-4 text-sm",
-    medium: "py-2 px-6 text-base",
-    large: "py-2 px-8 text-lg",
+    small: 'py-2 px-4 text-sm',
+    medium: 'py-2 px-6 text-base',
+    large: 'py-2 px-8 text-lg',
   },
   intent: {
-    primary: "text-white bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-l",
+    primary: 'text-white bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-l',
     secondary:
-      "text-gray-500 border border-gray-200 hover:border-gray-400 hover:bg-gray-100 hover:text-black dark:hover:bg-indigo-700 dark:text-gray-200",
-    minimal: "hover:text-indigo-600 px-0 py-0 border-0",
-    danger: "border border-red-600 text-red-600 hover:bg-red-100",
+      'bg-white text-gray-500 border border-gray-200 hover:border-gray-400 hover:bg-gray-100 hover:text-black dark:hover:bg-indigo-700 dark:text-gray-200',
+    minimal: 'bg-white hover:text-indigo-600 px-0 py-0 border-0',
+    danger: 'bg-white border border-red-600 text-red-600 hover:bg-red-100',
   },
   width: {
-    fit: "w-fit",
-    full: "w-full",
+    fit: 'w-fit',
+    full: 'w-full',
   },
-  active: "text-indigo-600",
+  active: 'text-indigo-600',
 };
 
 type ButtonProps = {
-  size?: "small" | "medium" | "large";
-  intent?: "primary" | "secondary" | "minimal" | "danger";
+  size?: 'small' | 'medium' | 'large';
+  intent?: 'primary' | 'secondary' | 'minimal' | 'danger';
   fullWidth?: boolean;
   active?: boolean;
   loading?: boolean;
@@ -34,36 +34,31 @@ export const Button = forwardRef(
   (
     {
       children,
-      type = "button",
+      type = 'button',
       className,
-      size = "medium",
+      size = 'medium',
       disabled = false,
-      intent = "primary",
+      intent = 'primary',
       fullWidth = false,
       active,
       loading,
       ...props
     }: ButtonProps,
-    ref: Ref<HTMLButtonElement>
+    ref: Ref<HTMLButtonElement>,
   ) => (
     <button
       ref={ref}
       disabled={disabled}
       type={type}
-      className={cls(`
-      ${active ? classes.active : ""}
-        ${classes.base}
-        ${fullWidth ? classes.width.full : classes.width.fit}
-        ${classes.size[size]}
-        ${classes.intent[intent]}
-        ${className}
-      `)}
+      className={cls(
+        ` ${active ? classes.active : ''} ${classes.base} ${fullWidth ? classes.width.full : classes.width.fit} ${classes.size[size]} ${classes.intent[intent]} ${className} `,
+      )}
       {...props}
     >
       {children}
       {loading ? <Spinner /> : null}
     </button>
-  )
+  ),
 );
 
 const Spinner = () => {
@@ -71,7 +66,7 @@ const Spinner = () => {
     <div role="status">
       <svg
         aria-hidden="true"
-        className="w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+        className="h-4 w-4 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

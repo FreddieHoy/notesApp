@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { useGlobalDispatch } from "../Global/GlobalContext";
-import { INote } from "../types";
-import { Stack } from "./Stack";
-import { H3, P } from "./Typography";
+import { useState } from 'react';
+import { useGlobalDispatch } from '../Global/GlobalContext';
+import { INote } from '../types';
+import { Stack } from './Stack';
+import { H3, P } from './Typography';
 
 export const Card = ({ note }: { note: INote }) => {
   const [hasOverflow, setHasOverflow] = useState(false);
@@ -11,15 +11,15 @@ export const Card = ({ note }: { note: INote }) => {
   return (
     <div
       className={
-        "p-4 min-w-[400px] w-fit bg-gray-50 dark:bg-gray-800 rounded-md hover:cursor-pointer hover:shadow border border-gray-300 dark:border-gray-600 transition-all duration-400 overflow-hidden"
+        'duration-400 w-fit min-w-[400px] overflow-hidden rounded-md border border-gray-300 bg-white p-4 transition-all hover:cursor-pointer hover:shadow dark:border-gray-600 dark:bg-gray-800'
       }
-      onClick={() => dispatch({ type: "setPage", page: "note", noteId: note.id })}
+      onClick={() => dispatch({ type: 'setPage', page: 'note', noteId: note.id })}
     >
       <Stack
         vertical
         gap={6}
         grow
-        className="overflow-hidden relative"
+        className="relative overflow-hidden"
         ref={(overflowRef) => {
           if (overflowRef) {
             setHasOverflow(overflowRef.scrollHeight > overflowRef.clientHeight);
@@ -27,14 +27,14 @@ export const Card = ({ note }: { note: INote }) => {
         }}
       >
         <Stack gap={6} justify="space-between">
-          <H3 className={"overflow-ellipsis whitespace-nowrap overflow-hidden"}>{note.heading}</H3>
+          <H3 className={'overflow-hidden overflow-ellipsis whitespace-nowrap'}>{note.heading}</H3>
         </Stack>
-        <P className="whitespace-pre-line flex grow">
+        <P className="flex grow whitespace-pre-line">
           {note.content || <span className="italic text-gray-400">Add content..</span>}
         </P>
       </Stack>
       {hasOverflow && (
-        <P intent="placeholder" className="top-10 right-10 ">
+        <P intent="placeholder" className="right-10 top-10">
           See more..
         </P>
       )}

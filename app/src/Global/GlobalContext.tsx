@@ -1,10 +1,10 @@
-import { createContext, ReactNode, useContext, useReducer } from "react";
-import { match } from "ts-pattern";
+import { createContext, ReactNode, useContext, useReducer } from 'react';
+import { match } from 'ts-pattern';
 
-export type Theme = "light" | "dark";
-export type PageType = "note" | "notes" | "profile";
+export type Theme = 'light' | 'dark';
+export type PageType = 'note' | 'notes' | 'profile';
 
-export type PageState = { page: "note"; noteId?: string } | { page: "notes" } | { page: "profile" };
+export type PageState = { page: 'note'; noteId?: string } | { page: 'notes' } | { page: 'profile' };
 
 interface GlobalContextState {
   pageState: PageState;
@@ -17,8 +17,8 @@ interface GlobalContextType {
 }
 
 const initialState: GlobalContextState = {
-  pageState: { page: "notes" },
-  theme: "light",
+  pageState: { page: 'notes' },
+  theme: 'light',
 };
 
 const defaultValue: GlobalContextType = {
@@ -27,21 +27,21 @@ const defaultValue: GlobalContextType = {
 };
 
 type Msg =
-  | { type: "setPage"; page: PageType; noteId?: string }
-  | { type: "setTheme"; theme: Theme };
+  | { type: 'setPage'; page: PageType; noteId?: string }
+  | { type: 'setTheme'; theme: Theme };
 
 const GlobalContext = createContext<GlobalContextType>(defaultValue);
 
 const reducer = (state: GlobalContextState, msg: Msg): GlobalContextState => {
   const newState: GlobalContextState = match<Msg, GlobalContextState>(msg)
-    .with({ type: "setPage" }, ({ page, noteId }) => ({
+    .with({ type: 'setPage' }, ({ page, noteId }) => ({
       ...state,
       pageState: {
         page,
-        noteId: page === "note" ? noteId : undefined,
+        noteId: page === 'note' ? noteId : undefined,
       },
     }))
-    .with({ type: "setTheme" }, ({ theme }) => ({
+    .with({ type: 'setTheme' }, ({ theme }) => ({
       ...state,
       theme,
     }))
