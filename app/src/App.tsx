@@ -28,7 +28,7 @@ const Jotter = () => {
   const isNoteShow = pageState.page === 'note';
 
   return (
-    <div className="relative m-0 flex h-screen w-screen overflow-hidden bg-gray-50 p-0 dark:bg-gray-800">
+    <div className="relative m-0 flex h-screen w-screen overflow-hidden bg-gray-100 p-0 dark:bg-gray-800">
       <NavMenu />
       <div className="flex flex-grow flex-col overflow-y-scroll">
         <Header />

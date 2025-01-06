@@ -12,7 +12,7 @@ export const Notes = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col gap-4 p-4">
+      <div className="columns-xs gap-x-3 gap-y-3 p-4">
         {notes.map((note) => {
           return <Card note={note} key={note.id} />;
         })}

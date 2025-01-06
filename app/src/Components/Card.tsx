@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { useState } from 'react';
 import { useGlobalDispatch } from '../Global/GlobalContext';
 import { INote } from '../types';
@@ -10,9 +11,12 @@ export const Card = ({ note }: { note: INote }) => {
 
   return (
     <div
-      className={
-        'relative w-full overflow-hidden rounded-md border border-gray-300 bg-white p-4 transition-all duration-200 hover:cursor-pointer hover:shadow-md active:shadow-none dark:border-gray-600 dark:bg-gray-800 sm:w-fit sm:min-w-[400px]'
-      }
+      className={cn(
+        'relative w-full overflow-hidden rounded-md border border-gray-300 bg-white p-4 transition-all',
+        'duration-200 hover:cursor-pointer hover:shadow-md active:shadow-none',
+        'dark:border-gray-600 dark:bg-gray-800',
+        'mb-3 break-inside-avoid',
+      )}
       onClick={() => dispatch({ type: 'setPage', page: 'note', noteId: note.id })}
     >
       <div

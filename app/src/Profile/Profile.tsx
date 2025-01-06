@@ -1,9 +1,9 @@
-import { useLogout } from "../client";
-import { Button } from "../Components";
-import { Stack } from "../Components/Stack";
-import { H2, H3, P } from "../Components/Typography";
-import { useAuth } from "../Global/Auth";
-import { Theme, useGlobal, useGlobalDispatch } from "../Global/GlobalContext";
+import { useLogout } from '../client';
+import { Button } from '../Components';
+import { Stack } from '../Components/Stack';
+import { H2, H3 } from '../Components/Typography';
+import { useAuth } from '../Global/Auth';
+import { Theme, useGlobal, useGlobalDispatch } from '../Global/GlobalContext';
 
 export const Profile = () => {
   const { account } = useAuth();
@@ -13,13 +13,13 @@ export const Profile = () => {
   const { mutate: logout, isLoading } = useLogout();
 
   const handleToggleTheme = (theme: Theme) => {
-    const htmlRoot = document.getElementsByTagName("html")[0];
-    dispatch({ type: "setTheme", theme });
+    const htmlRoot = document.getElementsByTagName('html')[0];
+    dispatch({ type: 'setTheme', theme });
 
-    if (theme === "dark") {
-      htmlRoot.setAttribute("class", "dark");
+    if (theme === 'dark') {
+      htmlRoot.setAttribute('class', 'dark');
     } else {
-      htmlRoot.removeAttribute("class");
+      htmlRoot.removeAttribute('class');
     }
   };
 
@@ -35,9 +35,9 @@ export const Profile = () => {
                 type="radio"
                 id="light"
                 name="theme"
-                value={"light"}
-                defaultChecked={theme === "light"}
-                onClick={() => handleToggleTheme("light")}
+                value={'light'}
+                defaultChecked={theme === 'light'}
+                onClick={() => handleToggleTheme('light')}
               />
               <label htmlFor="light" className="dark:text-gray-300">
                 Light
@@ -49,8 +49,8 @@ export const Profile = () => {
                 type="radio"
                 id="dark"
                 name="theme"
-                value={"dark"}
-                onClick={() => handleToggleTheme("dark")}
+                value={'dark'}
+                onClick={() => handleToggleTheme('dark')}
               />
               <label htmlFor="dark" className="dark:text-gray-300">
                 Dark
@@ -66,7 +66,7 @@ export const Profile = () => {
           loading={isLoading}
           onClick={() => logout()}
         >
-          <P>Logout</P>
+          Logout
         </Button>
       </Stack>
     </Stack>

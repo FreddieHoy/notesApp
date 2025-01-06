@@ -56,7 +56,6 @@ export const Button = forwardRef(
       {...props}
     >
       {children}
-      {intent}
       {loading ? <Spinner /> : null}
     </button>
   ),
