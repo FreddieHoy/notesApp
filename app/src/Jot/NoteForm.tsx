@@ -65,10 +65,18 @@ const Form = ({ note, noteId }: { note?: INote; noteId: string | undefined }) =>
         },
       );
     } else {
-      createNote({
-        heading: values.heading,
-        content: values.body,
-      });
+      createNote(
+        {
+          heading: values.heading,
+          content: values.body,
+        },
+        {
+          onSuccess: () => {
+            dispatch({ type: 'setPage', page: 'notes' });
+            queryClient.invalidateQueries([QueryKeys.GET_All_NOTES]);
+          },
+        },
+      );
     }
   };
 
