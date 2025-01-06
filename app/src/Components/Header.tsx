@@ -18,7 +18,7 @@ export const Header = () => {
 
   return (
     <>
-      <div className="absolute left-0 top-0 z-10 flex h-16 w-full items-center justify-between gap-1 border-b bg-white p-3 shadow-sm dark:bg-gray-900">
+      <div className="absolute left-0 top-0 z-10 flex h-16 w-full items-center justify-between gap-1 border-b bg-white p-3 shadow-sm dark:border-gray-700 dark:bg-gray-900">
         <H2>
           {match({ pageState, isMobile })
             .with({ pageState: { page: 'notes' } }, { pageState: { page: 'note' } }, () => 'Notes')
@@ -26,13 +26,13 @@ export const Header = () => {
             .exhaustive()}
         </H2>
         {showAdd && (
-          <Button intent="minimal" size="small" onClick={handleAdd}>
+          <Button intent="secondary" size="small" onClick={handleAdd}>
             <PlusIcon className="h-6 w-6" />
           </Button>
         )}
       </div>
       {/* Placeholder */}
-      <div className="max-h-16 min-h-16 w-full"> </div>
+      <div className="max-h-16 min-h-16 w-full" />
     </>
   );
 };

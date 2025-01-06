@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, forwardRef, Ref } from 'react';
 import { cls } from './StyleUtils';
 
 const classes = {
-  base: 'flex focus:outline-2 outline-offset-2 rounded text-lg justify-center items-center h-fit transition-all duration-400 dark:border-gray-600 gap-2',
+  base: 'flex focus:outline-2 outline-offset-2 rounded-lg text-lg justify-center items-center h-fit transition-all duration-400 dark:border-gray-600 gap-2',
   size: {
     small: 'py-2 px-4 text-sm',
     medium: 'py-2 px-6 text-base',
@@ -11,7 +11,7 @@ const classes = {
   intent: {
     primary: 'text-white bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-l',
     secondary:
-      'bg-white text-gray-500 border border-gray-200 hover:border-gray-400 hover:bg-gray-100 hover:text-black dark:hover:bg-indigo-700 dark:text-gray-800',
+      'bg-white text-gray-500 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 hover:text-black dark:hover:bg-indigo-700 dark:text-gray-800',
     minimal: 'bg-white hover:text-indigo-600 px-0 py-0 border-0',
     danger: 'bg-white border border-red-600 text-red-600 hover:bg-red-100',
   },

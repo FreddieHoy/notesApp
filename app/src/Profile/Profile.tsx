@@ -3,7 +3,7 @@ import { Button } from '../Components';
 import { Stack } from '../Components/Stack';
 import { H2, H3 } from '../Components/Typography';
 import { useAuth } from '../Global/Auth';
-import { Theme, useGlobal, useGlobalDispatch } from '../Global/GlobalContext';
+import { LS_THEME_KEY, Theme, useGlobal, useGlobalDispatch } from '../Global/GlobalContext';
 
 export const Profile = () => {
   const { account } = useAuth();
@@ -21,6 +21,7 @@ export const Profile = () => {
     } else {
       htmlRoot.removeAttribute('class');
     }
+    localStorage.setItem(LS_THEME_KEY, theme);
   };
 
   return (
@@ -35,7 +36,7 @@ export const Profile = () => {
                 type="radio"
                 id="light"
                 name="theme"
-                value={'light'}
+                value="light"
                 defaultChecked={theme === 'light'}
                 onClick={() => handleToggleTheme('light')}
               />
@@ -50,6 +51,7 @@ export const Profile = () => {
                 id="dark"
                 name="theme"
                 value={'dark'}
+                defaultChecked={theme === 'dark'}
                 onClick={() => handleToggleTheme('dark')}
               />
               <label htmlFor="dark" className="dark:text-gray-300">

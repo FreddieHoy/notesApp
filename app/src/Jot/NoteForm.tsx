@@ -124,14 +124,17 @@ const Form = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="h-full">
-      <div ref={targetRef} className="flex h-full w-full flex-col rounded-lg border-l">
+      <div
+        ref={targetRef}
+        className="flex h-full w-full flex-col rounded-lg border-l dark:border-gray-700"
+      >
         <div className="flex flex-col gap-4 p-4">
           {note ? (
-            <span>
+            <span className="dark:text-gray-200">
               Editing: <span className="font-semibold">{note.heading}</span>
             </span>
           ) : (
-            <span>Create Note</span>
+            <span className="dark:text-gray-200">Create Note</span>
           )}
 
           <div className="relative">
@@ -158,7 +161,7 @@ const Form = ({
           padding={18}
           align="center"
           justify="space-between"
-          className="w-full border-y"
+          className="w-full border-y dark:border-gray-700"
         >
           <Button
             size="small"

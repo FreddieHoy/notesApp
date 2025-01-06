@@ -14,7 +14,7 @@ export const Card = ({ note }: { note: INote }) => {
       className={cn(
         'relative w-full overflow-hidden rounded-md border border-gray-300 bg-white p-4 transition-all',
         'duration-200 hover:cursor-pointer hover:shadow-md active:shadow-none',
-        'dark:border-gray-600 dark:bg-gray-800',
+        'dark:border-gray-600 dark:bg-gray-700',
         'mb-3 break-inside-avoid',
       )}
       onClick={() => dispatch({ type: 'setPage', page: 'note', noteId: note.id })}

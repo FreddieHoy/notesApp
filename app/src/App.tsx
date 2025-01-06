@@ -51,7 +51,7 @@ const Jotter = () => {
         {/* Peeking window */}
         <div
           className={cn(
-            'absolute top-0 z-10 h-full bg-gray-50 shadow-xl transition-all duration-500',
+            'absolute top-0 z-10 h-full bg-gray-50 shadow-xl transition-all duration-500 dark:bg-gray-800',
             'hidden w-[500px] min-w-[500px] grow flex-col sm:flex',
             {
               '-right-[calc(100%)]': !isNoteShow,

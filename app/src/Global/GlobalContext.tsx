@@ -1,6 +1,7 @@
-import { createContext, ReactNode, useContext, useReducer } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useReducer } from 'react';
 import { match } from 'ts-pattern';
 
+export const LS_THEME_KEY = 'jotterTheme';
 export type Theme = 'light' | 'dark';
 export type PageType = 'note' | 'notes' | 'profile';
 
@@ -16,9 +17,11 @@ interface GlobalContextType {
   dispatch: (val: Msg) => void;
 }
 
+const initialTheme = localStorage.getItem(LS_THEME_KEY) as Theme;
+
 const initialState: GlobalContextState = {
   pageState: { page: 'notes' },
-  theme: 'light',
+  theme: initialTheme || 'light',
 };
 
 const defaultValue: GlobalContextType = {
@@ -51,6 +54,14 @@ const reducer = (state: GlobalContextState, msg: Msg): GlobalContextState => {
 
 export const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  // SetInitialTheme in DOM
+  useEffect(() => {
+    const htmlRoot = document.getElementsByTagName('html')[0];
+    if (initialState.theme === 'dark') {
+      htmlRoot.setAttribute('class', 'dark');
+    }
+  }, []);
 
   const value: GlobalContextType = {
     state,
