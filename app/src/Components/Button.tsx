@@ -11,7 +11,7 @@ const classes = {
   intent: {
     primary: 'text-white bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-l',
     secondary:
-      'bg-white text-gray-500 border border-gray-200 hover:border-gray-400 hover:bg-gray-100 hover:text-black dark:hover:bg-indigo-700 dark:text-gray-200',
+      'bg-white text-gray-500 border border-gray-200 hover:border-gray-400 hover:bg-gray-100 hover:text-black dark:hover:bg-indigo-700 dark:text-gray-800',
     minimal: 'bg-white hover:text-indigo-600 px-0 py-0 border-0',
     danger: 'bg-white border border-red-600 text-red-600 hover:bg-red-100',
   },
@@ -56,6 +56,7 @@ export const Button = forwardRef(
       {...props}
     >
       {children}
+      {intent}
       {loading ? <Spinner /> : null}
     </button>
   ),

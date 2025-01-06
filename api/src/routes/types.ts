@@ -5,6 +5,8 @@ export type INote = {
   content: string;
 };
 
+export type INoteCreate = Omit<INote, "id">;
+
 export type IAccount = {
   id: string;
   name: string;

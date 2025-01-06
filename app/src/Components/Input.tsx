@@ -1,17 +1,18 @@
-import React, { forwardRef, InputHTMLAttributes, Ref, TextareaHTMLAttributes } from "react";
-import { Stack } from "./Stack";
-import { cls } from "./StyleUtils";
+import cn from 'classnames';
+import { forwardRef, InputHTMLAttributes, Ref, TextareaHTMLAttributes } from 'react';
+import { Stack } from './Stack';
+import { cls } from './StyleUtils';
 
 export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
   (props, ref) => {
     return (
       <input
         {...props}
-        className="w-full bg-white dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 dark:text-gray-200 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        className="w-full rounded border border-gray-300 bg-white px-3 py-1 text-base leading-8 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
         ref={ref}
       />
     );
-  }
+  },
 );
 
 type TextAreaProps = { canResize?: boolean } & TextareaHTMLAttributes<HTMLTextAreaElement>;
@@ -21,20 +22,23 @@ export const Textarea = forwardRef(
     return (
       <textarea
         {...props}
-        className={cls(
-          `p-2 w-full h-[200px] rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200`
+        className={cn(
+          cls(
+            `h-[200px] w-full rounded border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200`,
+          ),
+          props.className,
         )}
         ref={ref}
       />
     );
-  }
+  },
 );
 
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
 }
 
-const checkBoxClass = "cursor-pointer mr-[6px] h-4 outline-gray-200 hover:outline-gray-600 rounded";
+const checkBoxClass = 'cursor-pointer mr-[6px] h-4 outline-gray-200 hover:outline-gray-600 rounded';
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(({ label, ...props }, ref) => {
   return (

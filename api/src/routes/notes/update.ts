@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
 import { pool } from "../../../dbPool";
+import logger from "../../logger";
+
+const PATH = "/notes/update";
 
 const UPDATE_NOTES_QUERY = `
   UPDATE note.notes SET  
@@ -13,6 +16,11 @@ export const update = async (request: Request, response: Response) => {
   const { heading, content } = request.body;
   const id = request.params.id;
 
+  logger.info({
+    path: PATH,
+    noteId: id,
+  });
+
   try {
     const res = await pool.query(UPDATE_NOTES_QUERY, [heading, content, id]);
 
@@ -22,6 +30,9 @@ export const update = async (request: Request, response: Response) => {
 
     return response.status(200).json(note);
   } catch (error) {
-    console.error(error);
+    logger.error({
+      path: PATH,
+      error,
+    });
   }
 };

@@ -1,41 +1,43 @@
-import { Button } from "../Components";
-import { Stack } from "../Components/Stack";
-import { H2 } from "../Components/Typography";
-import { PageState, useGlobal, useGlobalDispatch } from "../Global/GlobalContext";
+import cn from 'classnames';
+import { Button } from '../Components';
+import { H3 } from '../Components/Typography';
+import { PageState, useGlobal, useGlobalDispatch } from '../Global/GlobalContext';
 
 export const MobileFooterMenu = () => {
   const { pageState } = useGlobal();
   const dispatch = useGlobalDispatch();
-  const setPage = (pageState: PageState) => dispatch({ type: "setPage", page: pageState.page });
+  const setPage = (pageState: PageState) => dispatch({ type: 'setPage', page: pageState.page });
+
   return (
-    <Stack
-      className="w-full border-t-2 border-grey-600"
-      justify="space-around"
-      align="center"
-      padding={"12px 0px"}
+    <div
+      className={cn(
+        'border-grey-600 absolute bottom-0 right-0 flex h-16 w-full items-center justify-around border-t-2 px-3 py-0',
+        'bg-white sm:hidden',
+      )}
     >
       <Button
         intent="minimal"
-        onClick={() => setPage({ page: "notes" })}
-        active={pageState.page === "notes"}
+        onClick={() => setPage({ page: 'notes' })}
+        active={pageState.page === 'notes'}
       >
-        <H2>Notes</H2>
+        <H3>Notes</H3>
       </Button>
       <Button
-        intent="minimal"
+        intent="primary"
         type="button"
         size="small"
-        onClick={() => dispatch({ type: "setPage", page: "note" })}
+        className="h-[36px] w-[36px] text-[24px] font-semibold"
+        onClick={() => dispatch({ type: 'setPage', page: 'note' })}
       >
-        <H2>+</H2>
+        <span className="relative bottom-[2px]">+</span>
       </Button>
       <Button
         intent="minimal"
-        onClick={() => setPage({ page: "profile" })}
-        active={pageState.page === "profile"}
+        onClick={() => setPage({ page: 'profile' })}
+        active={pageState.page === 'profile'}
       >
-        <H2>Profile</H2>
+        <H3>Profile</H3>
       </Button>
-    </Stack>
+    </div>
   );
 };

@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { queryClient } from '../App';
+import { QueryKeys, useCreateNote, useGetNote, useUpdateNote } from '../client';
 import { Button, Input, Textarea } from '../Components';
 import { Stack } from '../Components/Stack';
 import { P } from '../Components/Typography';
 import { useAuth } from '../Global/Auth';
 import { useGlobalDispatch } from '../Global/GlobalContext';
-import { useApi } from '../Utils/useApi';
-import { QueryKeys, useCreateNote, useGetNote, useUpdateNote } from '../client';
 import { INote } from '../types';
+import { useApi } from '../Utils/useApi';
 
 type NoteFormValues = {
   id: string;
@@ -16,16 +16,30 @@ type NoteFormValues = {
   body: string;
 };
 
-export const NoteForm = ({ id }: { id?: string }) => {
+export const NoteForm = ({
+  id,
+  disableCloseClickOutside,
+}: {
+  id?: string;
+  disableCloseClickOutside?: boolean;
+}) => {
   const { data: note, isLoading, error } = useGetNote(id);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error getting note</div>;
 
-  return <Form noteId={id} note={note} />;
+  return <Form noteId={id} note={note} disableCloseClickOutside={!!disableCloseClickOutside} />;
 };
 
-const Form = ({ note, noteId }: { note?: INote; noteId: string | undefined }) => {
+const Form = ({
+  note,
+  noteId,
+  disableCloseClickOutside,
+}: {
+  note?: INote;
+  noteId: string | undefined;
+  disableCloseClickOutside: boolean;
+}) => {
   const targetRef = useRef<HTMLDivElement>(null);
   const dispatch = useGlobalDispatch();
   const { mutate: updateNote } = useUpdateNote();
@@ -93,6 +107,7 @@ const Form = ({ note, noteId }: { note?: INote; noteId: string | undefined }) =>
    */
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
+      if (disableCloseClickOutside) return;
       if (!targetRef?.current?.contains(e.target as Node)) {
         e.stopPropagation();
         e.preventDefault();
@@ -105,7 +120,7 @@ const Form = ({ note, noteId }: { note?: INote; noteId: string | undefined }) =>
         capture: true,
       });
     };
-  }, [dispatch, targetRef]);
+  }, [disableCloseClickOutside, dispatch, targetRef]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="h-full">
@@ -116,7 +131,7 @@ const Form = ({ note, noteId }: { note?: INote; noteId: string | undefined }) =>
               Editing: <span className="font-semibold">{note.heading}</span>
             </span>
           ) : (
-            <span>Add a new note</span>
+            <span>Create Note</span>
           )}
 
           <div className="relative">
@@ -133,6 +148,7 @@ const Form = ({ note, noteId }: { note?: INote; noteId: string | undefined }) =>
               })}
               placeholder="Content.."
               canResize
+              className="h-[350px] sm:h-[200px]"
             />
             {errors.body && <p>{`Character limit is 450 (${getValues().body.length})`}</p>}
           </div>

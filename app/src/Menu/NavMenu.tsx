@@ -11,7 +11,7 @@ export const NavMenu = () => {
   const setPage = (pageState: PageState) => dispatch({ type: 'setPage', page: pageState.page });
 
   return (
-    <div className="min-w-[220px] space-y-4 border-r pr-5 shadow-sm dark:bg-gray-900">
+    <div className="hidden min-w-[220px] space-y-4 border-r bg-white shadow-sm dark:bg-gray-900 sm:block">
       <Stack padding={'12px 24px'}>
         <H1 underline="primary">Jotter</H1>
       </Stack>

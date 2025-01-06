@@ -14,6 +14,11 @@ export const get = async (request: Request, response: Response) => {
   const { id } = request.params;
   const accountId = request.decodedAccountId;
 
+  logger.info({
+    path: PATH,
+    accountId,
+  });
+
   try {
     const result = await pool.query(GET_ALL_NOTES_FOR_USER, [accountId, id]);
 
