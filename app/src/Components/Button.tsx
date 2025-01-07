@@ -1,19 +1,21 @@
+import cn from 'classnames';
 import { ButtonHTMLAttributes, forwardRef, Ref } from 'react';
-import { cls } from './StyleUtils';
+import { twMerge } from 'tailwind-merge';
 
 const classes = {
   base: 'flex focus:outline-2 outline-offset-2 rounded-lg text-lg justify-center items-center h-fit transition-all duration-400 dark:border-gray-600 gap-2',
   size: {
     small: 'py-2 px-4 text-sm',
-    medium: 'py-2 px-6 text-base',
-    large: 'py-2 px-8 text-lg',
+    medium: 'py-2 px-6 text-sm',
+    large: 'py-2 px-8 text-base',
   },
   intent: {
-    primary: 'text-white bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-l',
+    primary: 'text-white bg-indigo-500 hover:bg-indigo-600 shadow-md active:shadow-none',
     secondary:
-      'bg-white text-gray-500 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 hover:text-black dark:hover:bg-indigo-700 dark:text-gray-800',
-    minimal: 'bg-white hover:text-indigo-600 px-0 py-0 border-0',
-    danger: 'bg-white border border-red-600 text-red-600 hover:bg-red-100',
+      'bg-white text-gray-500 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 hover:text-black dark:hover:bg-indigo-700 dark:text-gray-800 shadow-md active:shadow-none',
+    minimal: 'bg-transparent hover:text-indigo-600 px-0 py-0 border-0 underline px-1 shadow-none',
+    danger:
+      'bg-white border border-red-600 text-red-600 hover:bg-red-100 shadow-md active:shadow-none',
   },
   width: {
     fit: 'w-fit',
@@ -50,8 +52,20 @@ export const Button = forwardRef(
       ref={ref}
       disabled={disabled}
       type={type}
-      className={cls(
-        ` ${active ? classes.active : ''} ${classes.base} ${fullWidth ? classes.width.full : classes.width.fit} ${classes.size[size]} ${classes.intent[intent]} ${className} `,
+      className={twMerge(
+        cn(
+          {
+            [classes.base]: true,
+            [classes.active]: active,
+            [classes.width.fit]: !fullWidth,
+            [classes.width.full]: fullWidth,
+            [classes.size[size]]: true,
+            [classes.intent[intent]]: true,
+            'bg-gray-400 shadow-none hover:bg-gray-400 active:bg-gray-400 active:shadow-none':
+              disabled,
+          },
+          className,
+        ),
       )}
       {...props}
     >

@@ -1,19 +1,12 @@
-import cn from 'classnames';
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { match } from 'ts-pattern';
 import './App.css';
 import { Login } from './Auth/Login';
 import { Register } from './Auth/Register';
-import { Header } from './Components/Header';
 import { AuthProvider, deleteCookies } from './Global/Auth';
-import { GlobalProvider, useGlobal } from './Global/GlobalContext';
-import { NoteForm } from './Jot/NoteForm';
-import { Notes } from './Jot/Notes';
-import { MobileFooterMenu } from './Menu/MobileFooterMenu';
-import { NavMenu } from './Menu/NavMenu';
-import { Profile } from './Profile/Profile';
-import { useIsMobile } from './Utils/IsMobile';
+import { GlobalProvider } from './Global/GlobalContext';
+import { Jotter } from './Jotter';
 import { useGetMe, useLogout } from './client';
 import { IAccount } from './types';
 
@@ -21,55 +14,17 @@ export const queryClient = new QueryClient();
 
 export type LoginView = 'login' | 'register';
 
-const Jotter = () => {
-  const isMobile = useIsMobile();
-  const { pageState } = useGlobal();
-
-  const isNoteShow = pageState.page === 'note';
-
+const Providers = ({
+  user,
+  logout,
+  isLoadingLogout,
+}: {
+  user: IAccount;
+  logout: () => void;
+  isLoadingLogout: boolean;
+}) => {
   return (
-    <div className="relative m-0 flex h-screen w-screen overflow-hidden bg-gray-100 p-0 dark:bg-gray-800">
-      <NavMenu />
-      <div className="flex flex-grow flex-col overflow-y-scroll">
-        <Header />
-        <div className={cn('flex flex-col')}>
-          {match({ pageState, isMobile })
-            .with({ pageState: { page: 'notes' } }, () => <Notes />)
-            .with({ pageState: { page: 'note' } }, () => (
-              <>
-                <div className="hidden sm:block">
-                  <Notes />
-                </div>
-                <div className="sm:hidden">
-                  {isNoteShow && <NoteForm id={pageState.noteId} disableCloseClickOutside />}
-                </div>
-              </>
-            ))
-            .with({ pageState: { page: 'profile' } }, () => <Profile />)
-            .exhaustive()}
-        </div>
-        {/* Peeking window */}
-        <div
-          className={cn(
-            'absolute top-0 z-10 h-full bg-gray-50 shadow-xl transition-all duration-500 dark:bg-gray-800',
-            'hidden w-[500px] min-w-[500px] grow flex-col sm:flex',
-            {
-              '-right-[calc(100%)]': !isNoteShow,
-              'right-0': isNoteShow,
-            },
-          )}
-        >
-          {isNoteShow && <NoteForm id={pageState.noteId} />}
-        </div>
-      </div>
-      <MobileFooterMenu />
-    </div>
-  );
-};
-
-const Providers = ({ user, logout }: { user: IAccount; logout: () => void }) => {
-  return (
-    <AuthProvider account={user} logout={logout}>
+    <AuthProvider account={user} logout={logout} isLoadingLogout={isLoadingLogout}>
       <GlobalProvider>
         <Jotter />
       </GlobalProvider>
@@ -86,28 +41,50 @@ const App = () => {
     refetchOnWindowFocus: false,
   });
 
-  const { mutate: logout } = useLogout();
+  const { mutate: logout, isLoading: isLoadingLogout } = useLogout();
 
   const onLogout = () => {
-    setUser(undefined);
     try {
-      logout();
+      logout(undefined, {
+        onSuccess: () => {
+          localStorage.clear();
+          deleteCookies();
+          console.log('setUSer');
+          setUser(undefined);
+        },
+      });
     } catch (e) {
+      localStorage.clear();
       deleteCookies();
+      setUser(undefined);
     }
-    localStorage.clear();
   };
 
   const [view, setView] = useState<LoginView>('login');
 
   if (isLoading && !user) return <>Load4ing....</>;
 
-  if (user?.id) return <Providers user={user} logout={onLogout} />;
+  if (user?.id)
+    return <Providers user={user} logout={onLogout} isLoadingLogout={isLoadingLogout} />;
 
-  return match(view)
-    .with('login', () => <Login setView={setView} setUser={setUser} />)
-    .with('register', () => <Register setView={setView} />)
-    .exhaustive();
+  return (
+    <div className="box-border flex h-screen w-screen items-center justify-center">
+      <section className="body-font text-gray-600">
+        <div className="flex items-center gap-8 px-5">
+          <div className="flex flex-col pr-6">
+            <h1 className="title-font text-lg font-medium text-gray-900">Welcome to Jotter</h1>
+            <p className="mt-4 leading-relaxed">The greatest note taking app on the planet</p>
+          </div>
+          <div className="flex min-w-[400px] flex-col rounded-lg bg-gray-100 p-8 py-4">
+            {match(view)
+              .with('login', () => <Login setView={setView} setUser={setUser} />)
+              .with('register', () => <Register setView={setView} />)
+              .exhaustive()}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
 };
 
 export const AppWrapper = () => {

@@ -1,15 +1,15 @@
 import { Router } from "express";
 import account from "./account";
-import * as UserDb from "./Authentication/user";
+import authentication from "./authentication";
 import note from "./notes";
 import { secureRoute } from "./SecureRoute";
 
 const router = Router();
 
-router.get("/me", secureRoute, UserDb.getMe);
-router.post("/login", UserDb.logIn);
-router.post("/logout", secureRoute, UserDb.logOut);
-router.post("/register", UserDb.register);
+router.get("/me", secureRoute, authentication.getMe);
+router.post("/login", authentication.login);
+router.post("/logout", secureRoute, authentication.logout);
+router.post("/register", authentication.register);
 
 router.get("/notes", secureRoute, note.getAll);
 router.get("/notes/:id", secureRoute, note.get);

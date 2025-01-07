@@ -1,4 +1,3 @@
-import { useLogout } from '../client';
 import { Button } from '../Components';
 import { Stack } from '../Components/Stack';
 import { H2, H3 } from '../Components/Typography';
@@ -6,11 +5,9 @@ import { useAuth } from '../Global/Auth';
 import { LS_THEME_KEY, Theme, useGlobal, useGlobalDispatch } from '../Global/GlobalContext';
 
 export const Profile = () => {
-  const { account } = useAuth();
+  const { account, logout, isLoadingLogout } = useAuth();
   const { theme } = useGlobal();
   const dispatch = useGlobalDispatch();
-
-  const { mutate: logout, isLoading } = useLogout();
 
   const handleToggleTheme = (theme: Theme) => {
     const htmlRoot = document.getElementsByTagName('html')[0];
@@ -65,7 +62,7 @@ export const Profile = () => {
           intent="secondary"
           size="small"
           type="button"
-          loading={isLoading}
+          loading={isLoadingLogout}
           onClick={() => logout()}
         >
           Logout
