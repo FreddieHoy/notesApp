@@ -49,7 +49,6 @@ const App = () => {
         onSuccess: () => {
           localStorage.clear();
           deleteCookies();
-          console.log('setUSer');
           setUser(undefined);
         },
       });

@@ -21,8 +21,6 @@ export const Login = ({
     login({ email: email, password: password }, { onSuccess: (res) => setUser(res) });
   };
 
-  console.log(isLoading, !email, !password);
-
   return (
     <>
       <h2 className="title-font mb-5 text-lg font-medium text-gray-900">Login</h2>
