@@ -19,7 +19,7 @@ export const Jotter = () => {
   return (
     <div className="relative m-0 flex h-screen w-screen overflow-hidden bg-gray-100 p-0 dark:bg-gray-800">
       <NavMenu />
-      <div className="flex flex-grow flex-col overflow-y-scroll">
+      <div className="flex flex-grow flex-col overflow-y-auto">
         <Header />
         <div className={cn('flex flex-col')}>
           {match({ pageState, isMobile })
@@ -30,9 +30,7 @@ export const Jotter = () => {
                   <Notes />
                 </div>
                 <div className="sm:hidden">
-                  {isNoteShow && (
-                    <NoteForm id={pageState.noteId} disableCloseClickOutside />
-                  )}
+                  {isNoteShow && <NoteForm id={pageState.noteId} disableCloseClickOutside />}
                 </div>
               </>
             ))

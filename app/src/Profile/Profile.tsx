@@ -57,16 +57,17 @@ export const Profile = () => {
             </Stack>
           </Stack>
         </Stack>
-
-        <Button
-          intent="secondary"
-          size="small"
-          type="button"
-          loading={isLoadingLogout}
-          onClick={() => logout()}
-        >
-          Logout
-        </Button>
+        <div>
+          <Button
+            intent="secondary"
+            size="small"
+            type="button"
+            loading={isLoadingLogout}
+            onClick={() => logout()}
+          >
+            Logout
+          </Button>
+        </div>
       </Stack>
     </Stack>
   );

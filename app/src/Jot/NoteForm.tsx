@@ -4,7 +4,6 @@ import { queryClient } from '../App';
 import { QueryKeys, useCreateNote, useGetNote, useUpdateNote } from '../client';
 import { Button, Input, Textarea } from '../Components';
 import { Stack } from '../Components/Stack';
-import { P } from '../Components/Typography';
 import { useAuth } from '../Global/Auth';
 import { useGlobalDispatch } from '../Global/GlobalContext';
 import { INote } from '../types';
@@ -176,9 +175,7 @@ const Form = ({
                 Delete
               </Button>
             )}
-            <Button type="submit">
-              <P>{isEdit ? 'Save' : 'Add'}</P>
-            </Button>
+            <Button type="submit">{isEdit ? 'Save' : 'Add'}</Button>
           </Stack>
         </Stack>
       </div>

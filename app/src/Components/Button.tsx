@@ -2,28 +2,6 @@ import cn from 'classnames';
 import { ButtonHTMLAttributes, forwardRef, Ref } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-const classes = {
-  base: 'flex focus:outline-2 outline-offset-2 rounded-lg text-lg justify-center items-center h-fit transition-all duration-400 dark:border-gray-600 gap-2',
-  size: {
-    small: 'py-2 px-4 text-sm',
-    medium: 'py-2 px-6 text-sm',
-    large: 'py-2 px-8 text-base',
-  },
-  intent: {
-    primary: 'text-white bg-indigo-500 hover:bg-indigo-600 shadow-md active:shadow-none',
-    secondary:
-      'bg-white text-gray-500 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 hover:text-black dark:hover:bg-indigo-700 dark:text-gray-800 shadow-md active:shadow-none',
-    minimal: 'bg-transparent hover:text-indigo-600 px-0 py-0 border-0 underline px-1 shadow-none',
-    danger:
-      'bg-white border border-red-600 text-red-600 hover:bg-red-100 shadow-md active:shadow-none',
-  },
-  width: {
-    fit: 'w-fit',
-    full: 'w-full',
-  },
-  active: 'text-indigo-600',
-};
-
 type ButtonProps = {
   size?: 'small' | 'medium' | 'large';
   intent?: 'primary' | 'secondary' | 'minimal' | 'danger';
@@ -55,14 +33,17 @@ export const Button = forwardRef(
       className={twMerge(
         cn(
           {
-            [classes.base]: true,
-            [classes.active]: active,
-            [classes.width.fit]: !fullWidth,
-            [classes.width.full]: fullWidth,
-            [classes.size[size]]: true,
-            [classes.intent[intent]]: true,
-            'bg-gray-400 shadow-none hover:bg-gray-400 active:bg-gray-400 active:shadow-none':
-              disabled,
+            'button-base': true,
+            'button-size-small': size === 'small',
+            'button-size-medium': size === 'medium',
+            'button-size-large': size === 'large',
+            'button-intent-primary': intent === 'primary',
+            'button-intent-secondary': intent === 'secondary',
+            'button-intent-minimal': intent === 'minimal',
+            'button-intent-danger': intent === 'danger',
+            'button-width-full': fullWidth,
+            'button-active': active,
+            'button-disabled': disabled,
           },
           className,
         ),

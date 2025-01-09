@@ -2,7 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  p, h1, h2, h3, h4, h5, h6 {
+    @apply text-black;
+  }
+}
 
-p, h1, h2, h3, h4, h5, h6 {
-  color: black;
+.button-base {
+  @apply flex focus:outline-2 outline-offset-2 rounded-lg text-lg justify-center items-center h-fit transition-all dark:border-gray-600 gap-2;
+}
+
+.button-size-small {
+  @apply py-2 px-4 text-sm;
+}
+
+.button-size-medium { 
+  @apply py-2 px-6 text-sm;
+}
+
+.button-size-large {
+  @apply py-2 px-8 text-base;
+}
+
+.button-intent-primary {
+  @apply bg-indigo-500 hover:bg-indigo-600 shadow-md active:shadow-none text-white;
+}
+
+.button-intent-secondary {
+  @apply bg-white text-gray-500 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 hover:text-black dark:hover:bg-indigo-700 dark:text-gray-800 shadow-md active:shadow-none;
+}
+
+.button-intent-minimal {
+  @apply bg-transparent hover:text-indigo-600 px-0 py-0 border-0 underline underline-offset-4 shadow-none;
+}
+
+.button-intent-danger {
+  @apply bg-white border border-red-600 text-red-600 hover:bg-red-100 shadow-md active:shadow-none;
+}
+
+.button-width-fit {
+  @apply w-fit;
+}
+
+.button-width-full {
+  @apply w-full;
+}
+
+.button-active {
+  @apply text-indigo-600;
 }

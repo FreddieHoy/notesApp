@@ -1,18 +1,18 @@
 module.exports = {
-  content: ["./src/**/*.{html,js,tsx}"],
+  content: ['./src/**/*.{html,js,tsx,css}'],
   theme: {
     extend: {
       spacing: {
-        256: "32rem",
+        256: '32rem',
       },
     },
     fontSize: {
-      sm: ["14px", "20px"],
-      base: ["16px", "24px"],
-      lg: ["24px", "32px"],
-      xl: ["42px", "36px"],
+      sm: ['14px', '20px'],
+      base: ['16px', '24px'],
+      lg: ['24px', '32px'],
+      xl: ['42px', '36px'],
     },
   },
-  darkMode: "class",
+  darkMode: 'class',
   plugins: [],
 };

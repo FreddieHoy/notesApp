@@ -38,7 +38,7 @@ const App = () => {
   const { isLoading } = useGetMe({
     onSuccess: (user) => setUser(user),
     retry: false,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
   });
 
   const { mutate: logout, isLoading: isLoadingLogout } = useLogout();

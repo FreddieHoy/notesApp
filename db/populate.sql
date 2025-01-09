@@ -11,6 +11,11 @@ INSERT INTO note.notes (id, heading, content, account_id) VALUES
 INSERT INTO note.notes (id, heading, content, account_id) VALUES 
 ('8eeec737-e34c-43db-bd35-d7605aa97aa5', 'Dinner ingredients', 'Pasta, tomato sauce', '4bc38315-f925-4703-9ec2-60a73635b3cf');
 INSERT INTO note.notes (id, heading, content, account_id) VALUES 
-('a95a02ba-5cfa-4ee6-96ce-7009003224ea', 'Christmas Presents', 'Teddy for my sister', '4bc38315-f925-4703-9ec2-60a73635b3cf');
+('a95a02ba-5cfa-4ee6-96ce-7009003224ea', 'Christmas Presents', 'Teddy for my sister,
+Hat for dad
+Gloves for mum
+Game for cousin 
+Shoes for gf', 
+'4bc38315-f925-4703-9ec2-60a73635b3cf');
 
 
