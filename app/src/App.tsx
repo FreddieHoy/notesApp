@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { match } from 'ts-pattern';
-import './App.css';
 import { Login } from './Auth/Login';
 import { Register } from './Auth/Register';
+import './Global.css';
 import { AuthProvider, deleteCookies } from './Global/Auth';
 import { GlobalProvider } from './Global/GlobalContext';
 import { Jotter } from './Jotter';

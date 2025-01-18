@@ -5,11 +5,12 @@ import { P } from './Typography';
 interface InputProps extends ComponentProps<'input'> {
   label?: string;
   error?: string;
+  touched?: boolean;
   wrapperClassName?: string;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, className, id, wrapperClassName, ...props }, ref) => {
+  ({ label, error, className, id, wrapperClassName, touched, ...props }, ref) => {
     return (
       <div className={cn('relative', wrapperClassName)}>
         {label && (
@@ -26,7 +27,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
           {...props}
         />
-        {error && (
+        {error && touched && (
           <P intent="error" className="mt-1">
             {error}
           </P>

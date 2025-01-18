@@ -1,6 +1,5 @@
 import cn from 'classnames';
 import { match } from 'ts-pattern';
-import './App.css';
 import { Header } from './Components/Header';
 import { useGlobal } from './Global/GlobalContext';
 import { NoteForm } from './Jot/NoteForm';
