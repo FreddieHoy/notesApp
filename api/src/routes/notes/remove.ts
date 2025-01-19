@@ -3,17 +3,12 @@ import { pool } from "../../../dbPool";
 
 export const remove = (request: Request, response: Response) => {
   const id = request.params.id;
-  pool.query(
-    `DELETE FROM note.notes 
-      WHERE id = $1
-    `,
-    [id],
-    (error, results) => {
-      if (error) {
-        throw error;
-      }
-      response.status(200);
-      response.end();
-    }
-  );
+
+  try {
+    pool.query(`DELETE FROM note.notes WHERE id = $1`, [id]);
+
+    response.status(200);
+  } catch (error) {
+    return response.status(400);
+  }
 };

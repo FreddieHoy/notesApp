@@ -35,6 +35,7 @@ services:
       - /usr/src/app/node_modules
   api:
     build: ./api
+    env_file: ./docker.api.env
     depends_on:
       - db
     ports:

@@ -32,6 +32,6 @@ export const getAll = async (request: Request, response: Response) => {
       path: PATH,
       error,
     });
-    throw error;
+    return response.status(400);
   }
 };

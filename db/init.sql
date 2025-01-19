@@ -7,6 +7,6 @@ CREATE DATABASE jotterdb ENCODING 'UTF8';
 GRANT ALL ON DATABASE jotterdb TO dba WITH GRANT OPTION;
 GRANT ALL ON DATABASE jotterdb TO jotter WITH GRANT OPTION;
 
-\connect jotterdb
+\connect jotterdb freddie
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";

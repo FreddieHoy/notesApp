@@ -1,4 +1,3 @@
-\connect jotterdb
 
 -- Accounts 
 INSERT INTO account.accounts (id, name, email, password) VALUES 
