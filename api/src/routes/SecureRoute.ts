@@ -18,6 +18,7 @@ export const secureRoute = async (request: Request, response: Response, next: Ne
     message: "Check request authorization",
   });
 
+  // This just unencrypts the token to check the id matches
   try {
     const payload = await jwt.verify(token, secret);
 

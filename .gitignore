@@ -11,7 +11,10 @@ app/node_modules
 
 # production
 app/build
+app/.env
+
 api/build
+api/.env
 
 # misc
 .DS_Store
