@@ -1,4 +1,5 @@
 import { Router } from "express";
+import logger from "../logger";
 import account from "./account";
 import authentication from "./authentication";
 import note from "./notes";
@@ -8,7 +9,7 @@ const router = Router();
 
 // health route
 router.get("/health", (req, res) => {
-  console.log("Health check");
+  logger.info("Health check");
   res.json({ status: "UP" });
 });
 
