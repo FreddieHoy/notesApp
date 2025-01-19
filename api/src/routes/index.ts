@@ -8,6 +8,7 @@ const router = Router();
 
 // health route
 router.get("/health", (req, res) => {
+  console.log("Health check");
   res.json({ status: "UP" });
 });
 
