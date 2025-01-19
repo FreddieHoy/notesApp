@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { useMutation, useQuery, UseQueryOptions } from 'react-query';
-import { environment } from './environment';
 import { IAccount, INote } from './types';
 
 const instance = axios.create({
-  baseURL: environment.baseUrl,
+  baseURL: process.env.BASE_URL,
   timeout: 1000,
   headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
