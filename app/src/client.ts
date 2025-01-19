@@ -3,7 +3,7 @@ import { useMutation, useQuery, UseQueryOptions } from 'react-query';
 import { IAccount, INote } from './types';
 
 const instance = axios.create({
-  baseURL: process.env.BASE_URL,
+  baseURL: process.env.SERVER_URL,
   timeout: 1000,
   headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
