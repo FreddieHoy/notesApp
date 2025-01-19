@@ -6,6 +6,11 @@ import { secureRoute } from "./SecureRoute";
 
 const router = Router();
 
+// health route
+router.get("/health", (req, res) => {
+  res.json({ status: "UP" });
+});
+
 router.get("/me", secureRoute, authentication.getMe);
 router.post("/login", authentication.login);
 router.post("/logout", secureRoute, authentication.logout);
