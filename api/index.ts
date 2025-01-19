@@ -5,9 +5,9 @@ import dotEnv from "dotenv";
 import express from "express";
 import router from "./src/routes";
 
-const port = 8000;
-
 dotEnv.config();
+
+const port = process.env.PORT || 8000;
 
 export const app = express();
 
