@@ -8,6 +8,7 @@ import router from "./src/routes";
 dotEnv.config();
 
 const port = process.env.PORT || 8000;
+const clientOrigin = process.env.CLIENT_ORIGIN || "http://localhost:3000";
 
 export const app = express();
 
@@ -22,7 +23,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: clientOrigin,
     credentials: true,
   })
 );
