@@ -44,7 +44,7 @@ export default async (request: Request, response: Response) => {
       expiresIn: "6h",
     });
 
-    response.cookie("authToken", token, { httpOnly: true, secure: true });
+    response.cookie("authToken", token, { httpOnly: true, secure: true, sameSite: "none" });
 
     response.json({
       message: `Welcome back ${account.name}! (With Cookie)`,
