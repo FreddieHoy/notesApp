@@ -9,5 +9,12 @@ export default (request: Request, response: Response) => {
     data: { accountId },
   });
 
-  return response.status(200).clearCookie("authToken").send();
+  return response
+    .status(200)
+    .clearCookie("authToken", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    })
+    .send();
 };
