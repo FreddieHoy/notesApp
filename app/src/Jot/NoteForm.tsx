@@ -122,13 +122,7 @@ const Form = ({
   }, [disableCloseClickOutside, dispatch, targetRef]);
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit(onSubmit);
-      }}
-      className="h-full"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="h-full">
       <div
         ref={targetRef}
         className="flex h-full w-full flex-col rounded-lg border-l dark:border-gray-700"
