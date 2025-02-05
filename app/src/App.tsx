@@ -61,7 +61,12 @@ const App = () => {
 
   const [view, setView] = useState<LoginView>('login');
 
-  if (isLoading && !user) return <>Load4ing....</>;
+  if (isLoading && !user)
+    return (
+      <div className="box-border flex h-screen w-screen items-center justify-center">
+        Load4ing....
+      </div>
+    );
 
   if (user?.id)
     return <Providers user={user} logout={onLogout} isLoadingLogout={isLoadingLogout} />;
@@ -69,12 +74,12 @@ const App = () => {
   return (
     <div className="box-border flex h-screen w-screen items-center justify-center">
       <section className="body-font text-gray-600">
-        <div className="flex items-center gap-8 px-5">
+        <div className="flex flex-col items-center gap-8 sm:flex-row sm:px-5">
           <div className="flex flex-col pr-6">
             <h1 className="title-font text-lg font-medium text-gray-900">Welcome to Jotter</h1>
             <p className="mt-4 leading-relaxed">The greatest note taking app on the planet</p>
           </div>
-          <div className="flex min-w-[400px] flex-col rounded-lg bg-gray-100 p-8 py-4">
+          <div className="flex w-full flex-col rounded-lg bg-gray-100 p-6 sm:w-auto sm:min-w-[400px] sm:p-8">
             {match(view)
               .with('login', () => <Login setView={setView} setUser={setUser} />)
               .with('register', () => <Register setView={setView} />)
