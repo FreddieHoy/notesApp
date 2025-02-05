@@ -7,16 +7,21 @@ import { isJWTPayload } from "./utils/typeGuards";
 const PATH = "/secureRoute";
 
 export const secureRoute = async (request: Request, response: Response, next: NextFunction) => {
-  if (!request.cookies.authToken) {
-    return response.sendStatus(401);
-  }
-
-  const token: string = request.cookies.authToken;
-
   logger.info({
     path: PATH,
     message: "Check request authorization",
   });
+
+  if (!request.cookies.authToken) {
+    console.log("request.cookies", request.cookies);
+    logger.error({
+      path: PATH,
+      message: "No token found",
+    });
+    return response.sendStatus(401);
+  }
+
+  const token: string = request.cookies.authToken;
 
   // This just unencrypts the token to check the id matches
   try {
