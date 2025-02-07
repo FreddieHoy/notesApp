@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { queryClient } from '../App';
 import { QueryKeys, useCreateNote, useGetNote, useUpdateNote } from '../client';
@@ -7,7 +7,6 @@ import { Stack } from '../Components/Stack';
 import { useAuth } from '../Global/Auth';
 import { useGlobalDispatch } from '../Global/GlobalContext';
 import { INote } from '../types';
-import { useApi } from '../Utils/useApi';
 
 type NoteFormValues = {
   id: string;
@@ -45,7 +44,6 @@ const Form = ({
   const { mutate: createNote } = useCreateNote();
   const { account } = useAuth();
 
-  const api = useApi();
   const isEdit = note?.id;
 
   const {
@@ -93,13 +91,13 @@ const Form = ({
     }
   };
 
-  const onDeleteNote = useCallback(async () => {
-    if (note?.id) {
-      await api.delete(`notes/${note.id}`).then(async (res) => {
-        dispatch({ type: 'setPage', page: 'notes' });
-      });
-    }
-  }, [api, note?.id, dispatch]);
+  // const onDeleteNote = useCallback(async () => {
+  //   if (note?.id) {
+  //     await api.delete(`notes/${note.id}`).then(async (res) => {
+  //       dispatch({ type: 'setPage', page: 'notes' });
+  //     });
+  //   }
+  // }, [api, note?.id, dispatch]);
 
   /**
    Click outside logic
@@ -171,7 +169,7 @@ const Form = ({
           </Button>
           <Stack gap={6} align="center">
             {noteId && (
-              <Button size="small" onClick={onDeleteNote} intent="danger">
+              <Button size="small" onClick={() => {}} intent="danger">
                 Delete
               </Button>
             )}

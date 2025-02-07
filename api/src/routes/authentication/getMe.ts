@@ -16,7 +16,7 @@ export default async (request: Request, response: Response) => {
 
     if (!res.rows.length) throw new Error("No account found with this token");
 
-    const account = res.rows[0];
+    const { password, ...account } = res.rows[0];
 
     return response.status(200).json(account);
   } catch (e) {

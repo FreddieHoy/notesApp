@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { match } from 'ts-pattern';
 import { Login } from './Auth/Login';
 import { Register } from './Auth/Register';
 import './Global.css';
-import { AuthProvider, deleteCookies } from './Global/Auth';
+import { AuthProvider, deleteCookies, getUserCookie } from './Global/Auth';
 import { GlobalProvider } from './Global/GlobalContext';
 import { Jotter } from './Jotter';
 import { useGetMe, useLogout } from './client';
@@ -35,10 +35,16 @@ const Providers = ({
 const App = () => {
   const [user, setUser] = useState<IAccount | undefined>(undefined);
 
+  useEffect(() => {
+    const userCookie = getUserCookie();
+    if (!user && userCookie) setUser(userCookie);
+  }, [user]);
+
   const { isLoading } = useGetMe({
     onSuccess: (user) => setUser(user),
     retry: false,
     refetchOnWindowFocus: true,
+    enabled: !!user,
   });
 
   const { mutate: logout, isLoading: isLoadingLogout } = useLogout();

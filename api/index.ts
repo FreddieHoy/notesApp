@@ -1,14 +1,12 @@
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import dotEnv from "dotenv";
 import express from "express";
+import "./config";
 import router from "./src/routes";
 
-dotEnv.config();
-
-const port = process.env.PORT || 8000;
-const clientOrigin = process.env.CLIENT_ORIGIN || "http://localhost:3000";
+const port = process.env.PORT;
+const clientOrigin = process.env.CLIENT_ORIGIN;
 
 export const app = express();
 

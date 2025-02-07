@@ -13,7 +13,6 @@ export const secureRoute = async (request: Request, response: Response, next: Ne
   });
 
   if (!request.cookies.authToken) {
-    console.log("request.cookies.authToken", request.cookies.authToken);
     logger.error({
       path: PATH,
       message: "No token found",
