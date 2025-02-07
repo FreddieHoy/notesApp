@@ -6,7 +6,7 @@ const PATH = "/notes/get";
 
 const GET_ALL_NOTES_FOR_USER = `
   SELECT * FROM note.notes 
-  WHERE account_id = $1 AND id = $2 
+  WHERE account_id = $1 AND id = $2 AND deleted_on IS NULL
   ORDER BY id ASC;
 `;
 

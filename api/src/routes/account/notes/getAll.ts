@@ -7,8 +7,9 @@ const PATH = "/account/notes/get";
 
 const GET_ALL_NOTES_FOR_USER = `
   SELECT * FROM note.notes 
-  WHERE account_id = $1
-  ORDER BY id ASC;
+  WHERE account_id = $1 
+  AND deleted_on IS NULL 
+  ORDER BY id ASC
 `;
 
 export default async (request: Request, response: Response) => {

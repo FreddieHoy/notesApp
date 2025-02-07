@@ -1,0 +1,1 @@
+ALTER TABLE note.notes ADD COLUMN deleted_on TIMESTAMP;

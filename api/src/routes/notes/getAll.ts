@@ -15,7 +15,12 @@ export const getAll = async (request: Request, response: Response) => {
 
   try {
     const results = await pool.query(
-      "SELECT * FROM note.notes WHERE account_id = $1 ORDER BY id ASC",
+      `
+      SELECT * FROM note.notes 
+      WHERE account_id = $1 
+      AND deleted_on IS NULL 
+      ORDER BY id ASC
+      `,
       [userId]
     );
 

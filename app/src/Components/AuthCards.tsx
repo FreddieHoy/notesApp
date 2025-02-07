@@ -1,11 +1,11 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes } from 'react';
 
 export const CardWrapper = (props: HTMLAttributes<HTMLDivElement>) => {
   return (
     <div
       {...props}
       className={
-        "flex flex-col absolute h-80 ... w-1/2 ...  align-center bg-grey-100 text-sky-900/100 rounded-md border border-gray-800"
+        '... ... align-center bg-grey-100 absolute flex h-80 w-1/2 flex-col rounded-md border border-gray-800 text-sky-900/100'
       }
     >
       {props.children}
@@ -17,9 +17,7 @@ export const CardHeader = (props: HTMLAttributes<HTMLDivElement>) => {
   return (
     <div
       {...props}
-      className={
-        "flex bg-blue-300 rounded-t-md px-6 py-2 justify-between items-center"
-      }
+      className={'flex items-center justify-between rounded-t-md bg-gray-300 px-6 py-2'}
     >
       {props.children}
     </div>
@@ -31,7 +29,7 @@ export const CardBody = (props: HTMLAttributes<HTMLDivElement>) => {
     <div
       {...props}
       className={
-        "flex px-6 flex-col grow justify-center bg-blue-100 border-y border-sky-800 overflow-y-scroll"
+        'flex grow flex-col justify-center overflow-y-scroll border-y border-sky-800 bg-blue-100 px-6'
       }
     >
       {props.children}
@@ -41,10 +39,7 @@ export const CardBody = (props: HTMLAttributes<HTMLDivElement>) => {
 
 export const CardFooter = (props: HTMLAttributes<HTMLDivElement>) => {
   return (
-    <div
-      {...props}
-      className={"flex w-full px-6 py-2 border-t gap-1 items-center"}
-    >
+    <div {...props} className={'flex w-full items-center gap-1 border-t px-6 py-2'}>
       {props.children}
     </div>
   );

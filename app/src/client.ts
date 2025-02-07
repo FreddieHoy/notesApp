@@ -73,6 +73,10 @@ export const useUpdateNote = () => {
   );
 };
 
+export const useDeleteNote = () => {
+  return useMutation((noteId: string) => instance({ url: `/notes/${noteId}`, method: 'DELETE' }));
+};
+
 export const useLogin = () => {
   return useMutation((data: { email: string; password: string }) =>
     instance({ url: '/login', method: 'POST', data }).then((res) => res.data.account as IAccount),

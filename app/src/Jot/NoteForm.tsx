@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { queryClient } from '../App';
-import { QueryKeys, useCreateNote, useGetNote, useUpdateNote } from '../client';
-import { Button, Input, Textarea } from '../Components';
+import { QueryKeys, useCreateNote, useDeleteNote, useGetNote, useUpdateNote } from '../client';
+import { Button, Dialog, Input, Textarea } from '../Components';
 import { Stack } from '../Components/Stack';
 import { useAuth } from '../Global/Auth';
 import { useGlobalDispatch } from '../Global/GlobalContext';
@@ -42,6 +42,10 @@ const Form = ({
   const dispatch = useGlobalDispatch();
   const { mutate: updateNote } = useUpdateNote();
   const { mutate: createNote } = useCreateNote();
+  const { mutate: deleteNote } = useDeleteNote();
+
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
+
   const { account } = useAuth();
 
   const isEdit = note?.id;
@@ -91,13 +95,16 @@ const Form = ({
     }
   };
 
-  // const onDeleteNote = useCallback(async () => {
-  //   if (note?.id) {
-  //     await api.delete(`notes/${note.id}`).then(async (res) => {
-  //       dispatch({ type: 'setPage', page: 'notes' });
-  //     });
-  //   }
-  // }, [api, note?.id, dispatch]);
+  const onDeleteNote = () => {
+    if (note?.id) {
+      deleteNote(note.id, {
+        onSuccess: () => {
+          dispatch({ type: 'setPage', page: 'notes' });
+          queryClient.invalidateQueries([QueryKeys.GET_All_NOTES]);
+        },
+      });
+    }
+  };
 
   /**
    Click outside logic
@@ -120,63 +127,73 @@ const Form = ({
   }, [disableCloseClickOutside, dispatch, targetRef]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="h-full">
-      <div
-        ref={targetRef}
-        className="flex h-full w-full flex-col rounded-lg border-l dark:border-gray-700"
-      >
-        <div className="flex flex-col gap-4 p-4">
-          {note ? (
-            <span className="dark:text-gray-200">
-              Editing: <span className="font-semibold">{note.heading}</span>
-            </span>
-          ) : (
-            <span className="dark:text-gray-200">Create Note</span>
-          )}
-
-          <div className="relative">
-            <Input
-              {...register('heading', { required: 'A heading is required' })}
-              placeholder="Title.."
-            />
-            {errors.heading && <p>{errors.heading.message}</p>}
-          </div>
-          <div className="relative">
-            <Textarea
-              {...register('body', {
-                maxLength: 450,
-              })}
-              placeholder="Content.."
-              canResize
-              className="h-[350px] sm:h-[200px]"
-            />
-            {errors.body && <p>{`Character limit is 450 (${getValues().body.length})`}</p>}
-          </div>
-        </div>
-        <Stack
-          gap={6}
-          padding={18}
-          align="center"
-          justify="space-between"
-          className="w-full border-y dark:border-gray-700"
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className="h-full">
+        <div
+          ref={targetRef}
+          className="flex h-full w-full flex-col rounded-lg border-l dark:border-gray-700"
         >
-          <Button
-            size="small"
-            intent="secondary"
-            onClick={() => dispatch({ type: 'setPage', page: 'notes' })}
-          >
-            Close
-          </Button>
-          <Stack gap={6} align="center">
-            {noteId && (
-              <Button size="small" onClick={() => {}} intent="danger">
-                Delete
-              </Button>
+          <div className="flex flex-col gap-4 p-4">
+            {note ? (
+              <span className="dark:text-gray-200">
+                Editing: <span className="font-semibold">{note.heading}</span>
+              </span>
+            ) : (
+              <span className="dark:text-gray-200">Create Note</span>
             )}
-            <Button type="submit">{isEdit ? 'Save' : 'Add'}</Button>
+
+            <div className="relative">
+              <Input
+                {...register('heading', { required: 'A heading is required' })}
+                placeholder="Title.."
+              />
+              {errors.heading && <p>{errors.heading.message}</p>}
+            </div>
+            <div className="relative">
+              <Textarea
+                {...register('body', {
+                  maxLength: 450,
+                })}
+                placeholder="Content.."
+                canResize
+                className="h-[350px] sm:h-[200px]"
+              />
+              {errors.body && <p>{`Character limit is 450 (${getValues().body.length})`}</p>}
+            </div>
+          </div>
+          <Stack
+            gap={6}
+            padding={18}
+            align="center"
+            justify="space-between"
+            className="w-full border-y dark:border-gray-700"
+          >
+            <Button
+              size="small"
+              intent="secondary"
+              onClick={() => dispatch({ type: 'setPage', page: 'notes' })}
+            >
+              Close
+            </Button>
+            <Stack gap={6} align="center">
+              {noteId && (
+                <Button size="small" onClick={() => setDeleteModal(true)} intent="danger">
+                  Delete
+                </Button>
+              )}
+              <Button type="submit">{isEdit ? 'Save' : 'Add'}</Button>
+            </Stack>
           </Stack>
-        </Stack>
-      </div>
-    </form>
+        </div>
+      </form>
+      <Dialog
+        isOpen={!!deleteModal}
+        onClose={() => setDeleteModal(false)}
+        title={`Delete ${note?.heading}`}
+      >
+        <p>Are you sure you want to delete this note?</p>
+        <Button onClick={onDeleteNote}>Delete</Button>
+      </Dialog>
+    </>
   );
 };
