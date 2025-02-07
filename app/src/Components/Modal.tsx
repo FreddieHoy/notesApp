@@ -23,7 +23,9 @@ export const Dialog = ({
               <CardWrapper>
                 <CardHeader>
                   <h1 className="dark:text-white">{title}</h1>
-                  <Button onClick={() => onClose()}>Close</Button>
+                  <Button intent="secondary" onClick={() => onClose()}>
+                    Close
+                  </Button>
                 </CardHeader>
                 <CardBody>{children}</CardBody>
               </CardWrapper>

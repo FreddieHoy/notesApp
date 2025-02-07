@@ -96,6 +96,7 @@ const Form = ({
   };
 
   const onDeleteNote = () => {
+    console.log('deleting note', note?.id);
     if (note?.id) {
       deleteNote(note.id, {
         onSuccess: () => {
@@ -111,7 +112,7 @@ const Form = ({
    */
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (disableCloseClickOutside) return;
+      if (disableCloseClickOutside || deleteModal) return;
       if (!targetRef?.current?.contains(e.target as Node)) {
         e.stopPropagation();
         e.preventDefault();
@@ -124,7 +125,9 @@ const Form = ({
         capture: true,
       });
     };
-  }, [disableCloseClickOutside, dispatch, targetRef]);
+  }, [deleteModal, disableCloseClickOutside, dispatch, targetRef]);
+
+  console.log('note', { note });
 
   return (
     <>
@@ -191,8 +194,10 @@ const Form = ({
         onClose={() => setDeleteModal(false)}
         title={`Delete ${note?.heading}`}
       >
-        <p>Are you sure you want to delete this note?</p>
-        <Button onClick={onDeleteNote}>Delete</Button>
+        <p>Are you sure you want to delete this note?{note?.heading} </p>
+        <div>
+          <Button onClick={onDeleteNote}>Delete</Button>
+        </div>
       </Dialog>
     </>
   );

@@ -15,6 +15,13 @@ export default (request: Request, response: Response) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
+      path: "/",
+    })
+    .clearCookie("user_data", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      path: "/",
     })
     .send();
 };

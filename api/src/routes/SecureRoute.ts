@@ -33,7 +33,8 @@ export const secureRoute = async (request: Request, response: Response, next: Ne
 
       const account = results.rows[0];
 
-      if (!account) return response.sendStatus(404).json("No account found please login again");
+      if (!account)
+        return response.sendStatus(404).json("No account found please login again").end();
 
       request.decodedAccountId = payload.sub;
 
@@ -49,6 +50,6 @@ export const secureRoute = async (request: Request, response: Response, next: Ne
       path: PATH,
       message: "Failed to authorize request",
     });
-    return response.sendStatus(401);
+    return response.sendStatus(401).end();
   }
 };

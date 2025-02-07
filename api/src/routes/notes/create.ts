@@ -23,6 +23,7 @@ export const create = async (request: Request, response: Response) => {
 
     logger.info({
       path: PATH,
+      msg: "Create Note Success",
       accountId,
     });
 
@@ -30,8 +31,9 @@ export const create = async (request: Request, response: Response) => {
   } catch (error) {
     logger.error({
       path: PATH,
+      msg: "Create Note Error",
       error,
     });
-    return response.status(400);
+    return response.status(400).end();
   }
 };

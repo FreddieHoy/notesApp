@@ -74,7 +74,10 @@ export const useUpdateNote = () => {
 };
 
 export const useDeleteNote = () => {
-  return useMutation((noteId: string) => instance({ url: `/notes/${noteId}`, method: 'DELETE' }));
+  return useMutation(
+    async (noteId: string) =>
+      await instance({ url: `/notes/${noteId}`, method: 'DELETE' }).then(() => {}),
+  );
 };
 
 export const useLogin = () => {

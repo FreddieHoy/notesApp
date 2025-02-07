@@ -5,6 +5,8 @@ import { secret } from "../../../dbPool";
 import db from "../../db";
 import logger from "../../logger";
 
+const sevenDays = 7 * 24 * 60 * 60 * 1000;
+
 const PATH = "auth/login";
 
 export default async (request: Request, response: Response) => {
@@ -46,14 +48,14 @@ export default async (request: Request, response: Response) => {
       secure: true,
       sameSite: "none",
       path: "/",
-      maxAge: 21600,
+      maxAge: sevenDays,
     });
     response.cookie("user_data", JSON.stringify(accountWithoutPassword), {
       httpOnly: false,
       secure: true,
       sameSite: "none",
       path: "/",
-      maxAge: 21600,
+      maxAge: sevenDays,
     });
 
     response.json({

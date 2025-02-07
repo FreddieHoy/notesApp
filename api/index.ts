@@ -21,13 +21,13 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: clientOrigin,
+    origin: true,
     credentials: true,
   })
 );
 
 app.get("/", (_request, response) => {
-  response.json({ info: "Node.js, Express, and Postgres API" });
+  response.json({ info: "Node.js, Express, and Postgres API" }).end();
 });
 
 app.use(router);

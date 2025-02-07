@@ -30,6 +30,6 @@ export const get = async (request: Request, response: Response) => {
       path: PATH,
       error,
     });
-    return response.status(400);
+    return response.status(400).end();
   }
 };
