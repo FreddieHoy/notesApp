@@ -42,8 +42,11 @@ const App = () => {
 
   const { isLoading } = useGetMe({
     onSuccess: (user) => setUser(user),
-    onError: () => setUser(undefined),
-    retry: false,
+    onError: () => {
+      deleteCookies();
+      setUser(undefined);
+    },
+    retry: 1,
     refetchOnWindowFocus: true,
     enabled: !!user,
   });
