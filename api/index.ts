@@ -27,7 +27,6 @@ app.use(
 );
 
 app.get("/", (_request, response) => {
-  console.log("hit node api");
   response.json({ info: "Node.js, Express, and Postgres API" }).end();
 });
 

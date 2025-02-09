@@ -1,4 +1,3 @@
-export * from './AuthCards';
 export * from './Button';
 export * from './Checkbox';
 export * from './Error';

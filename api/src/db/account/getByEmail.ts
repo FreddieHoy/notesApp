@@ -4,14 +4,19 @@ import { IAccount } from "../../routes/types";
 
 const PATH = "db/account/getByEmail";
 
-const getByEmail = async (email: string): Promise<IAccount> => {
+const GET_BY_EMAIL_QUERY = `
+  SELECT * FROM account.accounts 
+  WHERE email = $1
+`;
+
+export default async (email: string): Promise<IAccount> => {
   logger.info({
     path: PATH,
     data: { email },
   });
 
   try {
-    const results = await pool.query("SELECT * FROM account.accounts WHERE email = $1", [email]);
+    const results = await pool.query(GET_BY_EMAIL_QUERY, [email]);
 
     const account = results.rows[0];
 
@@ -35,5 +40,3 @@ const getByEmail = async (email: string): Promise<IAccount> => {
     throw new Error("Failed to find Account");
   }
 };
-
-export default getByEmail;

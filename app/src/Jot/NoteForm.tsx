@@ -53,7 +53,7 @@ const Form = ({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, touchedFields },
     getValues,
   } = useForm<NoteFormValues>({
     defaultValues: {
@@ -96,7 +96,6 @@ const Form = ({
   };
 
   const onDeleteNote = () => {
-    console.log('deleting note', note?.id);
     if (note?.id) {
       deleteNote(note.id, {
         onSuccess: () => {
@@ -127,8 +126,6 @@ const Form = ({
     };
   }, [deleteModal, disableCloseClickOutside, dispatch, targetRef]);
 
-  console.log('note', { note });
-
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="h-full">
@@ -149,8 +146,9 @@ const Form = ({
               <Input
                 {...register('heading', { required: 'A heading is required' })}
                 placeholder="Title.."
+                error={errors.heading?.message}
+                touched={touchedFields.heading}
               />
-              {errors.heading && <p>{errors.heading.message}</p>}
             </div>
             <div className="relative">
               <Textarea
@@ -169,7 +167,7 @@ const Form = ({
             padding={18}
             align="center"
             justify="space-between"
-            className="w-full border-y dark:border-gray-700"
+            className="w-full border-t dark:border-gray-700"
           >
             <Button
               size="small"
@@ -178,14 +176,14 @@ const Form = ({
             >
               Close
             </Button>
-            <Stack gap={6} align="center">
+            <div className="flex items-center gap-4">
               {noteId && (
                 <Button size="small" onClick={() => setDeleteModal(true)} intent="danger">
                   Delete
                 </Button>
               )}
               <Button type="submit">{isEdit ? 'Save' : 'Add'}</Button>
-            </Stack>
+            </div>
           </Stack>
         </div>
       </form>
@@ -194,8 +192,8 @@ const Form = ({
         onClose={() => setDeleteModal(false)}
         title={`Delete ${note?.heading}`}
       >
-        <p>Are you sure you want to delete this note?{note?.heading} </p>
-        <div>
+        <p>Are you sure you want to delete this note?</p>
+        <div className="flex gap-4">
           <Button onClick={onDeleteNote}>Delete</Button>
         </div>
       </Dialog>

@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
-import { pool } from "../../../dbPool";
+import db from "../../db";
 import logger from "../../logger";
 import { isErrorWithMessage } from "../utils/typeGuards";
 
@@ -18,36 +18,35 @@ export default async (request: Request, response: Response) => {
     throw new Error("Please enter all fields");
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-
   try {
-    const results = await pool.query(`SELECT * FROM account.accounts WHERE email = $1`, [email]);
+    const accountExists = await db.account.getByEmail(email).catch(() => undefined);
 
-    if (results.rows.length > 0) {
+    if (accountExists) {
       logger.error({
         path: PATH,
+        msg: "Account already exists",
         data: { name, email, password },
       });
 
       return response.status(400).send();
     }
 
-    const res = await pool.query(
-      "INSERT INTO account.accounts (name, email, password) VALUES ($1, $2, $3) RETURNING *",
-      [name, email, hashedPassword]
-    );
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const account = res.rows[0];
+    const { password: _, ...account } = await db.account.create({ name, email, hashedPassword });
 
-    if (!account) throw new Error("Failed to register user");
+    logger.info({
+      path: PATH,
+      msg: "Registered account Success",
+      data: account,
+    });
 
-    const newUserId = res.rows[0].id;
-
-    return response.status(201).send(`User added with ID: ${newUserId ?? "unknown"}`);
+    return response.status(201).send();
   } catch (error) {
     logger.error({
       path: PATH,
       error,
+      data: { name, email },
     });
 
     if (isErrorWithMessage(error)) {
