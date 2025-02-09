@@ -7,6 +7,7 @@ import { Stack } from '../Components/Stack';
 import { useAuth } from '../Global/Auth';
 import { useGlobalDispatch } from '../Global/GlobalContext';
 import { INote } from '../types';
+import { useIsMobile } from '../Utils/IsMobile';
 
 type NoteFormValues = {
   id: string;
@@ -39,6 +40,7 @@ const Form = ({
   disableCloseClickOutside: boolean;
 }) => {
   const targetRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
   const dispatch = useGlobalDispatch();
   const { mutate: updateNote } = useUpdateNote();
   const { mutate: createNote } = useCreateNote();
@@ -111,7 +113,7 @@ const Form = ({
    */
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (disableCloseClickOutside || deleteModal) return;
+      if (disableCloseClickOutside || deleteModal || isMobile) return;
       if (!targetRef?.current?.contains(e.target as Node)) {
         e.stopPropagation();
         e.preventDefault();
@@ -124,7 +126,7 @@ const Form = ({
         capture: true,
       });
     };
-  }, [deleteModal, disableCloseClickOutside, dispatch, targetRef]);
+  }, [deleteModal, disableCloseClickOutside, dispatch, isMobile, targetRef]);
 
   return (
     <>

@@ -1,6 +1,6 @@
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from 'react';
 
-const mobileBreakPoint = 480;
+const mobileBreakPoint = 640;
 
 export const useIsMobile = () => {
   const initialSize = window.innerWidth < mobileBreakPoint;
@@ -11,8 +11,8 @@ export const useIsMobile = () => {
       setIsMobile(window.innerWidth < mobileBreakPoint);
     };
 
-    window.addEventListener("resize", handler);
-    return () => window.removeEventListener("resize", handler);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
   });
 
   return isMobile;
